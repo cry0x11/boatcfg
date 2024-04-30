@@ -1,0 +1,11 @@
+#!/bin/bash
+
+percent=`cat /sys/class/power_supply/BAT0/capacity`
+state=`cat /sys/class/power_supply/ACAD/online`
+
+case $1 in
+    percent)    echo "$percent";;
+    state)      echo "$state";;
+    *)
+        dunstify "EWW: Battery ERROR!" "\n'$1': INVALID ARGUMENT\n\nEither 'percent' or 'state' were expected"
+esac
