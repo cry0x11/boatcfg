@@ -1,7 +1,8 @@
 # Boatcfg
 ## Dependencies
-`wideriver`: tiling manager for river
-`wf-recorder`: used to record videos
+- `wideriver` tiling manager for river
+- `ristate` required to integrate eww into river
+- `wf-recorder` used to record videos
 
 
 ## Preview
