@@ -1,5 +1,5 @@
 (deflisten current-json :initial "[]"
-    `ristate -t | stdbuf -o0 sed '/{"tags":{}}/d; s/│   │/[1]/g; s/│ /[/; s/ │/]/; s/├─┤/]/g;'`
+    `ristate -t | stdbuf -o0 sed '/{"tags":{}}/d; s/├─┤ │/[]/g; s/│ ├─┤/[]/g; s/│   │/[1]/g; s/│ /[/; s/ │/]/;'`
 )
 
 (deflisten occupied-tags :initial "1" 
