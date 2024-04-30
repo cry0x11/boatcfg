@@ -141,7 +141,7 @@ riverctl set-repeat 50 300
 
 riverctl default-layout wideriver
 
-wideriver --layout right                            \
+wideriver --layout left                             \
           --layout-alt  monocle                     \
           --stack even                              \
           --count-master 1                          \
