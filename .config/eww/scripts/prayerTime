@@ -35,15 +35,15 @@ function calculator () {
 today=`date +'%m%d'`
 yesterday=`date -d yesterday +'%m%d'`
 
-if [ -f $yesterday ]; then
+if [ -f ~/.cache/boatcfg/prayers/$yesterday ]; then
     removeOld $yesterday
 fi
 
-if ! [ -f $today-index ]; then
+if ! [ -f ~/.cache/boatcfg/prayers/$today-index ]; then
     echo 1 > ~/.cache/boatcfg/prayers/$today-index
 fi
 
-if ! [ -f $today ]; then
+if ! [ -f ~/.cache/boatcfg/prayers/$today ]; then
      prayerFile $today
 fi
 
