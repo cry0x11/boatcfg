@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# ----------------------------
+# PACKAGE MANAGER
+# ----------------------------
+alias q='xbps-query -Rs'
+alias u='doas xbps-install -Su'
+alias i='doas xbps-install -S'
+alias r='doas xbps-remove'
+
+
+# ----------------------------
+# TOOLS / UTILITIES
+# ----------------------------
+alias mki='make && doas make install'
+alias grep='grep --color=always -i'
+alias ll='eza -lah --icons=always'
+alias v='nvim'
+alias dv='doas nvim -u ~/.config/nvim/init.lua'
+alias ugrub='doas grub-mkconfig -o /boot/grub/grub.cfg'
+alias ytd='yt-dlp -f bv[height=720]+ba'
+
+# ----------------------------
+# GIT
+# ----------------------------
+
+bare () {
+    /usr/bin/git --git-dir=$HOME/git/boatcfg --work-tree=$HOME "$@"
+}
+
+alias ba="bare add"
+alias bc="bare commit"
+alias bp="bare push -u origin main"
+alias bpull="bare pull origin main --allow-unrelated-histories"
+
+alias gi='git init'
+alias ga='git add'
+alias gc='git commit'
+alias gra='git remote add origin'
+alias gp='git push -u origin main'
+alias gpull='git pull origin main --allow-unrelated-histories'
+
+export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
+export MANPAGER="nvim +Man!"
