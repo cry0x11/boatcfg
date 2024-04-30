@@ -1,0 +1,97 @@
+#!/bin/bash
+
+[ ! -d ~/.cache/boatcfg/prayers ] && mkdir -p ~/.cache/boatcfg/prayers
+
+function removeOld () {
+    rm ~/.cache/boatcfg/prayers/$1
+    rm ~/.cache/boatcfg/prayers/$1-index
+}
+
+function prayerFile () {
+    grep --color=never $1T ~/.config/eww/scripts/eg-prayers | sed 's/^.*T//g; s/[0.9]\{2\}Z//g' > ~/.cache/boatcfg/prayers/$1
+}
+
+function calculator () {
+
+    prayTime=$(awk 'NR=='$1'{print $1}' ~/.cache/boatcfg/prayers/$2) 
+    summary=$(awk 'NR=='$1'{print $2}' ~/.cache/boatcfg/prayers/$2) 
+    tzPrayTime=$((10#$prayTime+300))
+
+    year=`date +"%Y"`
+    value=`date --date="${year}$2 $tzPrayTime" +%s` 
+    current=`date +'%s'`
+
+    # print name of prayer + its time
+    prayTimeText="$summary `date -d@${value} \"+%I:%M %p\"`"
+
+    # only print name of prayer
+    #prayTimeText="$summary" 
+
+    remSec=$((($value - $current)%60))
+    remTime=$((($value - $current)/60))
+
+}
+
+today=`date +'%m%d'`
+yesterday=`date -d yesterday +'%m%d'`
+
+if [ -f $yesterday ]; then
+    removeOld $yesterday
+fi
+
+if ! [ -f $today-index ]; then
+    echo 1 > ~/.cache/boatcfg/prayers/$today-index
+fi
+
+if ! [ -f $today ]; then
+     prayerFile $today
+fi
+
+position=`cat ~/.cache/boatcfg/prayers/$today-index`
+
+calculator $position $today
+
+if [ $position -ge 6 ] && [ $remTime -le 0 ] && [ $remSec -le 0 ]; then
+	remTimeText="DONE"
+	prayTimeText=""	
+
+elif [ $remTime -eq 0 ] && [ $remSec -ge 0 ]; then
+
+    remTimeText="${remSec}s"
+
+elif [ $remTime -le 0 ] && [ $remSec -le 0 ]; then
+
+	while [ $remTime -le 0 ] && [ $remSec -le 0 ] && [ $position -lt 6 ]
+	do
+		position=$(($position+1))
+		echo $position > ~/.cache/boatcfg/prayers/$today-index
+		calculator $position $today
+	done
+
+    if [ $remTime -eq 0 ] && [ $remSec -ge 0 ]; then
+        remTimeText="${remSec}s"
+    elif [ $remTime -ge 60 ]; then
+        remMin=$(($remTime%60))
+        remHour=$(($remTime/60)) 
+        remTimeText="${remHour}h ${remMin}m"
+    else
+        remTimeText="${remTime}m"
+    fi
+
+
+elif [ $remTime -ge 60 ]; then
+	remMin=$(($remTime%60))
+	remHour=$(($remTime/60)) 
+	remTimeText="${remHour}h ${remMin}m"
+else
+	remTimeText="${remTime}m"
+fi
+
+case $1 in
+    "q")
+        echo "$prayTimeText"
+    ;;
+    "t")
+        echo "$remTimeText"
+    ;;
+esac
