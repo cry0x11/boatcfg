@@ -1,0 +1,199 @@
+(deflisten current-json :initial "[]"
+    `ristate -t | stdbuf -o0 sed '/{"tags":{}}/d; s/│   │/[1]/g; s/│ /[/; s/ │/]/; s/├─┤/]/g;'`
+)
+
+(deflisten occupied-tags :initial "1" 
+    `ristate -vt | stdbuf -o0 sed '/{"viewstag":{}}/d'`
+)
+
+(defpoll time :initial ""
+              :interval "1s"
+    `date +"%a %Y/%m/%d %I:%M %p"`)
+
+(defpoll battery_percent :initial "0"
+                         :interval "1s"
+    `scripts/battery percent`)
+
+(defpoll battery_state :initial "0"
+                       :interval "1s"
+    `scripts/battery state`)
+
+(defpoll prayerTime :initial ""
+              :interval "1s"
+    `scripts/prayerTime t`)
+
+(defpoll prayer :initial ""
+              :interval "1s"
+    `scripts/prayerTime q`)
+
+(defvar rev_prayer false)
+(defvar rev_date false)
+(defvar rev_battery false)
+(defvar rev_mode false)
+(defvar rev_recording false)
+(defvar recording_paused false)
+(defvar quran_button "0")
+
+(defwidget bar []
+
+  	(centerbox :orientation "h"
+    (left)
+    (middle)
+    (right)
+))
+
+
+(defwidget middle []
+    (box
+        :space-evenly false
+        :class "side"
+        (revealer
+            :reveal {rev_recording}
+            :transition "slideright"
+            :duration "350ms"
+            (label
+                :class "module mode"
+                :text "${recording_paused == true ? "" : "󰑊"} Rec"
+            )
+        )
+        
+        (box
+        :class "quran_radio"
+        :space-evenly false
+        :style `${quran_button == "0" ? "background-color: #5a524c; color: #d4be98" : "background-color: #a9b665; color: #282828"}`
+          (label
+              :text "Quran Radio"
+          )
+          (button
+            :onclick `${quran_button == "0" ? "scripts/cairoQuran play" : "scripts/cairoQuran stop"}`
+            :class "quran-button"
+            `${quran_button == "1" ? "" : ""}`
+          )
+        )
+    )
+)
+
+(defwidget right []
+    (box
+        :class "side"
+        :orientation "h"
+        :halign "end"
+        :space-evenly false
+        :spacing 0
+        (systray 
+            :class "systray"
+            :icon-size 22
+            :space-evenly true
+            :spacing 8
+        )
+        (box
+          :class "module"
+          :space-evenly false
+          :style `${battery_percent < 25 ? "background-color: #ea6962" : "background-color: #a9b665" }`
+
+          (label
+              :class "battery_state"
+              :text `${battery_state == 1 ? "󱐋" : battery_percent == 100 ? "󰁹" : battery_percent > 90 ? "󰂂" : battery_percent > 80 ? "󰂁" : battery_percent > 70 ? "󰂀" : battery_percent > 60 ? "󰁿" : battery_percent > 50 ? "󰁾" : battery_percent > 40 ? "󰁽" : battery_percent == 30 ? "󰁼" : battery_percent == 20 ? "󰁻" : "󰁺" }`
+          )
+          (label
+              :class "battery_percent"
+              :text `${battery_percent}%`
+          )
+        )
+
+        (revealer
+            :reveal `${prayer == "" ? false : rev_prayer}`
+            :transition "slideleft"
+            :duration "350ms"
+            (label
+                :class "module prayer"
+                :text "${prayer}"
+            )
+        )
+
+        (eventbox
+            :onhover "eww update rev_prayer=true"
+            :onhoverlost "eww update rev_prayer=false"
+            (label
+                :class "module prayer"
+                :text " ${prayerTime}"
+            )
+        )
+
+
+        (revealer
+            :reveal rev_date
+            :transition "slideleft"
+            :duration "350ms"
+            (label
+                :class "module date"
+                :text `${substring(time, 0, 14)}`
+            )
+        )
+        (eventbox
+            :onhover "eww update rev_date=true"
+            :onhoverlost "eww update rev_date=false"
+            (label
+                :class "module clock"
+                :text "${substring(time, 15, 8)}"
+            )
+        )
+    )
+)
+
+(defwidget tag [id]
+    (eventbox
+        :onclick `riverctl set-focused-tags \`echo "2^${id - 1}" | bc -l\``
+        ( box 
+		:class `tag ${id == current-json["tags"]["LGDisplay"][0] ? "active-tag" : matches(occupied-tags["viewstag"]["LGDisplay"], id) == true ? "occupied-tag" : "empty-tag"}` 
+		"${id == "1" ? "" : id == "2" ? "󱟱" : id == "3" ? "" : id == "4" ? "" : id == "5" ? "" : id == "6" ? "" : id == "7" ? "" : id == "8" ? "󰭹" : id == "9" ? "󰂔" : id}" 
+        )
+    )
+)
+
+(defwidget left []
+    (box
+        :class "side"
+       	:orientation "h"
+       	:space-evenly false
+        :halign "start"
+        :spacing 3
+        (tag :id 1)
+        (tag :id 2)
+        (tag :id 3)
+        (tag :id 4)
+        (tag :id 5)
+        (tag :id 6)
+        (tag :id 7)
+        (tag :id 8)
+        (tag :id 9)
+        (label 
+		    :class "layout"
+            :justify "center"
+		    :text `${current-json["layout"] == "null" ? "[]" : current-json["layout"]}`
+        )
+        (revealer
+            :reveal {rev_mode}
+            :transition "slideright"
+            :duration "350ms"
+            (label
+                :class "module mode"
+                :text "R"
+            )
+        )
+    )
+)
+
+
+(defwindow bar
+  :monitor 0
+  :exclusive true
+  :class "bar"
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0.7%"
+                      :width "99.3%"
+                      :height "30px"
+                      :anchor "top center")
+  (bar)
+)
