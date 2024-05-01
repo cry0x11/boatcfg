@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ ! -z $1 ]; then
+    foot -e --app-id="fileManager" bash -c "lf -command select $1"
+else
+    foot -e --app-id="fileManager" bash -c "lf"
+fi
