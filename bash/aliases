@@ -34,6 +34,7 @@ alias bc="bare commit"
 alias bp="bare push -u origin main"
 alias bs="bare status"
 alias bl="bare log"
+alias blu="bare ls-files --others"
 alias bpull="bare pull origin main --allow-unrelated-histories"
 
 alias gi='git init'
@@ -43,6 +44,7 @@ alias gl='git log'
 alias gc='git commit'
 alias gra='git remote add origin'
 alias gp='git push -u origin main'
+alias glu='git ls-files --others'
 alias gpull='git pull origin main --allow-unrelated-histories'
 
 export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
