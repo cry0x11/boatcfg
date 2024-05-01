@@ -1,0 +1,18 @@
+#!/bin/bash
+
+url=`echo "" | tofi --config ~/.scripts/tofi-prompt.cfg --prompt-text=" MPV YT  " --width 50%`
+
+if [ -z $url ]; then
+    dunstify "MPV YT ERROR!" "\nYou have provided an empty argument\n\nURL was expected"
+else
+    if [[ $url =~ ^"https" ]]; then
+        mpv --ytdl=yes \
+            --ytdl-raw-options=force-ipv4= \
+            --ytdl-format='bv[height<=720]+ba' \
+            $url
+    else
+        dunstify "MPV YT ERROR!" "\nYou have provided an invalid URL\n\nMake sure it's a Youtube URL"
+    fi
+fi
+
+
