@@ -336,6 +336,7 @@ float 'Anki'           "Image Occlusion Enhanced*"   1200    650    center   cen
 float 'Anki'                         "Add"           500     650    center   center
 float 'Gimp'              "Change Foreground Color"  500     500    center   center
 float 'Firefox'      "Firefox - Choose User Profile" 1000    650    center   center
+float 'mpv'                                          1000    650    center   center
 float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
 float 'nm-connection-editor'         0
@@ -346,7 +347,6 @@ float 'org.keepassxc.KeePassXC'      0
 #    APP-ID                                 TAG
 tags 'sioyek'                                1
 tags 'Anki'          "* - Anki"              2
-tags 'mpv'                                   3
 tags 'Firefox'       "Mozilla Firefox"       4
 tags 'fileManager'                           6
 tags 'Gimp'                                  7
