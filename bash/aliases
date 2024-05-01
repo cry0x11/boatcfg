@@ -29,8 +29,10 @@ bare () {
 }
 
 alias ba="bare add"
+alias bu="bare add -u"
 alias bc="bare commit"
 alias bp="bare push -u origin main"
+alias bs="bare status"
 alias bpull="bare pull origin main --allow-unrelated-histories"
 
 alias gi='git init'
