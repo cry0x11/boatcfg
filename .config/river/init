@@ -183,7 +183,7 @@ touchpad pointer-2-7-SynPS/2_Synaptics_TouchPad
 # AUTOSTART
 # --------------------------------------------------------
 
-riverctl spawn "$HOME/.scripts/river-autostart"
+riverctl spawn "$HOME/.config/river/autostart"
 riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
 

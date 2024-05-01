@@ -1,0 +1,27 @@
+#!/bin/bash
+wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
+
+pkill lxpolkit
+pkill eww
+pkill dunst
+pkill foot
+pkill gammastep
+pkill kdeconnectd
+pkill swaybg
+pkill pipewire
+pkill pipewire-pulse
+pkill wireplumber
+
+swaybg -m fill -i ~/Pictures/wallpapers/"$wallpaper" &
+dunst &
+lxpolkit &
+foot -s &
+gammastep -O 3500 &
+/usr/lib/kdeconnectd &
+eww open bar &
+fcitx5 -d --replace &
+wl-paste -p --watch cliphist store &
+wl-paste --watch cliphist store &
+pipewire &
+pipewire-pulse &
+wireplumber &
