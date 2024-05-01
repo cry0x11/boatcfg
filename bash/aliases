@@ -38,6 +38,8 @@ alias bpull="bare pull origin main --allow-unrelated-histories"
 
 alias gi='git init'
 alias ga='git add'
+alias gs='git status'
+alias gl='git log'
 alias gc='git commit'
 alias gra='git remote add origin'
 alias gp='git push -u origin main'
