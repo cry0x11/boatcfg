@@ -1,0 +1,19 @@
+#!/bin/bash
+choice=$( cat ~/.scripts/files/power-list | column -s ";" -t | tofi --config ~/.scripts/configs/tofi.cfg --prompt-text=" " | sed 's/^.*\s\s//g')
+
+case $choice in
+    "power off")
+        doas poweroff;;
+    "reboot")
+        doas reboot;;
+    "logout")
+        pkill river;;
+    "suspend")
+        bash ~/.scripts/lock & sleep 1 && doas zzz ;;
+    "lights off")
+        doas zzz;;
+    "lock screen")
+        bash ~/.scripts/lock;;
+    *)
+        echo "invalid choice";;
+esac
