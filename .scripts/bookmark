@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if ! [ -f ~/.web_bookmarks ]; then
+    touch ~/.web_bookmarks
+fi
+
+
+case $1 in
+    "add")
+        bookmark=`wl-paste -p`
+        if [[ $bookmark =~ ^"http" ]]; then
+            if grep -q "$bookmark" ~/.web_bookmarks ;then
+                notify-send "Bookmark already exists!"
+            else
+                name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
+                notify-send "Bookmark added!" "\n$name $bookmark"
+                echo -e "$name   $bookmark" >> ~/.web_bookmarks
+            fi
+        else
+            notify-send "Bookmark" "\n<b><u>Text in your clipboard is not a valid url</u></b>"
+        fi
+        ;;
+    
+    "query")
+        cat ~/.web_bookmarks | column -s "   " -t | tofi --config ~/.scripts/configs/tofi-top.cfg --prompt-text=" Mark  " | awk '{print $2}' | wl-copy
+        ;;
+    *)
+        notify-send "Bookmark" "\n<b>'$1': <u>Invalid argument</u></b>\n\n<b>Either 'add' or 'query' were expected</b>"
+        ;;
+esac
