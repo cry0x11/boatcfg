@@ -1,0 +1,21 @@
+#!/bin/bash
+
+case $1 in
+    "install")
+        curl https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/css/nerd-fonts-generated.css -o ~/.scripts/nerd-fonts-generated.css
+        cat nerd-fonts-generated.css | grep --color=never -A 2 "nf-" | sed 's/^\.//g; s/:before {//g; s/  content: "//g; s/";$//g; /^}$/d; s/\\/\\U/g' | paste -sd ' \n' | awk '{print $2"  "$1}' > ~/.scripts/files/nerd-icons
+        ;;
+    "query")
+        icon=`printf "$(cat ~/.scripts/files/nerd-icons)" | tofi --config ~/.scripts/configs/tofi.cfg --prompt-text=" "| awk '{print $1}'` 
+        if [[ ! -z $icon ]]; then
+            wl-copy "$icon"
+        fi
+        ;;
+    *)
+        ;;
+esac
+
+
+
+
+
