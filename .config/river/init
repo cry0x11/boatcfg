@@ -197,7 +197,7 @@ spawn Super D       firefox
 spawn Super A       "$HOME/.scripts/browser"
 
 # My launcher with custom config
-spawn Super R "tofi-run --config ~/.scripts/tofi.cfg --prompt-text=' ' | sh"                 
+spawn Super R "~/.scripts/tofi-run"                 
 
 
 # --------------------------------------------------------
