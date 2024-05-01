@@ -10,6 +10,7 @@
 resolution=`wlr-randr | grep -A 1 --color=never "Modes:" | awk 'NR==2{print $1}'`
 res_x=`echo $resolution | cut -d'x' -f1`
 res_y=`echo $resolution | cut -d'x' -f2`
+eww_height="32"
 
 
 # --------------------------------------------------------
@@ -74,9 +75,15 @@ function float () {
                 riverctl rule-add -app-id "$1" dimensions $3 $4
                 ;;
             6)
-                riverctl rule-add -app-id "$1" float
-                riverctl rule-add -app-id "$1" dimensions $3 $4
-                riverctl rule-add -app-id "$1" position $5 $6
+                if [ $5 == center ];then
+                    riverctl rule-add -app-id "$1" float
+                    riverctl rule-add -app-id "$1" dimensions $3 $4
+                    riverctl rule-add -app-id "$1" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2+$eww_height))
+                else
+                    riverctl rule-add -app-id "$1" float
+                    riverctl rule-add -app-id "$1" dimensions $3 $4
+                    riverctl rule-add -app-id "$1" position $5 $6
+                fi
                 ;;
         esac
     else
@@ -92,7 +99,7 @@ function float () {
                 if [ $5 == center ];then
                     riverctl rule-add -app-id "$1" -title "$2" float
                     riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
-                    riverctl rule-add -app-id "$1" -title "$2" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2))
+                    riverctl rule-add -app-id "$1" -title "$2" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2+$eww_height))
                 else
                     riverctl rule-add -app-id "$1" -title "$2" float
                     riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
@@ -336,7 +343,7 @@ float 'Anki'           "Image Occlusion Enhanced*"   1200    650    center   cen
 float 'Anki'                         "Add"           500     650    center   center
 float 'Gimp'              "Change Foreground Color"  500     500    center   center
 float 'Firefox'      "Firefox - Choose User Profile" 1000    650    center   center
-float 'mpv'                                          1000    650    center   center
+float 'mpv'                          0               1000    650    center   center
 float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
 float 'nm-connection-editor'         0
