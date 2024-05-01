@@ -237,8 +237,8 @@ spawn Super E "$HOME/.scripts/fileManager"
 # Adding bookmarks from primary clipboard
 # or copying bookmarks from menu to clipboard
 #
-spawn Super B "$HOME/.scripts/bookmark q"
-spawn Super+Shift B "$HOME/.scripts/bookmark a"
+spawn Super B "$HOME/.scripts/bookmark query"
+spawn Super+Shift B "$HOME/.scripts/bookmark add"
 
 # paste contents of primary selection into clipboard
 spawn Super V "$HOME/.scripts/clipboard q"
