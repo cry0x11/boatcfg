@@ -256,7 +256,7 @@ spawn Super Print "$HOME/.scripts/shotcopy shot full"
 # Making media keys work as they should
 spawn Super equal            "$HOME/.scripts/volumectl up"
 spawn Super minus           "$HOME/.scripts/volumectl down"
-spawn Super plus           "$HOME/.scripts/volumectl toggle"
+spawn Super backslash           "$HOME/.scripts/volumectl toggle"
 spawn Super bracketright    "$HOME/.scripts/brightctl up"
 spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 
