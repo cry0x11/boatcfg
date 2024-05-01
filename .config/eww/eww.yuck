@@ -89,7 +89,7 @@
         (box
           :class "module"
           :space-evenly false
-          :style `${battery_percent < 25 ? "background-color: #ea6962" : "background-color: #a9b665" }`
+          :style '${battery_percent > 25 ? "background-color: #a9b665;" : battery_state == 0 ? "background-color: #ea6962;" : "background-color: #a9b665;" }'
 
           (label
               :class "battery_state"
