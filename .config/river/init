@@ -206,7 +206,7 @@ spawn Super R "tofi-run --config ~/.scripts/tofi.cfg --prompt-text=' ' | sh"
 
 
 # Menu for nerd icons so i don't have to go to their website and pick icons
-spawn Super S "$HOME/.scripts/nerdmenu q"
+spawn Super S "$HOME/.scripts/scriptman"
 
 # 
 # XProp-like functionality ... not sufficient but it does the bare minimum 
