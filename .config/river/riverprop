@@ -1,0 +1,4 @@
+#!/bin/sh
+
+foot --app-id="riverprop" -e bash -c "lswt -j | jq '.[\"toplevels\"].[] | select(.activated==true) | { \"title\" : .[\"title\"], \"app_id\" : .[\"app-id\"]}' && read"
+

@@ -215,7 +215,7 @@ spawn Super S "$HOME/.scripts/scriptman"
 # it relies on ristate
 # SOURCE: https://gitlab.com/snakedye/ristate
 #
-spawn Super+Shift P "$HOME/.scripts/riverprop"
+spawn Super+Shift P "$HOME/.config/river/riverprop"
 
 # Power menu
 spawn Super Q "$HOME/.scripts/power"
