@@ -2,14 +2,39 @@
 A comfy boat in the river
 
 ## Compiling dependencies
-`river` package is out of date in void repos because `zig` is also out of date
+NOTE: `river` package is out of date in void repos because `zig` is also out of date, so I'll begin with acquiring zig and compiling river
+
 ### Acquiring zig
 Zig on Void linux is out of date as of the time I'm writing this guide (ver. 10) and version 11 is required to compile river correctly
+```Bash
+wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
+tar -xf zig-linux-x86_64-0.11.0.tar.xz
+```
 
+### Compiling River
+1. Clone and build
+```Bash
+git clone https://codeberg.org/river/river
+cd river
+git submodule update --init
+<Where-you-downloaded-zig>/zig-linux-x86_64-0.11.0/zig build -Dxwayland -Doptimize=ReleaseSafe --prefix ~/.local install
+```
 
+2. Make executable and move to `/usr/local/bin`
+```Bash
+cd ~/.local/bin
+chmod +x river*
+cp river* /usr/local/bin
+```
+
+3. Moving man pages to system
+```Bash
+cd ~/.local/share/man/man1/
+doas cp river* /usr/share/man/man1/
+```
 
 ### Wideriver
-Wideriver is by far the most feature rich tiling manager for river I have found
+Wideriver is by far the most feature rich tiling manager for river I have found. 
 ```Bash
 git clone clone git@github.com:alex-courtis/wideriver.git
 cd wideriver
@@ -33,7 +58,6 @@ doas cp ristate /usr/local/bin
 ```
 
 ### Lswt (Required for riverprop script)
-I hate the sourcehut git interface and find it confusing and painful.
 ```Bash
 git clone https://git.sr.ht/~leon_plickat/lswt
 cd lswt
@@ -112,7 +136,7 @@ doas cp eww /usr/local/bin/
 - `sshfs` for kdeconnect mount script. Required for `~/.scripts/kcmount`
 - `dunst` notification daemon. I used `notify-send` in scripts so I guess it's not required (Warning: pango markup is used in scripts).
 - `foot` terminal emulator. Used in `~/.scripts/fileManager` and `~/.config/river/riverprop`
-
+- `curl`
 ## Installing dependencies
 ### Void linux
 #### Repo
@@ -121,9 +145,6 @@ Here's the install command for most of the above. Note that `doas` is a minimal 
 ```Bash
 doas xbps-install -S cliphist lf gawk wlr-randr wl-clipboard kdeconnect
 ```
-
-#### Compiling
-1. River itself requires compiling as the void package is old. This is because zig wasn't updated in the main void repos as of the time writing this guide (zig ver. 10 and river requires zig ver. 11)
 
 ### Arch linux
 Same or similar package names are present in arch repositories and you don't need to compile software yourself since you have the AUR
