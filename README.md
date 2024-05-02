@@ -1,6 +1,13 @@
 # Boatcfg
 A comfy boat in the river
 
+## Features
+River is already capable but I created bash functions to make it easier
+1. Keychords
+2. Easy rules `float`, `dimensions` and `positions`
+3. Start programs on specific tag
+4. EWW integration
+
 ## Dependencies
 
 ### Arch Linux
@@ -20,7 +27,7 @@ A comfy boat in the river
 - `jq` parses lswt output (used in riverprop script to obtain **APP-ID** and **Title** of currently focused window)
 
 ```Bash
-doas xbps-install -S dbus elogind gawk wlr-randr 
+doas xbps-install -S dbus elogind gawk wlr-randr jq
 ```
 - `river`, `wideriver`, `eww`, `ristate` and `lswt` are in the **Compiling dependencies** section
 
@@ -38,7 +45,7 @@ doas xbps-install -S dbus elogind gawk wlr-randr
 - `kdeconnect` connects your phone with the system. Required if you intend to use `~/.scripts/kcmount`
 
 ```Bash
-doas xbps-install -S cliphist lf gammastep swaybg wf-recorder jq foot dunst curl fuse-sshfs kdeconnect
+doas xbps-install -S cliphist lf gammastep swaybg wf-recorder foot dunst curl fuse-sshfs kdeconnect
 ```
 
 ### Compiling dependencies
@@ -64,6 +71,7 @@ doas xbps-install -S base-devel wayland wayland-protocols wlroots libevdev-devel
 ```
 
 2. Clone and build
+Remember to replace `<ZIG-DIR>` with the directory where you extracted the zig archive downloaded earlier
 ```Bash
 git clone https://codeberg.org/river/river
 cd river
@@ -148,5 +156,3 @@ chmod +x ./eww
 ```Bash
 doas cp eww /usr/local/bin/
 ```
-## Preview
-https://github.com/cry0x11/boatcfg/assets/167573046/8eee081b-73ea-4b68-9533-8cddfd04aad9
