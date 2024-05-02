@@ -213,7 +213,7 @@ spawn Super bracketright    "$HOME/.scripts/brightctl up"
 spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 
 # Toggling input methods using fcitx5
-spawn Control Space "$HOME/.scripts/bar-modules/im c"
+spawn Control Space "$HOME/.scripts/fcitx5-toggle"
 
 
 riverctl declare-mode recording
