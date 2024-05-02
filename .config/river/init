@@ -27,20 +27,32 @@ res_y=`echo $resolution | cut -d'x' -f2`
 #
 # see functions below...
 #
+
+# spawn shell command in normal mode
 function spawn () { riverctl map normal $1 $2 spawn "$3"; }
 
+# spawn shell command in recording mode
 function rspawn () { 
     riverctl map recording None $1 spawn "$2"
     riverctl map -release recording None $1 spawn "$HOME/.scripts/modriver exit"
 }
 
+# map river command in normal mode
 function map () { riverctl map normal "$@"; }
+
+# map river command in recording mode
 function rmap () { riverctl map recording "$@"; }
+
+# map mouse pointer in normal mode 
 function pointer () { riverctl map-pointer normal "$@"; }
+
+# send command to tiler (in this case wideriver)
 function tiler () { riverctl map normal $1 $2 send-layout-cmd wideriver "$3"; }
 
+# Add app rule
 function ruleAdd () { riverctl rule-add -app-id "$@"; }
 
+# Specify tags app will start on
 function tags () { 
     case $# in
         2)  ruleAdd "$1" tags $(( 1 << ($2-1) )) ;;
@@ -48,7 +60,9 @@ function tags () {
     esac
 }
 
+# Floating windows
 function float () {
+    # If title field is 0
     if [ $2 == 0 ]; then
         [ $# -ge 2 ] && riverctl rule-add -app-id "$1" float
         [ $# -ge 4 ] && riverctl rule-add -app-id "$1" dimensions $3 $4
@@ -60,6 +74,7 @@ function float () {
             riverctl rule-add -app-id "$1" position $pos_x $pos_y
         fi
     else
+        # If title is specified instead of 0
         [ $# -ge 2 ] && riverctl rule-add -app-id "$1" -title "$2" float
         [ $# -ge 4 ] && riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
         if [ $# -ge 6 ]; then 
@@ -72,6 +87,7 @@ function float () {
     fi
 }
 
+# touchpad configuration
 function touchpad () {
     riverctl input $1 events enabled
     riverctl input $1 tap enabled
@@ -83,6 +99,7 @@ function touchpad () {
     riverctl input $1 scroll-factor 1.5
 }
 
+# mouse configuration
 function mouse () {
     riverctl input $1 scroll-factor 2.5
 }
@@ -90,6 +107,9 @@ function mouse () {
 
 # --------------------------------------------------------
 # RIVER SETTINGS
+# --------------------------------------------------------
+# Please note that wideriver overrides border colors set with
+# riverctl
 # --------------------------------------------------------
 riverctl background-color 0x282828
 riverctl focus-follows-cursor "always"
@@ -139,7 +159,6 @@ mouse pointer-4292-33029-YSPRINGTECH_USB_OPTICAL_MOUSE
 # --------------------------------------------------------
 # AUTOSTART
 # --------------------------------------------------------
-
 riverctl spawn "$HOME/.config/river/autostart"
 riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
@@ -153,23 +172,23 @@ spawn Super Return  footclient
 spawn Super D       firefox
 spawn Super A       "$HOME/.scripts/browser"
 
-# My launcher with custom config
-spawn Super R "~/.scripts/tofi-run"                 
 
 
 # --------------------------------------------------------
 # SHELL SCRIPTS
 # --------------------------------------------------------
 
+# My launcher with custom config
+spawn Super R "~/.scripts/tofi-run"                 
 
-# Menu for nerd icons so i don't have to go to their website and pick icons
+# Script manager to launch other shell scripts
 spawn Super S "$HOME/.scripts/scriptman"
 
 # 
 # XProp-like functionality ... not sufficient but it does the bare minimum 
 # for picking the ID and Title of the window
 # 
-# it relies on ristate
+# it relies on lswt
 # SOURCE: https://gitlab.com/snakedye/ristate
 #
 spawn Super+Shift P "$HOME/.config/river/riverprop"
@@ -184,8 +203,8 @@ spawn Super Q "$HOME/.scripts/power"
 # It will be better if i store current brightness instead in a file
 # then toggling between it and 0 ... but maybe for the future
 #
-spawn None KP_Up "doas brightnessctl s 20%"
-spawn None KP_Down "doas brightnessctl s 0%"
+spawn None KP_Up "brightnessctl s 20%"
+spawn None KP_Down "brightnessctl s 0%"
 
 # launching LF file manager with foot window
 spawn Super E "$HOME/.scripts/fileManager"
@@ -202,7 +221,7 @@ spawn Super V "$HOME/.scripts/clipboard query"
 spawn Super+Shift V "$HOME/.scripts/clipboard delete"
 
 # 
-# screenshotting using grim & slurp then pasting image
+# screenshooting using grim & slurp then pasting image
 # to clipboard
 #
 # it makes it trivial for me to add images to Anki
@@ -222,6 +241,11 @@ spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 spawn Control Space "$HOME/.scripts/fcitx5-toggle"
 
 
+# --------------------------------------------------------
+# RECORDING MODE 
+#
+# (Keychord using the previously declared function at the top)
+# --------------------------------------------------------
 riverctl declare-mode recording
 
 spawn None KP_Begin "$HOME/.scripts/modriver enter"
@@ -287,19 +311,13 @@ tiler Super Tab "--layout-toggle"   # toggle layout
 # --------------------------------------------------------
 # WINDOW RULES
 # --------------------------------------------------------
-# Why did i do that in an ugly function? 
-# ... yea aside from saving time ...
-# 
-# 1. Id is always required.
+# float function expects the following:
+#   1. Id is always required.
+#   2. Want title? add it. Don't want it? add 0.
+#   3. Geometry is always width & height combined.
+#   4. Position is expected when geometry is added beforehand.
 #
-# 2. If I decide geometry it's always width & height 
-#    combined.
-#
-# 3. Occasionally i may use position (only IF i decide 
-#    geometry beforehand).
-#
-# 4. I don't wanna waste time trying to come up
-#    with a complex function (maybe some time later??)
+# You may adjust the function as you need if you want more stuff.
 # --------------------------------------------------------
 #
 #       APP-ID                       APP-TITLE       W       H       X       Y 
@@ -318,7 +336,7 @@ float 'nm-connection-editor'         0
 float 'pavucontrol'                  0
 float 'org.keepassxc.KeePassXC'      0
 
-
+# Start app in specific tag
 #    APP-ID                                 TAG
 tags 'sioyek'                                1
 tags 'Anki'          "* - Anki"              2

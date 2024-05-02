@@ -25,10 +25,17 @@ River is already capable but I created bash functions to make it easier
 - `elogind` for the peace of mind as river requires XDG\_RUNTIME\_DIR (Arch users already have systemd)
 - `dbus` you need dbus for EWW systray to work
 - `jq` parses lswt output (used in riverprop script to obtain **APP-ID** and **Title** of currently focused window)
+- `seatd` river expects seatd, so why not?
 
 ```Bash
-doas xbps-install -S dbus elogind gawk wlr-randr jq
+doas xbps-install -S dbus elogind gawk wlr-randr jq seatd
 ```
+
+Remember to activate the services
+```Bash
+
+```
+
 - `river`, `wideriver`, `eww`, `ristate` and `lswt` are in the **Compiling dependencies** section
 
 #### Optional
@@ -43,9 +50,11 @@ doas xbps-install -S dbus elogind gawk wlr-randr jq
 - `curl` used in `~/.scripts/prayer-ical-parser`
 - `sshfs` for kdeconnect mount script. Required for `~/.scripts/kcmount`
 - `kdeconnect` connects your phone with the system. Required if you intend to use `~/.scripts/kcmount`
+- `grim` screenshot tool. Used in `~/.scripts/shotcopy`
+- `slurp` region selector tool. Used in `~/.scripts/shotcopy`
 
 ```Bash
-doas xbps-install -S cliphist lf gammastep swaybg wf-recorder foot dunst curl fuse-sshfs kdeconnect
+doas xbps-install -S cliphist lf gammastep swaybg wf-recorder foot dunst curl fuse-sshfs kdeconnect grim slurp wl-clipboard
 ```
 
 ### Compiling dependencies
@@ -155,4 +164,22 @@ chmod +x ./eww
 6. Copy EWW bin to `/usr/local/bin` 
 ```Bash
 doas cp eww /usr/local/bin/
+```
+
+## Post-installation
+1. Add user to groups
+```Bash
+doas usermod -aG audio,video,input,_seatd <USERNAME>
+```
+
+2. Enable services
+```Bash
+doas ln -s /etc/sv/seatd/ /etc/runit/runsvdir/default/
+doas ln -s /etc/sv/dbus/ /etc/runit/runsvdir/default/
+doas ln -s /etc/sv/elogind/ /etc/runit/runsvdir/default/
+```
+
+3. Whenever you run `river` use `dbus-run-session` for systray in EWW to work
+```Bash
+dbus-run-session river
 ```
