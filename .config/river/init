@@ -50,9 +50,9 @@ function tags () {
 
 function float () {
     if [ $2 == 0 ]; then
-        [ $# >= 2 ] && riverctl rule-add -app-id "$1" float
-        [ $# >= 4 ] && riverctl rule-add -app-id "$1" dimensions $3 $4
-        if [ $# == 6 ]; then 
+        [ $# -ge 2 ] && riverctl rule-add -app-id "$1" float
+        [ $# -ge 4 ] && riverctl rule-add -app-id "$1" dimensions $3 $4
+        if [ $# -ge 6 ]; then 
             pos_x="$5"
             pos_y="$6"
             [ $5 == center ] && pos_x="$((res_x/2 - $3/2))"
@@ -60,9 +60,9 @@ function float () {
             riverctl rule-add -app-id "$1" position $pos_x $pos_y
         fi
     else
-        [ $# >= 2 ] && riverctl rule-add -app-id "$1" -title "$2" float
-        [ $# >= 4 ] && riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
-        if [ $# == 6 ]; then 
+        [ $# -ge 2 ] && riverctl rule-add -app-id "$1" -title "$2" float
+        [ $# -ge 4 ] && riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
+        if [ $# -ge 6 ]; then 
             pos_x="$5"
             pos_y="$6"
             [ $5 == center ] && pos_x="$((res_x/2 - $3/2))"

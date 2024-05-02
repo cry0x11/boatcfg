@@ -1,6 +1,6 @@
 #!/bin/bash
 
-url=`echo "" | tofi --config ~/.scripts/tofi-prompt.cfg --prompt-text=" MPV YT  " --width 50%`
+url=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" MPV YT  " --width 50%`
 
 if [ -z $url ]; then
     dunstify "MPV YT ERROR!" "\nYou have provided an empty argument\n\nURL was expected"
