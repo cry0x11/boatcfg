@@ -3,8 +3,19 @@ A comfy boat in the river
 
 ## Previews
 
-![preview-1](https://github.com/cry0x11/boatcfg/assets/167573046/a530ebf5-6667-463a-8319-d0c3449852ac) | ![preview-2](https://github.com/cry0x11/boatcfg/assets/167573046/cbf49190-5493-43e4-9ea6-d8f9aabb17e3) | ![preview-3](https://github.com/cry0x11/boatcfg/assets/167573046/ce23cc93-816d-4a9a-a7db-42710306e342)
-:------------------------------------:|:------------------------------------:|:------------------------------------:
+![preview-1](https://github.com/cry0x11/boatcfg/assets/167573046/a530ebf5-6667-463a-8319-d0c3449852ac) | ![preview-2](https://github.com/cry0x11/boatcfg/assets/167573046/cbf49190-5493-43e4-9ea6-d8f9aabb17e3) 
+:------------------------------------:|:------------------------------------:
+
+![preview-3](https://github.com/cry0x11/boatcfg/assets/167573046/ce23cc93-816d-4a9a-a7db-42710306e342) | ![preview-4](https://github.com/cry0x11/boatcfg/assets/167573046/ca2bcfc3-ed39-4987-9302-183533688bc4)
+:------------------------------------:|:------------------------------------:
+
+![preview-5](https://github.com/cry0x11/boatcfg/assets/167573046/5e82ac7a-4516-407e-87d8-e215be43a272) | ![preview-6](https://github.com/cry0x11/boatcfg/assets/167573046/f1b4fe79-8024-4dd8-a109-bc7585a57649)
+:------------------------------------:|:------------------------------------:
+
+
+
+
+
 
 https://github.com/cry0x11/boatcfg/assets/167573046/9f49d9e3-2622-4ddc-a532-ecdb08ab8294 
 
