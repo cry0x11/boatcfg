@@ -192,7 +192,8 @@ spawn Super B "$HOME/.scripts/bookmark query"
 spawn Super+Shift B "$HOME/.scripts/bookmark add"
 
 # paste contents of primary selection into clipboard
-spawn Super V "$HOME/.scripts/clipboard q"
+spawn Super V "$HOME/.scripts/clipboard query"
+spawn Super+Shift V "$HOME/.scripts/clipboard delete"
 
 # 
 # screenshotting using grim & slurp then pasting image
