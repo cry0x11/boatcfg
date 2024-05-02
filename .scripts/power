@@ -2,7 +2,7 @@
 choice=$( cat ~/.scripts/files/power-list | column -s ";" -t | tofi --config ~/.scripts/configs/tofi.cfg --prompt-text=" " | sed 's/^.*\s\s//g')
 
 case $choice in
-    "power off")
+    "poweroff")
         doas poweroff;;
     "reboot")
         doas reboot;;
@@ -10,7 +10,7 @@ case $choice in
         pkill river;;
     "suspend")
         bash ~/.scripts/lock & sleep 1 && doas zzz ;;
-    "lights off")
+    "sleep")
         doas zzz;;
     "lock screen")
         bash ~/.scripts/lock;;
