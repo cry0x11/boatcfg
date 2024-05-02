@@ -75,22 +75,22 @@ doas xbps-install -S base-devel wayland wayland-protocols wlroots libevdev-devel
 ```
 
 2. Clone and build
-Remember to replace `<ZIG-DIR>` with the directory where you extracted the zig archive downloaded earlier
 ```Bash
 git clone https://codeberg.org/river/river
 cd river
 git submodule update --init
 <ZIG-DIR>/zig-linux-x86_64-0.11.0/zig build -Dxwayland -Doptimize=ReleaseSafe --prefix ~/.local install
 ```
+Remember to replace `<ZIG-DIR>` with the directory where you extracted the zig archive downloaded earlier
 
-3. Make executable and move to `/usr/local/bin`
+3. Make binaries executable and move them to `/usr/local/bin`
 ```Bash
 cd ~/.local/bin
 chmod +x river*
 cp river* /usr/local/bin
 ```
 
-4. Moving man pages to system
+4. Move man pages to system
 ```Bash
 cd ~/.local/share/man/man1/
 doas cp river* /usr/share/man/man1/
