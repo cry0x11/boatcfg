@@ -1,6 +1,13 @@
 # Boatcfg
 A comfy boat in the river
 
+## Previews
+
+![preview-1](https://github.com/cry0x11/boatcfg/assets/167573046/a530ebf5-6667-463a-8319-d0c3449852ac) | ![preview-2](https://github.com/cry0x11/boatcfg/assets/167573046/cbf49190-5493-43e4-9ea6-d8f9aabb17e3) | ![preview-3](https://github.com/cry0x11/boatcfg/assets/167573046/ce23cc93-816d-4a9a-a7db-42710306e342)
+:------------------------------------:|:------------------------------------:|:------------------------------------:
+
+https://github.com/cry0x11/boatcfg/assets/167573046/9f49d9e3-2622-4ddc-a532-ecdb08ab8294 
+
 ## Features
 River is already capable but I created bash functions to make it easier
 1. Keychords
