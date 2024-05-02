@@ -1,6 +1,44 @@
 # Boatcfg
 A comfy boat in the river
 
+## Credits
+I thank each and every one of these gentlemen:
+1. [Isaac Freund](https://github.com/ifreund) for the amazing [riverwm](https://codeberg.org/river/river)
+2. [Sainnhe](https://github.com/sainnhe) for creating [gruvbox material theme](https://github.com/sainnhe/gruvbox-material)
+3. [Alex Courtis](https://github.com/alex-courtis) for creating a feature-rich tiling manager for river [wideriver](https://github.com/alex-courtis/wideriver)
+4. [Elkowar](https://github.com/elkowar/) for creating [EWW](https://github.com/elkowar/eww)
+5. [Bryan](https://gitlab.com/snakedye/) for making EWW integration in river possible with [ristate](https://gitlab.com/snakedye/ristate/)
+6. [Philip Jones](https://github.com/philj56) for creating [tofi](https://github.com/philj56/tofi)
+7. [Leon Plickat](https://git.sr.ht/~leon_plickat) for creating [lswt](https://git.sr.ht/~leon_plickat/lswt)
+
+## Known issues
+1. When you change focus between floating windows using the mouse the focused window becomes on top and the unfocused one gets behind it. It's bad if you accidentally unfocused a floating dialog popping up from a floating window.
+2. `fcitx5` doesn't blend in nicely with `wtype` or any other autotype tool (`keyd` or `ydotool`), thus my scripts copy to clipboard instead of autotyping.
+
+I hope they get fixed with future river releases
+
+## Previews
+![preview-1](https://github.com/cry0x11/boatcfg/assets/167573046/a530ebf5-6667-463a-8319-d0c3449852ac) | ![preview-2](https://github.com/cry0x11/boatcfg/assets/167573046/cbf49190-5493-43e4-9ea6-d8f9aabb17e3) 
+:------------------------------------:|:------------------------------------:
+
+![preview-3](https://github.com/cry0x11/boatcfg/assets/167573046/ce23cc93-816d-4a9a-a7db-42710306e342) | ![preview-4](https://github.com/cry0x11/boatcfg/assets/167573046/ca2bcfc3-ed39-4987-9302-183533688bc4)
+:------------------------------------:|:------------------------------------:
+
+![preview-5](https://github.com/cry0x11/boatcfg/assets/167573046/5e82ac7a-4516-407e-87d8-e215be43a272) | ![preview-6](https://github.com/cry0x11/boatcfg/assets/167573046/f1b4fe79-8024-4dd8-a109-bc7585a57649)
+:------------------------------------:|:------------------------------------:
+
+https://github.com/cry0x11/boatcfg/assets/167573046/9f49d9e3-2622-4ddc-a532-ecdb08ab8294 
+
+## Color scheme
+[gruvbox-material-medium](https://github.com/sainnhe/gruvbox-material)
+
+## Programs I use
+1. `tofi` menu
+2. `nvim` text editor
+3. `sioyek` PDF viewer (imo better than zathura)
+4. `fcitx5` to type asian languages
+5. `keepassxc` password manager
+
 ## Features
 River is already capable but I created bash functions to make it easier
 1. Keychords
