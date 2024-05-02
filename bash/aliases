@@ -19,6 +19,7 @@ alias v='nvim'
 alias dv='doas nvim -u ~/.config/nvim/init.lua'
 alias ugrub='doas grub-mkconfig -o /boot/grub/grub.cfg'
 alias ytd='yt-dlp -f bv[height=720]+ba'
+alias mpv='mpv --geometry=1000x650'
 
 # ----------------------------
 # GIT

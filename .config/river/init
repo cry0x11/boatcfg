@@ -11,8 +11,6 @@ resolution=`wlr-randr | grep -A 1 --color=never "Modes:" | awk 'NR==2{print $1}'
 res_x=`echo $resolution | cut -d'x' -f1`
 res_y=`echo $resolution | cut -d'x' -f2`
 
-eww_height="32"     #This is used in the ugly mpv hack to center the window
-
 
 # --------------------------------------------------------
 # FUNCTIONS
@@ -29,20 +27,22 @@ eww_height="32"     #This is used in the ugly mpv hack to center the window
 #
 # see functions below...
 #
-function spawn () { riverctl map normal $1 $2 spawn "$3"; }
+spawn () { riverctl map normal $1 $2 spawn "$3"; }
 
-function rspawn () { 
+rspawn () { 
     riverctl map recording None $1 spawn "$2"
     riverctl map -release recording None $1 spawn "$HOME/.scripts/modriver exit"
 }
 
-function map () { riverctl map normal $@; }
-function rmap () { riverctl map recording $@; }
+map () { riverctl map normal $@; }
+rmap () { riverctl map recording $@; }
 
-function pointer () { riverctl map-pointer normal $@; }
-function tiler () { riverctl map normal $1 $2 send-layout-cmd wideriver "$3"; }
+pointer () { riverctl map-pointer normal $@; }
+tiler () { riverctl map normal $1 $2 send-layout-cmd wideriver "$3"; }
 
-function tags () { 
+rules () { riverctl rule-add -app-id "$1" "$@"; }
+
+tags () { 
 
     case $# in
         2)
@@ -65,7 +65,7 @@ function tags () {
 
 }
 
-function float () {
+float () {
     if [ $2 == 0 ]; then
         case $# in
             2)
@@ -79,12 +79,6 @@ function float () {
                 if [ $5 == center ];then
                     riverctl rule-add -app-id "$1" float
                     riverctl rule-add -app-id "$1" dimensions $3 $4
-                    
-                    if [ $1 == 'mpv' ]; then
-                        riverctl rule-add -app-id "$1" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2 +$eww_height))
-                    else
-                        riverctl rule-add -app-id "$1" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2))
-                    fi
                 else
                     riverctl rule-add -app-id "$1" float
                     riverctl rule-add -app-id "$1" dimensions $3 $4
@@ -105,11 +99,6 @@ function float () {
                 if [ $5 == center ];then
                     riverctl rule-add -app-id "$1" -title "$2" float
                     riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4
-                    if [ $1 == 'mpv' ]; then
-                        riverctl rule-add -app-id "$1" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2 + $eww_height))
-                    else
-                        riverctl rule-add -app-id "$1" position $((res_x/2 - $3/2)) $((res_y/2 - $4/2))
-                    fi
                 else
                     riverctl rule-add -app-id "$1" -title "$2" float
                     riverctl rule-add -app-id "$1" -title "$2" dimensions $3 $4

@@ -6,7 +6,8 @@ if [ -z $url ]; then
     dunstify "MPV YT ERROR!" "\nYou have provided an empty argument\n\nURL was expected"
 else
     if [[ $url =~ ^"https" ]]; then
-        mpv --ytdl=yes \
+        mpv --geometry=1000x650 \
+            --ytdl=yes \
             --ytdl-raw-options=force-ipv4= \
             --ytdl-format='bv[height<=720]+ba' \
             $url
