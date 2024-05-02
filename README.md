@@ -17,6 +17,9 @@ I thank each and every one of these gentlemen:
 
 I hope they get fixed with future river releases
 
+## Quirks
+River doesn't provide eye-candy effects. It just happened that I used a hack with EWW to render it with rounded corners (used `rgba(40,40,40,0.99)` instead of hex)
+
 ## Previews
 ![preview-1](https://github.com/cry0x11/boatcfg/assets/167573046/a530ebf5-6667-463a-8319-d0c3449852ac) | ![preview-2](https://github.com/cry0x11/boatcfg/assets/167573046/cbf49190-5493-43e4-9ea6-d8f9aabb17e3) 
 :------------------------------------:|:------------------------------------:
