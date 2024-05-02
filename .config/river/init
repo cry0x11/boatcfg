@@ -80,6 +80,11 @@ function touchpad () {
     riverctl input $1 scroll-method edge
     riverctl input $1 disable-while-typing enabled
     riverctl input $1 tap-button-map left-right-middle
+    riverctl input $1 scroll-factor 1.5
+}
+
+function mouse () {
+    riverctl input $1 scroll-factor 2.5
 }
 
 
@@ -124,10 +129,11 @@ wideriver --layout left                             \
 
 
 # --------------------------------------------------------
-# TOUCHPADS
+# INPUT
 # --------------------------------------------------------
 
 touchpad pointer-2-7-SynPS/2_Synaptics_TouchPad
+mouse pointer-4292-33029-YSPRINGTECH_USB_OPTICAL_MOUSE
 
 
 # --------------------------------------------------------

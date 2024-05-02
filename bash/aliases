@@ -37,6 +37,7 @@ alias bs="bare status"
 alias bl="bare log"
 alias blu="bare ls-files --others"
 alias bpull="bare pull origin main --allow-unrelated-histories"
+alias bds="bare diff --staged"
 
 alias gi='git init'
 alias ga='git add'
@@ -47,6 +48,7 @@ alias gra='git remote add origin'
 alias gp='git push -u origin main'
 alias glu='git ls-files --others'
 alias gpull='git pull origin main --allow-unrelated-histories'
+alias gds="git diff --staged"
 
 export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
 export MANPAGER="nvim +Man!"

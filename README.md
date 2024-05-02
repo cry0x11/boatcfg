@@ -1,6 +1,97 @@
 # Boatcfg
 A comfy boat in the river
 
+## Compiling dependencies
+`river` package is out of date in void repos because `zig` is also out of date
+### Acquiring zig
+Zig on Void linux is out of date as of the time I'm writing this guide (ver. 10) and version 11 is required to compile river correctly
+
+
+
+### Wideriver
+Wideriver is by far the most feature rich tiling manager for river I have found
+```Bash
+git clone clone git@github.com:alex-courtis/wideriver.git
+cd wideriver
+make
+doas make install
+```
+
+### Ristate
+1. Clone and build
+```Bash
+git clone https://gitlab.com/snakedye/ristate.git
+cd ristate
+cargo build --release
+```
+
+2. Make executable and move to `/usr/local/bin`
+```Bash
+cd target/release
+chmod +x ./ristate
+doas cp ristate /usr/local/bin
+```
+
+### Lswt (Required for riverprop script)
+I hate the sourcehut git interface and find it confusing and painful.
+```Bash
+git clone https://git.sr.ht/~leon_plickat/lswt
+cd lswt
+make
+doas make install
+```
+
+### EWW
+1. Install rustup.
+```Bash
+doas xbps-install -S rustup
+```
+
+2. Run it and it will install `rustc` and `cargo`
+```Bash
+rustup-init
+```
+
+3. Install dependencies
+```Bash
+doas xbps-install -S
+```
+
+4. Clone EWW and compile it for wayland
+```Bash
+git clone https://github.com/elkowar/eww
+cd eww
+cargo build --release --no-default-features --features=wayland
+```
+
+5. Make resulted binary executable
+```Bash
+cd target/release
+chmod +x ./eww
+```
+
+6. Copy EWW bin to `/usr/local/bin` 
+```Bash
+doas cp eww /usr/local/bin/
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## List of dependencies
 - `eww` main bar
 - `wideriver` tiling manager for river
