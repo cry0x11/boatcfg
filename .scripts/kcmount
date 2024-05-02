@@ -1,0 +1,42 @@
+#!/bin/bash
+
+deviceName=`kdeconnect-cli -a --id-name-only | cut -d ' ' -f1`
+
+if [ -z "$deviceName" ]; then
+	echo "No phone connected"
+	exit 1
+fi
+
+function device() { qdbus-qt5 org.kde.kdeconnect /modules/kdeconnect/devices/$deviceName/sftp $1; }
+
+isMounted=`device isMounted`
+
+case $1 in
+	"mount")
+		if [ $isMounted == "true" ]; then
+			echo "Device already mounted"
+		else
+			device mountAndWait
+			echo "Mounted successfully"
+		fi	
+	    ;;	
+	"link")
+		if [ $isMounted == "true" ]; then
+			path=`device getDirectories | cut -d ":" -f1`
+			ln -s $path $2
+		else
+			echo -e "\nDevice isn't even mounted.\nPlease mount the device and try again later."
+		fi	
+	    ;;
+	"unmount")
+		if [ $isMounted == "true" ]; then
+			device unmount
+			echo "Unmounted successfully"
+		else
+			echo "Device already not mounted"
+		fi
+	    ;;
+	*)
+		echo "Invalid argument"
+	    ;;
+esac
