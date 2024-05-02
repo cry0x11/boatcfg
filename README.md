@@ -31,11 +31,6 @@ River is already capable but I created bash functions to make it easier
 doas xbps-install -S dbus elogind gawk wlr-randr jq seatd
 ```
 
-Remember to activate the services
-```Bash
-
-```
-
 - `river`, `wideriver`, `eww`, `ristate` and `lswt` are in the **Compiling dependencies** section
 
 #### Optional
