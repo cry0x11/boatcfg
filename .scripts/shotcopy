@@ -2,6 +2,12 @@
 #
 # TODO: prevent overriding
 
+# If cache directory does not exist, create one
+[ ! -d ~/.cache/boatcfg/scripts ] && mkdir -p ~/.cache/boatcfg/scripts
+
+function menu () { name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Filename  "`; }
+function notifyShot () { notify-send "Shotcopy: screenshot" "$@"; }
+function notifyVideo () { notify-send "Shotcopy: video recording" "$@"; }
 
 
 case $1 in
@@ -11,51 +17,45 @@ case $1 in
                 region=`slurp`
                 if [ -n "$region" ]; then
                     grim -g "$region" - | wl-copy
-                    notify-send "Shotcopy: screenshot" \
-                                "\n<u><b>Copied screenshot to clipboard</b></u>"
+                    notifyShot "\n<u><b>Copied screenshot to clipboard</u></b>"
                 else
-                    notify-send "Shotcopy: screenshot" \
-                                "\n<u><b>No region provided so didn't take screenshot</b></u>"
+                    notifyShot "\n<u><b>No region provided so didn't take screenshot</u></b>"
                 fi
                 ;;
 
             "region")
                 region=`slurp`
                 if [ -n "$region" ]; then 
-                    name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
+                    grim -g "$region" ~/.cache/boatcfg/scripts/screenshot.png
+                    menu
                     if [ -n "$name" ]; then
-                        grim -g "$region" ~/Pictures/"$name".png
-                        notify-send "Shotcopy: screenshot" \
-                                    "\n<u><b>Took screenshot</b></u>\n\n<b>~/Pictures/$name.png</b>"
+                        mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$name".png
+                        notifyShot "\n<u><b>Took screenshot</b></u>\n\n<b>~/Pictures/$name.png</b>"
                     else
                         datename=`date +'%Y%m%d-%H%M%p-screenshot-region'`
-                        grim -g "$region" ~/Pictures/"$datename".png
-                        notify-send "Shotcopy: screenshot" \
-                                    "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
+                        mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$datename".png
+                        notifyShot "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
                     fi
                 else
-                    notify-send "Shotcopy: screenshot" \
-                                "\n<u><b>No region provided so didn't take screenshot</b></u>"
+                    notifyShot "\n<u><b>No region provided so didn't take screenshot</b></u>"
                 fi
                 ;;
 
             "full")
-                name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
+                grim ~/.cache/boatcfg/scripts/screenshot.png
+                menu
                 if [ -n "$name" ]; then
-                    grim ~/Pictures/"$name".png
-                    notify-send "Shotcopy: screenshot" \
-                                "\n<u><b>Took screenshot</b></u>\n\n<b>~/pictures/$name.png</b>"
+                    mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$name".png
+                    notifyShot "\n<u><b>Took screenshot</b></u>\n\n<b>~/Pictures/$name.png</b>"
                 else
-                    datename=`date +'%Y%m%d-%H%M%p-screenshot-full'`
-                    grim ~/Pictures/"$datename".png
-                    notify-send "Shotcopy: screenshot" \
-                                "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
+                    datename=`date +'%Y%m%d-%H%M%S%p-screenshot-full'`
+                    mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$datename".png
+                    notifyShot "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
                 fi
                 ;;
            
             *)
-                notify-send "Shotcopy: screenshot" \
-                            "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'copy', 'region' or 'full' were expected</b>"
+                notifyShot "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'copy', 'region' or 'full' were expected</b>"
                 ;;
             esac
             ;;
@@ -64,88 +64,60 @@ case $1 in
     "rec")
         # name of device below will be used as an audio device for screen recording
         device_name="alsa_output.pci-0000_00_1b.0.analog-stereo.monitor"
-        
-        # If cache directory does not exist, create one
-        [ ! -d ~/.cache/boatcfg/scripts ] && mkdir -p ~/.cache/boatcfg/scripts
-
         case $2 in
             "region")
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
-                    notify-send "Shotcopy: video" \
-                                "\n<u><b>Script wasn't made to be run concurrently</b></u>"
+                    notifyVideo "\n<u><b>Script wasn't made to be run concurrently</b></u>"
                 else
                     region=`slurp`
                     if [ -n "$region" ]; then 
-                        name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
+                        echo "region" > ~/.cache/boatcfg/scripts/recorder.lock
                         eww update rev_recording=true
-                        if [ -n "$name" ]; then
-                            echo "$name" > ~/.cache/boatcfg/scripts/recorder.lock
-                            notify-send "Shotcopy: video" \
-                                        "\n<u><b>Region video recording started</b></u>"
-                            wf-recorder -x yuv420p                  \
-                                        --audio="$device_name"      \
-                                        -g "$region"                \
-                                        -f ~/Videos/"$name".mp4
-                        else
-                            datename=`date +'%Y%m%d-%H%M%p-video-region'`
-                            echo "$datename" > ~/.cache/boatcfg/scripts/recorder.lock
-                            notify-send "Shotcopy: video" \
-                                        "\n<u><b>Region video recording started</b></u>\n\n<b>No was name provided, so date will be used as a name</b>"
-
-                            wf-recorder -x yuv420p                  \
-                                        --audio="$device_name"      \
-                                        -g "$region"                \
-                                        -f ~/Videos/"$datename".mp4
-                        fi
+                        notifyVideo "\n<u><b>Region video recording started</b></u>"
+                        wf-recorder -x yuv420p                  \
+                                    --audio="$device_name"      \
+                                    -g "$region"                \
+                                    -f ~/.cache/boatcfg/scripts/recording.mp4
                     else
-                        notify-send "Shotcopy: video" \
-                                    "\n<u><b>No region provided so didn't record video</b></u>"
+                        notifyVideo "\n<u><b>No region provided so didn't record video</b></u>"
                     fi
                 fi
                 ;;
 
             "full")
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
-                    notify-send "Shotcopy: video" \
-                                "\n<u><b>Script wasn't made to be run concurrently</b></u>"
+                    notifyVideo "\n<u><b>Script wasn't made to be run concurrently</b></u>"
                 else
-                    name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
+                    echo "fullscreen" > ~/.cache/boatcfg/scripts/recorder.lock
                     eww update rev_recording=true
-                    if [ -n "$name" ]; then
-                        echo "$name" > ~/.cache/boatcfg/scripts/recorder.lock
-                        notify-send "Shotcopy: video" \
-                                    "\n<u><b>Fullscreen video recording started</b></u>"
-                        wf-recorder -x yuv420p                  \
-                                    --audio="$device_name"      \
-                                    -f ~/Videos/"$name".mp4
-                    else
-                        datename=`date +'%Y%m%d-%H%M%p-video-fullscreen'`
-                        echo "$datename" > ~/.cache/boatcfg/scripts/recorder.lock
-                        notify-send "Shotcopy: video" \
-                                    "\n<u><b>Fullscreen video recording started</b></u>\n\n<b>No was name provided, so date will be used as a name</b>"
-
-                        wf-recorder -x yuv420p                  \
-                                    --audio="$device_name"      \
-                                    -f ~/Videos/"$datename".mp4
-                    fi
+                    notifyVideo "\n<u><b>Fullscreen video recording started</b></u>"
+                    wf-recorder -x yuv420p                  \
+                                --audio="$device_name"      \
+                                -f ~/.cache/boatcfg/scripts/recording.mp4
                 fi
                 ;;
+
             "stop")
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
-                    name=`cat ~/.cache/boatcfg/scripts/recorder.lock`
                     kill -s SIGINT `pgrep wf-recorder`
                     eww update rev_recording=false
-                    notify-send "Shotcopy: video" \
-                                "\n<b><u>Video recording stopped</u></b>\n\n<b>Video is saved as:</b>\n\n<b>~/Videos/$name.mp4</b>"
+                    menu
+                    if [ -n "$name" ]; then
+                        mv ~/.cache/boatcfg/scripts/recording.mp4 ~/Videos/"$name".mp4
+                        notifyVideo "\n<b><u>Video recording stopped</u></b>\n\n<b>~/Videos/$name.mp4</b>"
+                    else
+                        recType=`cat ~/.cache/boatcfg/scripts/recorder.lock`
+                        datename=`date +'%Y%m%d-%H%M%S%p-video'`
+                        mv ~/.cache/boatcfg/scripts/recording.mp4 ~/Videos/"${datename}-$recType".mp4
+                        notifyVideo "\n<b><u>Video recording stopped</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Videos/${datename}-$recType.mp4</b>"
+                    fi
                     rm ~/.cache/boatcfg/scripts/recorder.lock
                 else
-                    notify-send "Shotcopy: video" \
-                                "\n<b><u>Not even running to be stopped</u></b>"
+                    notifyVideo "\n<b><u>Not even running to be stopped</u></b>"
                 fi
                 ;;
             *)
-                notify-send "Shotcopy: video" \
-                            "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'full', 'region' or 'stop' were expected</b>"
+                notifyVideo "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'full', 'region' or 'stop' were expected</b>"
                 ;;
         esac
         ;;
