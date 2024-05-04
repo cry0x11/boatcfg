@@ -18,10 +18,10 @@ lxpolkit &
 foot -s &
 gammastep -O 3500 &
 /usr/lib/kdeconnectd &
-eww open bar &
 fcitx5 -d --replace &
 wl-paste -p --watch cliphist store &
 wl-paste --watch cliphist store &
 pipewire &
 pipewire-pulse &
 wireplumber &
+eww open bar &&

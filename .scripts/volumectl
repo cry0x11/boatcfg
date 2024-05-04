@@ -8,27 +8,32 @@ case $1 in
     "down")
         if [ $muted == "false" ]; then 
 		    pamixer -d $step
+            volume=`pamixer --get-volume`
+            eww update volume="$volume"
 	    fi
         ;;
     "up")
         if [ $muted == "false" ]; then
 		    pamixer -i $step
+            volume=`pamixer --get-volume`
+            eww update volume="$volume"
 	    fi
         ;;
     "toggle")
 	    pamixer -t
+        muted=`pamixer --get-mute`
+        volume=`pamixer --get-volume`
+        eww update volume_mute="$muted"
         ;;
     *)
         echo "Invalid option"
         ;;
 esac
 
-volume=`pamixer --get-volume`
-muted=`pamixer --get-mute`
 
 if [ $muted == "true" ]; then
-    dunstify -r 5501232 "Muted" -t 2000 -i audio-volume-muted
+    notify-send -r 5501232 "Muted" -t 2000 -i audio-volume-muted
 else
-    dunstify -r 5501232 "Volume  $volume%" -t 2000 -i audio-volume-high -h int:value:$volume
+    notify-send -r 5501232 "Volume  $volume%" -t 2000 -i audio-volume-high -h int:value:$volume
 fi
 

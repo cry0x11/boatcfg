@@ -7,7 +7,7 @@
 )
 
 (defpoll time :initial ""
-              :interval "1s"
+              :interval "10s"
     `date +"%a %Y/%m/%d %I:%M %p"`)
 
 (defpoll battery_percent :initial "0"
@@ -25,6 +25,18 @@
 (defpoll prayer :initial ""
               :interval "1s"
     `scripts/prayerTime q`)
+
+(defpoll ethernet_state :initial "down"
+                        :interval "2s"
+    `scripts/network eth state`)
+
+(defpoll volume :initial "0"
+                :interval "86400s"
+  `pamixer --get-volume`)
+
+(defpoll volume_mute :initial "false"
+                :interval "86400s"
+  `pamixer --get-mute`)
 
 (defvar rev_prayer false)
 (defvar rev_date false)
@@ -85,6 +97,16 @@
             :icon-size 22
             :space-evenly true
             :spacing 8
+        )
+        (label
+          :class "module"
+          :style '${volume_mute == "false" ? "background-color: #a9b665;" : "background-color: #ea6962;" }'
+          :text `${volume_mute == "false" ? "" : "" } ${volume}%`
+        )
+        (label
+          :class "module"
+          :style '${ethernet_state == "up" ? "background-color: #a9b665;" : "background-color: #ea6962;"}'
+          :text `${ethernet_state == "up" ? "󰈀" : ""}`
         )
         (box
           :class "module"
