@@ -1,0 +1,55 @@
+#!/bin/bash
+
+ethernet_interface="eno1"
+wifi_interface="wlo1"
+
+function wifi () {
+    doas wpa_cli -i $wifi_interface $@;
+}
+
+
+case $1 in
+    status)
+        # Check if connection to router is available
+        # Exit code 0 means connected
+        ping -c 3 192.168.1.1
+        echo $?
+        ;;
+    wifi)
+        case $2 in
+
+        on)
+            # enable wifi
+            rfkill unblock wifi
+            ;;
+
+        off)
+            # disable wifi
+            rfkill block wifi
+            ;;
+
+        connect)
+            wifi scan
+            ssid=`wifi scan_results | sed '/bssid \//d' | cut -f5- | tofi --config ~/.scripts/configs/tofi.cfg`
+            
+            networkadded=`wifi list_networks | awk 'NR==3{print}'`
+            [ -z $networkadded ] && wifi add_network
+            wifi set_network 0 ssid '"'$ssid'"'
+            password=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Password  " --hide-input=true --hidden-character="*"`
+            wifi set_network 0 psk '"'$password'"'
+            unset password
+            wifi enable_network 0
+            ;;
+
+         esac
+         ;;
+     eth)
+         case $2 in
+             state)
+                echo `cat /sys/class/net/$ethernet_interface/operstate`
+                ;;
+         esac
+         ;;
+    *)
+        ;;
+esac
