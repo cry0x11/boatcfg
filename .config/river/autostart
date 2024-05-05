@@ -24,4 +24,4 @@ wl-paste --watch cliphist store &
 pipewire &
 pipewire-pulse &
 wireplumber &
-eww open bar &&
+eww open bar &
