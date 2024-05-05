@@ -7,12 +7,13 @@ pkill dunst
 pkill foot
 pkill gammastep
 pkill kdeconnectd
-pkill swaybg
+pkill sww-daemon
 pkill pipewire
 pkill pipewire-pulse
 pkill wireplumber
 
-swaybg -m fill -i ~/Pictures/wallpapers/"$wallpaper" &
+swww-daemon --format xrgb &
+swww img ~/Pictures/wallpapers/"$wallpaper" &
 dunst &
 lxpolkit &
 foot -s &
@@ -25,3 +26,6 @@ pipewire &
 pipewire-pulse &
 wireplumber &
 eww open bar &
+
+
+#swaybg -m fill -i ~/Pictures/wallpapers/"$wallpaper" &
