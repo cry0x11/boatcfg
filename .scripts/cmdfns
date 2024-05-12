@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function fzfcmd { fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 "$@"; }
+
+function notifier { 
+    case $1 in
+        normal) notify-send "$2" "\n<b><u>$3</u></b>";;
+        normalicon) notify-send "$2" "\n<b><u>$3</u></b>" -i "$4" ;;
+        err) notify-send "$2" "\n<b>'$3': <u>Invalid argument</u></b>\n\n<b>$4</b>" -i "$5";;
+        add) notify-send "$2" "\n<b><u>Added successfully</u></b>\n\n$3" -i "$4" ;;
+    esac
+}
+
+function fzfprompt {
+    echo "" |\
+        fzf --print-query -0 \
+            --color=pointer:0,prompt:4,hl:4,bg+:0,fg+:7,hl+:1 \
+            --header="" \
+            --no-info \
+            --prompt="$1 > " | sed '/^$/d'
+}

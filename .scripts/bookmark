@@ -1,30 +1,59 @@
 #!/bin/bash
 
-if ! [ -f ~/.web_bookmarks ]; then
-    touch ~/.web_bookmarks
-fi
-
+source ~/.scripts/cmdfns
+[ ! -f ~/.web_bookmarks ] && touch ~/.web_bookmarks
 
 case $1 in
     "add")
         bookmark=`wl-paste -p`
         if [[ $bookmark =~ ^"http" ]]; then
             if grep -q "$bookmark" ~/.web_bookmarks ;then
-                notify-send "Bookmark already exists!"
+                notifier \
+                    normalicon \
+                    "Bookmark" \
+                    "already exists" \
+                    "bookmarks"
             else
-                name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Name  "`
-                notify-send "Bookmark added!" "\n$name $bookmark"
-                echo -e "$name   $bookmark" >> ~/.web_bookmarks
+                name=`fzfprompt "Bookmark Name"`
+                if [ -n "$name" ]; then
+                    notifier \
+                        add \
+                        "Bookmark" \
+                        "<b>$name</b>\n\n<b>$bookmark</b>" \
+                        "bookmark-new"
+
+                    echo -e "$name;;;$bookmark" >> ~/.web_bookmarks
+                else
+                    notifier \
+                        normalicon \
+                        "Bookmark" \
+                        "Not saved because you didn't specify a name" \
+                        "bookmarks"
+                fi
             fi
         else
-            notify-send "Bookmark" "\n<b><u>Text in your clipboard is not a valid url</u></b>"
+            notifier \
+                normalicon \
+                "Bookmark" \
+                "Text in your clipboard is not a valid url" \
+                bookmarks
         fi
         ;;
     
     "query")
-        cat ~/.web_bookmarks | column -s "   " -t | tofi --config ~/.scripts/configs/tofi-top.cfg --prompt-text=" Mark  " | awk '{print $2}' | wl-copy
+        cat ~/.web_bookmarks |\
+            awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
+            fzfcmd --prompt='Marks > ' |\
+            awk '{print $2}' |\
+            wl-copy
         ;;
+
     *)
-        notify-send "Bookmark" "\n<b>'$1': <u>Invalid argument</u></b>\n\n<b>Either 'add' or 'query' were expected</b>"
+        notifier \
+            err \
+            "Bookmark" \
+            $1 \
+            "Either 'add' or 'query' were expected" \
+            "bookmark"
         ;;
 esac

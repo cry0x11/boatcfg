@@ -1,0 +1,11 @@
+#!/bin/bash
+
+prog=`printf "$PATH" |\
+    xargs -d: -I{} -r find -L {} -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n' |\
+    sort -u |\
+    awk -F ';' '{ printf "%2s %-5s\n", " ", $1}' |\
+    fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='Run > '`
+
+if [ -n "$prog" ]; then
+    nohup bash -c "$prog &" 2&>1
+fi

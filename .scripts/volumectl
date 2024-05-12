@@ -1,7 +1,6 @@
 #!/bin/bash
 
 step=5
-
 muted=`pamixer --get-mute`
 
 case $1 in
@@ -25,15 +24,20 @@ case $1 in
         volume=`pamixer --get-volume`
         eww update volume_mute="$muted"
         ;;
-    *)
-        echo "Invalid option"
-        ;;
+    *) echo "Invalid option" ;;
 esac
 
 
 if [ $muted == "true" ]; then
-    notify-send -r 5501232 "Muted" -t 2000 -i audio-volume-muted
+    notify-send -r 101\
+        "Muted" \
+        -t 1000 \
+        -i audio-volume-muted
 else
-    notify-send -r 5501232 "Volume  $volume%" -t 2000 -i audio-volume-high -h int:value:$volume
+    notify-send \
+        -r 101 \
+        "Volume  $volume%" \
+        -t 1000 \
+        -i audio-volume-high \
+        -h int:value:$volume
 fi
-

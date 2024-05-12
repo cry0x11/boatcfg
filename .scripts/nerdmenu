@@ -2,20 +2,27 @@
 
 case $1 in
     "install")
-        curl https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/css/nerd-fonts-generated.css -o ~/.scripts/nerd-fonts-generated.css
-        cat nerd-fonts-generated.css | grep --color=never -A 2 "nf-" | sed 's/^\.//g; s/:before {//g; s/  content: "//g; s/";$//g; /^}$/d; s/\\/\\U/g' | paste -sd ' \n' | awk '{print $2"  "$1}' > ~/.scripts/files/nerd-icons
+        curl \
+            'https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/css/nerd-fonts-generated.css' \
+            -o ~/.scripts/nerd-fonts-generated.css
+
+        cat nerd-fonts-generated.css |\
+            grep --color=never -A 2 "nf-" |\
+            sed 's/^\.//g; s/:before {//g; s/  content: "//g; s/";$//g; /^}$/d; s/\\/\\U/g' |\
+            paste -sd ' \n' |\
+            awk '{print $2";;;"$1}' > ~/.scripts/files/nerd-icons
+
         ;;
     "query")
-        icon=`printf "$(cat ~/.scripts/files/nerd-icons)" | tofi --config ~/.scripts/configs/tofi.cfg --prompt-text=" "| awk '{print $1}'` 
-        if [[ ! -z $icon ]]; then
-            wl-copy "$icon"
-        fi
+        icon=`printf "$(cat ~/.scripts/files/nerd-icons)" |\
+                awk -F ';;;' '{ printf "%2s %-5s %s\n", " ", $1, $2}' |\
+                fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='Nerd > ' |\
+                awk '{print $1}'`
+
+        [ -n "$icon" ] && wl-copy "$icon"
         ;;
+
     *)
+        echo "Invalid option"
         ;;
 esac
-
-
-
-
-
