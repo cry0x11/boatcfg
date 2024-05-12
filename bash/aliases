@@ -18,8 +18,7 @@ alias ll='eza -lah --icons=always'
 alias v='nvim'
 alias dv='doas nvim -u ~/.config/nvim/init.lua'
 alias ugrub='doas grub-mkconfig -o /boot/grub/grub.cfg'
-alias ytd='yt-dlp -f bv[height=720]+ba'
-alias mpv='mpv --geometry=1000x650'
+alias ytd='yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480]"'
 
 # ----------------------------
 # GIT
@@ -44,7 +43,7 @@ alias ga='git add'
 alias gs='git status'
 alias gl='git log'
 alias gc='git commit'
-alias gra='git remote add origin'
+alias gra='git remote set-url origin'
 alias gp='git push -u origin main'
 alias glu='git ls-files --others'
 alias gpull='git pull origin main --allow-unrelated-histories'
