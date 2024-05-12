@@ -1,7 +1,0 @@
-#!/bin/bash
-
-script=`cat ~/.scripts/files/scriptman-list | column -s ";" -t | tofi --config ~/.scripts/configs/tofi-top.cfg --prompt-text=" script  " | sed 's/.*\s\s//g'`
-
-if ! [ -z $script ]; then
-    echo "~/.scripts/$script" | sh
-fi

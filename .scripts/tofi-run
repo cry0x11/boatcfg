@@ -1,3 +1,0 @@
-#!/bin/bash
-
-tofi-run --config ~/.scripts/configs/tofi.cfg --prompt-text=' ' | sh
