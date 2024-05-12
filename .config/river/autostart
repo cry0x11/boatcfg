@@ -2,19 +2,11 @@
 
 wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
 
-function killer { kill -SIGINT `pgrep $1`; }
+cleaner=("lxpolkit" "eww" "dunst" "foot" "gammastep" "kdeconnectd" "swww-daemon" "wl-paste" "pipewire" "pipewire-pulse" "wireplumber" "fcitx5")
 
-killer lxpolkit
-killer eww
-killer dunst
-killer foot
-killer gammastep
-killer kdeconnectd
-killer swww-daemon
-killer wl-paste
-killer pipewire
-killer pipewire-pulse
-killer wireplumber
+for str in ${cleaner[@]}; do
+    kill -SIGTERM `pgrep $str`
+done
 
 swww-daemon --format xrgb &
 swww img ~/Pictures/wallpapers/"$wallpaper" &
@@ -31,5 +23,3 @@ wl-paste --primary --watch cliphist store &
 pipewire &
 pipewire-pulse &
 wireplumber &
-
-#swaybg -m fill -i ~/Pictures/wallpapers/"$wallpaper" &
