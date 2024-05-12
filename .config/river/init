@@ -82,7 +82,7 @@ function float () {
             pos_y="$6"
             [ $5 == center ] && pos_x="$((res_x/2 - $3/2))"
             [ $6 == center ] && pos_y="$((res_y/2 - $4/2))"
-            riverctl rule-add -app-id "$1" position $pos_x $pos_y
+            riverctl rule-add -app-id "$1" -title "$2" position $pos_x $pos_y
         fi
     fi
 }
@@ -101,7 +101,7 @@ function touchpad () {
 
 # mouse configuration
 function mouse () {
-    riverctl input $1 scroll-factor 2.5
+    riverctl input $1 scroll-factor 1.5
 }
 
 
@@ -115,7 +115,7 @@ riverctl background-color 0x282828
 riverctl focus-follows-cursor "always"
 riverctl default-attach-mode "bottom"
 riverctl set-repeat 50 300
-
+riverctl hide-cursor timeout 3000
 
 # --------------------------------------------------------
 # TILER (Wideriver)
@@ -170,7 +170,7 @@ riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DI
 spawn Super P       keepassxc
 spawn Super Return  footclient
 spawn Super D       firefox
-spawn Super A       "$HOME/.scripts/browser"
+spawn Super A       "$HOME/.scripts/floatingterm ffprofile"
 
 
 
@@ -179,10 +179,14 @@ spawn Super A       "$HOME/.scripts/browser"
 # --------------------------------------------------------
 
 # My launcher with custom config
-spawn Super R "~/.scripts/tofi-run"                 
+spawn Super R "~/.scripts/floatingterm run"                 
 
 # Script manager to launch other shell scripts
-spawn Super S "$HOME/.scripts/scriptman"
+spawn Super Q "$HOME/.scripts/floatingterm sman"
+
+# Search web
+# spawn Super comma "$HOME/.scripts/search"
+spawn Super S "$HOME/.scripts/floatingterm search"
 
 # 
 # XProp-like functionality ... not sufficient but it does the bare minimum 
@@ -192,9 +196,6 @@ spawn Super S "$HOME/.scripts/scriptman"
 # SOURCE: https://gitlab.com/snakedye/ristate
 #
 spawn Super+Shift P "$HOME/.config/river/riverprop"
-
-# Power menu
-spawn Super Q "$HOME/.scripts/power"
 
 # 
 # I get distracted when i use laptop during study sessions so I made 
@@ -213,11 +214,11 @@ spawn Super E "$HOME/.scripts/fileManager"
 # Adding bookmarks from primary clipboard
 # or copying bookmarks from menu to clipboard
 #
-spawn Super B "$HOME/.scripts/bookmark query"
+spawn Super B "$HOME/.scripts/floatingterm mark"
 spawn Super+Shift B "$HOME/.scripts/bookmark add"
 
 # paste contents of primary selection into clipboard
-spawn Super V "$HOME/.scripts/clipboard query"
+spawn Super V "$HOME/.scripts/floatingterm clip"
 spawn Super+Shift V "$HOME/.scripts/clipboard delete"
 
 # 
@@ -238,7 +239,7 @@ spawn Super bracketright    "$HOME/.scripts/brightctl up"
 spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 
 # Toggling input methods using fcitx5
-spawn Control Space "$HOME/.scripts/fcitx5-toggle"
+spawn Control Space "fcitx5-remote -t"
 
 
 # --------------------------------------------------------
@@ -322,6 +323,7 @@ tiler Super Tab "--layout-toggle"   # toggle layout
 #
 #       APP-ID                       APP-TITLE       W       H       X       Y 
 float 'riverprop'                    0               400     250     5       40
+float 'floatingterm'                 0               1000    400    center   center
 float 'Anki'                         "Browse*"       1000    650    center   center
 float 'Anki'                         "Statistics"    1000    650    center   center
 float 'Anki'                        "Preferences"    1000    650    center   center
@@ -344,3 +346,5 @@ tags 'Firefox'       "Mozilla Firefox"       4
 tags 'fileManager'                           6
 tags 'Gimp'                                  7
 tags 'org.telegram.desktop'                  8
+tags 'Godot'                                 9
+tags 'Godot_Engine'                          9

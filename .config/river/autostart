@@ -1,4 +1,5 @@
 #!/bin/bash
+
 wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
 
 pkill lxpolkit
@@ -7,7 +8,8 @@ pkill dunst
 pkill foot
 pkill gammastep
 pkill kdeconnectd
-pkill sww-daemon
+pkill swww-daemon
+pkill wl-paste
 pkill pipewire
 pkill pipewire-pulse
 pkill wireplumber
@@ -20,12 +22,12 @@ foot -s &
 gammastep -O 3500 &
 /usr/lib/kdeconnectd &
 fcitx5 -d --replace &
-wl-paste -p --watch cliphist store &
-wl-paste --watch cliphist store &
+eww open bar &
+wl-paste --type text --watch cliphist store &
+wl-paste --type image --watch cliphist store &
+wl-paste --primary --watch cliphist store &
 pipewire &
 pipewire-pulse &
 wireplumber &
-eww open bar &
-
 
 #swaybg -m fill -i ~/Pictures/wallpapers/"$wallpaper" &
