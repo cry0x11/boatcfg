@@ -2,17 +2,19 @@
 
 wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
 
-pkill lxpolkit
-pkill eww
-pkill dunst
-pkill foot
-pkill gammastep
-pkill kdeconnectd
-pkill swww-daemon
-pkill wl-paste
-pkill pipewire
-pkill pipewire-pulse
-pkill wireplumber
+function killer { kill -SIGINT `pgrep $1`; }
+
+killer lxpolkit
+killer eww
+killer dunst
+killer foot
+killer gammastep
+killer kdeconnectd
+killer swww-daemon
+killer wl-paste
+killer pipewire
+killer pipewire-pulse
+killer wireplumber
 
 swww-daemon --format xrgb &
 swww img ~/Pictures/wallpapers/"$wallpaper" &
