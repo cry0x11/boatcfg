@@ -1,0 +1,8 @@
+#!/bin/bash
+
+choice=`cliphist list | fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 \
+                     --prompt='Clip > ' \
+                     --preview-window=right:50% \
+                     --preview='~/.scripts/files/clip-preview {}'`
+
+[ -n "$choice" ] && printf $choice | cliphist decode | wl-copy

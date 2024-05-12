@@ -1,3 +1,14 @@
+󰒲;Suspend;gtklock & sleep 2 && doas zzz
 ;Bookmarks;bookmark query
 󰞅;Nerd Icons;nerdmenu query
+;Papirus Icons;icontheme
 ;MPV YT;mpvyt
+󰟸;Disable Touchpad;touchpad disable
+󰟸;Enable Touchpad;touchpad enable
+;Lock;gtklock
+;Log out;kill -s SIGINT `pgrep river`
+⏻;Power off;doas poweroff
+;Reboot;doas reboot
+;Sleep;doas zzz
+;Clear clipboard history;cliphist wipe
+󱓞;Run program;cmdrunner

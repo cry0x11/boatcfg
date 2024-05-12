@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function togglecmd () {
+    riverctl input pointer-2-7-SynPS/2_Synaptics_TouchPad events $1 
+}
+
+case $1 in
+    enable) togglecmd enabled ;;
+    disable) togglecmd disabled ;;
+    *) echo "Invalid option" ;;
+esac

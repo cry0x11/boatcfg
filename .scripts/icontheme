@@ -1,0 +1,9 @@
+#!/bin/bash
+
+find /usr/share/icons/Papirus-Dark/ -type f |\
+    sed 's/^.*\/Papirus-Dark\///g' |\
+    grep svg --color=never |\
+    fzf --preview-window=right:40% \
+    --preview='convert -density 1200 -background "#282828" /usr/share/icons/Papirus-Dark/{} PNG:- | chafa' |\
+    sed 's/^.*\///g; s/.svg//g' |\
+    wl-copy

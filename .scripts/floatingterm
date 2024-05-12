@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function floating () {
+    footclient -o colors.alpha=1 --app-id="floatingterm" $@;
+}
+
+case $1 in
+    sman) floating ~/.scripts/files/scriptfzf;;
+    clip) floating ~/.scripts/files/lsclip;;
+    run) floating ~/.scripts/cmdrunner;;
+    mark) floating ~/.scripts/bookmark query;;
+    ffprofile) floating ~/.scripts/browser;;
+    search) floating ~/.scripts/search;;
+    *)
+        echo Script unavailable;;
+esac
