@@ -46,6 +46,14 @@ $borderRadius: 0.6em;
   border-radius: 0.9em;
 }
 
+.tasks {
+  background-color: rgba(40,40,40,0.99);
+  color: $white;
+  padding: 0.1em 0.2em 0.1em 0.2em;
+  border-radius: 0.9em;
+  border: 2px solid $red;
+}
+
 .side { margin: 0.2em; }
 
 .module {

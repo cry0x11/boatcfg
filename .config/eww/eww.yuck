@@ -19,11 +19,11 @@
     `scripts/battery state`)
 
 (defpoll prayerTime :initial ""
-              :interval "1s"
+                    :interval "1s"
     `scripts/prayerTime t`)
 
 (defpoll prayer :initial ""
-              :interval "1s"
+                :interval "1s"
     `scripts/prayerTime q`)
 
 (defpoll ethernet_state :initial "down"
@@ -35,7 +35,7 @@
   `pamixer --get-volume`)
 
 (defpoll volume_mute :initial "false"
-                :interval "86400s"
+                     :interval "86400s"
   `pamixer --get-mute`)
 
 (defvar rev_prayer false)
@@ -92,12 +92,14 @@
         :halign "end"
         :space-evenly false
         :spacing 0
+
         (systray 
             :class "systray"
             :icon-size 22
             :space-evenly true
             :spacing 8
         )
+
         (label
           :class "module"
           :style '${volume_mute == "false" ? "background-color: #a9b665;" : "background-color: #ea6962;" }'
@@ -163,15 +165,18 @@
     )
 )
 
-(defwidget tag [id]
+(defwidget tag [id symbol]
     (eventbox
         :onclick `riverctl set-focused-tags \`echo "2^${id - 1}" | bc -l\``
         ( box 
 		:class `tag ${id == current-json["tags"]["LGDisplay"][0] ? "active-tag" : matches(occupied-tags["viewstag"]["LGDisplay"], id) == true ? "occupied-tag" : "empty-tag"}` 
-		"${id == "1" ? "" : id == "2" ? "󱟱" : id == "3" ? "" : id == "4" ? "" : id == "5" ? "" : id == "6" ? "" : id == "7" ? "" : id == "8" ? "󰭹" : id == "9" ? "󰂔" : id}" 
+          {symbol}
         )
     )
 )
+
+(defvar tags "[1, 2, 3, 4, 5, 6, 7, 8, 9]")
+(defvar tagSymbols `["", "󱟱", "", "", "", "", "", "󰭹", "󰂔"]`)
 
 (defwidget left []
     (box
@@ -180,15 +185,10 @@
        	:space-evenly false
         :halign "start"
         :spacing 3
-        (tag :id 1)
-        (tag :id 2)
-        (tag :id 3)
-        (tag :id 4)
-        (tag :id 5)
-        (tag :id 6)
-        (tag :id 7)
-        (tag :id 8)
-        (tag :id 9)
+        (for tagnum in tags
+          (tag :id tagnum
+               :symbol `${tagSymbols[tagnum - 1]}`)
+        )
         (label 
 		    :class "layout"
             :justify "center"
@@ -215,7 +215,20 @@
   :geometry (geometry :x "0%"
                       :y "0.7%"
                       :width "99.3%"
-                      :height "30px"
+                      :height "3.9%"
                       :anchor "top center")
   (bar)
 )
+
+(defwindow tasks
+  :monitor 0
+  :exclusive false
+  :class "tasks"
+  :windowtype "normal"
+  :geometry (geometry :x "25%"
+                      :y "10.4%"
+                      :width "50%"
+                      :height "70%")
+  (label :text "hello world")
+)
+
