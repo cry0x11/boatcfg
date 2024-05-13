@@ -1,10 +1,13 @@
 #!/bin/bash
 
-find /usr/share/icons/Papirus-Dark/ -type f |\
+choice=`find /usr/share/icons/Papirus-Dark/ -type f |\
     grep --color=never "/symbolic/status/\|/16x16/" |\
     sed 's/^.*\/Papirus-Dark\///g' |\
     grep svg --color=never |\
     fzf --preview-window=right:40% \
     --preview='convert -density 1200 -background "#282828" /usr/share/icons/Papirus-Dark/{} PNG:- | chafa' |\
-    sed 's/^.*\///g; s/.svg//g' |\
-    wl-copy
+    sed 's/^.*\///g; s/.svg//g'`
+
+if [ -n "$choice" ]; then
+    printf "$choice" | wl-copy
+fi
