@@ -9,6 +9,7 @@ case $1 in
     clip) floating ~/.scripts/files/lsclip;;
     run) floating ~/.scripts/cmdrunner;;
     mark) floating ~/.scripts/bookmark query;;
+    addmark) floating ~/.scripts/bookmark add;;
     ffprofile) floating ~/.scripts/browser;;
     search) floating ~/.scripts/search;;
     *)

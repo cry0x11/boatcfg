@@ -215,7 +215,7 @@ spawn Super E "$HOME/.scripts/fileManager"
 # or copying bookmarks from menu to clipboard
 #
 spawn Super B "$HOME/.scripts/floatingterm mark"
-spawn Super+Shift B "$HOME/.scripts/bookmark add"
+spawn Super+Shift B "$HOME/.scripts/floatingterm addmark"
 
 # paste contents of primary selection into clipboard
 spawn Super V "$HOME/.scripts/floatingterm clip"
