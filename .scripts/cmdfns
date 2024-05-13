@@ -1,6 +1,10 @@
 #!/bin/bash
 
-function fzfcmd { fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 "$@"; }
+function fzfcmd { 
+    fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 \
+        --bind 'tab:toggle+up,shift-tab:toggle+down' \
+        "$@"
+}
 
 function notifier { 
     case $1 in

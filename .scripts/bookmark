@@ -5,7 +5,7 @@ source ~/.scripts/cmdfns
 
 case $1 in
     "add")
-        bookmark=`wl-paste -p`
+        bookmark=`wl-paste`
         if [[ $bookmark =~ ^"http" ]]; then
             if grep -q "$bookmark" ~/.web_bookmarks ;then
                 notifier \
@@ -41,11 +41,26 @@ case $1 in
         ;;
     
     "query")
-        cat ~/.web_bookmarks |\
+        query=`cat ~/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
             fzfcmd --prompt='Marks > ' |\
-            sed 's/^.*http/http/g' |\
-            wl-copy
+            sed 's/^.*http/http/g'`
+
+        if [ -n "$query" ]; then
+            printf "$query" | wl-copy
+        fi
+        ;;
+
+    "delete")
+        del=`cat ~/.web_bookmarks |\
+            awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
+            fzfcmd --multi --prompt='Delete Bookmark > ' |\
+            sed 's/^.*http/http/g'`
+
+        if [ -n "$del" ]; then
+            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.web_bookmarks 2&>1
+        fi
+            
         ;;
 
     *)

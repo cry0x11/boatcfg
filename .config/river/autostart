@@ -23,3 +23,4 @@ wl-paste --primary --watch cliphist store &
 pipewire &
 pipewire-pulse &
 wireplumber &
+kdeconnect-indicator &

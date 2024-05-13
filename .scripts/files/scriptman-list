@@ -12,3 +12,4 @@
 ;Sleep;doas zzz
 ;Clear clipboard history;cliphist wipe
 󱓞;Run program;cmdrunner
+󰆴;Delete bookmark;bookmark delete

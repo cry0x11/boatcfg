@@ -7,7 +7,6 @@ set icons true
 set ignorecase true
 set number true
 set relativenumber true
-set ratios 1:3:4
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
@@ -37,6 +36,7 @@ map \! shell-wait
 map \& shell-async
 map ; shell
 map \' !true
+map c clear
 
 map d &rm -rf $fx
 

@@ -10,6 +10,7 @@ case $1 in
     run) floating ~/.scripts/cmdrunner;;
     mark) floating ~/.scripts/bookmark query;;
     addmark) floating ~/.scripts/bookmark add;;
+    delmark) floating ~/.scripts/bookmark delete;;
     ffprofile) floating ~/.scripts/browser;;
     search) floating ~/.scripts/search;;
     *)
