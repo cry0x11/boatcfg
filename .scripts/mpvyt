@@ -1,11 +1,8 @@
 #!/bin/bash
 
-url=`echo "" |\
-    fzf --print-query -0 \
-        --color=pointer:0,prompt:4,hl:4,bg+:0,fg+:7,hl+:1 \
-        --header="" \
-        --no-info \
-        --prompt='MPV YT > ' | sed '/^$/d'`
+source ~/.scripts/cmdfns
+
+url=`fzfprompt "MPV YT"`
 
 if [ -n "$url" ]; then
     if [[ $url =~ ^"https" ]]; then

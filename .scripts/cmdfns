@@ -21,5 +21,7 @@ function fzfprompt {
             --color=pointer:0,prompt:4,hl:4,bg+:0,fg+:7,hl+:1 \
             --header="" \
             --no-info \
-            --prompt="$1 > " | sed '/^$/d'
+            --prompt="$1 > " \
+            "${@:2}" | sed '/^$/d'
+            
 }

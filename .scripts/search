@@ -1,17 +1,16 @@
 #!/bin/bash
 
+source ~/.scripts/cmdfns
+
 choice=`cat ~/.scripts/files/search-list |\
      awk -F ';' '{ printf "%2s %-5s %s\n", " ", $1, $2}' |\
-     fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='Search > ' |\
+     fzfcmd --prompt='Search > ' |\
      sed 's/[^A-Za-z]/ /g; s/ \{3,\}//g'`
 
 if [ -n "$choice" ]; then
     url=`grep ";$choice;" ~/.scripts/files/search-list | sed "s/^.*;$choice;//g"`
 
-    input=`echo "" |\
-        fzf --print-query -0 \
-            --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 \
-            --prompt="$choice > "`
+    input=`fzfprompt "$choice"`
 
     if [ -n "$input" ]; then
         nohup bash -c "firefox \"${url}$input\" &" 2&>1

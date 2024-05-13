@@ -14,7 +14,7 @@ case $1 in
                     "already exists" \
                     "bookmarks"
             else
-                name=`fzfprompt "Bookmark Name"`
+                name=`fzfprompt "Bookmark Name" --header="$bookmark"`
                 if [ -n "$name" ]; then
                     notifier \
                         add \
@@ -43,7 +43,7 @@ case $1 in
     "query")
         query=`cat ~/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
-            fzfcmd --prompt='Marks > ' |\
+            fzfcmd --prompt='Bookmarks > ' |\
             sed 's/^.*http/http/g'`
 
         if [ -n "$query" ]; then
