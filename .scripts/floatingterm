@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function floating () {
-    footclient -o colors.alpha=1 --app-id="floatingterm" $@;
+    konsole --notransparency --profile Floating -e "$@";
 }
 
 case $1 in

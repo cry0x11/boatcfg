@@ -168,7 +168,7 @@ riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DI
 # --------------------------------------------------------
 
 spawn Super P       keepassxc
-spawn Super Return  footclient
+spawn Super Return  konsole
 spawn Super D       firefox
 spawn Super A       "$HOME/.scripts/floatingterm ffprofile"
 
@@ -324,13 +324,14 @@ tiler Super Tab "--layout-toggle"   # toggle layout
 #       APP-ID                       APP-TITLE       W       H       X       Y 
 float 'riverprop'                    0               400     250     5       40
 float 'floatingterm'                 0               1000    400    center   center
+float 'org.kde.konsole'      "Floating — Konsole"    1000    400    center   center
 float 'Anki'                         "Browse*"       1000    650    center   center
 float 'Anki'                         "Statistics"    1000    650    center   center
 float 'Anki'                        "Preferences"    1000    650    center   center
-float 'Anki'           "Image Occlusion Enhanced*"   1200    650    center   center
+float 'Anki'          "Image Occlusion Enhanced*"    1200    650    center   center
 float 'Anki'                         "Add"           500     650    center   center
-float 'Gimp'              "Change Foreground Color"  500     500    center   center
-float 'Firefox'      "Firefox - Choose User Profile" 1000    650    center   center
+float 'Gimp'            "Change Foreground Color"    500     500    center   center
+float 'Firefox'   "Firefox - Choose User Profile"    1000    650    center   center
 float 'mpv'                          0               1000    650    center   center
 float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
