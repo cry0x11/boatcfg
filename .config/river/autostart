@@ -2,7 +2,7 @@
 
 wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
 
-cleaner=("lxpolkit" "eww" "dunst" "foot" "gammastep" "kdeconnectd" "swww-daemon" "wl-paste" "pipewire" "pipewire-pulse" "wireplumber" "fcitx5")
+cleaner=("lxpolkit" "eww" "dunst" "konsole" "gammastep" "kdeconnectd" "swww-daemon" "wl-paste" "pipewire" "pipewire-pulse" "wireplumber" "fcitx5")
 
 for str in ${cleaner[@]}; do
     kill -SIGTERM `pgrep $str`

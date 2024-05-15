@@ -13,4 +13,4 @@ else
         --wrap=auto \
         --theme=gruvbox-dark \
         --terminal-width ${FZF_PREVIEW_COLUMNS}
-fi
+fi 
