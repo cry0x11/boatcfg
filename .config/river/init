@@ -340,7 +340,7 @@ float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
 float 'nm-connection-editor'         0
 float 'pavucontrol'                  0
-float 'KeePassXC'                    0
+float 'KeePassXC'                    0               800     550    center   center
 
 # Start app in specific tag
 #    APP-ID                                 TAG
