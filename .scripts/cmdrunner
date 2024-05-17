@@ -7,5 +7,5 @@ prog=`printf "$PATH" |\
     fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='Run > '`
 
 if [ -n "$prog" ]; then
-    nohup bash -c "$prog &" 2&>1
+    nohup bash -c "$prog &" 2&>/dev/null
 fi

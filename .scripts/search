@@ -13,6 +13,6 @@ if [ -n "$choice" ]; then
     input=`fzfprompt "$choice"`
 
     if [ -n "$input" ]; then
-        nohup bash -c "firefox \"${url}$input\" &" 2&>1
+        nohup bash -c "firefox \"${url}$input\" &" 2&>/dev/null
     fi
 fi

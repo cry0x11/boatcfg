@@ -1,6 +1,7 @@
 #!/bin/bash
 
-choice=`cliphist list | fzf -d $'\t' \
+choice=`cliphist list | fzf --ansi \
+                     -d $'\t' \
                      --with-nth 2 \
                      --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 \
                      --prompt='Clip > ' \

@@ -9,7 +9,7 @@ if [ -n "$url" ]; then
         nohup bash -c "mpv --ytdl=yes \
             --ytdl-raw-options=force-ipv4= \
             --ytdl-format='bestvideo[height<=480]+bestaudio/best[height<=480]' \
-            $url &" 2&>1
+            $url &" 2&>/dev/null
     else
         dunstify "MPV YT ERROR!" "\nYou have provided an invalid URL\n\nMake sure it's a Youtube URL"
     fi

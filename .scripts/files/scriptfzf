@@ -16,6 +16,6 @@ if [ -n "$choice" ]; then
     if [ -f ~/.scripts/$script ]; then
         bash -c "~/.scripts/$cmd"
     else
-        bash -c "nohup bash -c '$cmd &' 2&>1"
+        bash -c "nohup bash -c '$cmd &' 2&>/dev/null"
     fi
 fi

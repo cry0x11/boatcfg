@@ -58,7 +58,7 @@ case $1 in
             sed 's/^.*http/http/g'`
 
         if [ -n "$del" ]; then
-            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.web_bookmarks 2&>1
+            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.web_bookmarks 2&>/dev/null
         fi
             
         ;;
