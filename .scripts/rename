@@ -18,7 +18,7 @@ function move () {
                 "<b>~/Pictures/$3.png</b>"
             ;;
         video)
-            mv ~/.cache/boatcfg/scripts/recording.png ~/Videos/"$3".png
+            mv ~/.cache/boatcfg/scripts/recording.mp4 ~/Videos/"$3".mp4
             case $2 in
                 name) msg="Saved as" ;;
                 noname) msg="Used date because no name was provided" ;;
