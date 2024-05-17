@@ -1,0 +1,4 @@
+#!/bin/bash
+
+url=`cat ~/.cache/boatcfg/scripts/ytrss | grep --color=never ";;;$1" | awk -F ';;;' '{print $4}'`
+curl -s $url | chafa -f sixels -s ${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES} -
