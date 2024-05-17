@@ -7,5 +7,4 @@ function togglecmd () {
 case $1 in
     enable) togglecmd enabled ;;
     disable) togglecmd disabled ;;
-    *) echo "Invalid option" ;;
 esac

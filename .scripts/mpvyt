@@ -6,11 +6,12 @@ url=`fzfprompt "MPV YT"`
 
 if [ -n "$url" ]; then
     if [[ $url =~ ^"https" ]]; then
-        nohup bash -c "mpv --ytdl=yes \
-            --ytdl-raw-options=force-ipv4= \
-            --ytdl-format='bestvideo[height<=480]+bestaudio/best[height<=480]' \
-            $url &" 2&>/dev/null
+        nohup bash -c "source ~/.scripts/cmdfns; mpvcmd $url &" 2&>/dev/null
     else
-        dunstify "MPV YT ERROR!" "\nYou have provided an invalid URL\n\nMake sure it's a Youtube URL"
+        notifier normal \
+            "dialog-error" \
+            "Mpvyt" \
+            "You have provided an invalid URL" \
+            "<b>Make sure it can be handled by yt-dlp</b>"
     fi
 fi

@@ -1,17 +1,15 @@
 #!/bin/bash
 
-function floating () {
-    konsole --notransparency --profile Floating -e "$@";
-}
+# Using console because of both sixel and bidi are available
+function floating () { konsole --notransparency --profile Floating -e "$@"; }
 
-function floatingclip () {
-    mlterm --title="Floating" -e "$@";
-}
+# Using mlterm because fzf previews overlap in konsole :(
+function fclip () { mlterm --title="Floating" -e "$@"; }
 
 
 case $1 in
     sman) floating ~/.scripts/files/scriptfzf;;
-    clip) floatingclip ~/.scripts/files/lsclip;;
+    clip) fclip ~/.scripts/files/lsclip;;
     run) floating ~/.scripts/cmdrunner;;
     mark) floating ~/.scripts/bookmark query;;
     addmark) floating ~/.scripts/bookmark add;;
@@ -19,6 +17,5 @@ case $1 in
     ffprofile) floating ~/.scripts/browser;;
     search) floating ~/.scripts/search;;
     ytrss) floating ~/.scripts/ytrss view;;
-    *)
-        echo Script unavailable;;
+    rename) floating ~/.scripts/rename ${@:2};;
 esac

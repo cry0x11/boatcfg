@@ -48,7 +48,4 @@ case $1 in
         rm ~/.cache/boatcfg/scripts/ytrss
         updater
         ;;
-
-    *)
-        ;;
 esac

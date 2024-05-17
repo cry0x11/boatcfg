@@ -7,11 +7,28 @@
 # the resulted file is expected to be placed in ~/.config/eww/scripts 
 # unless you changed eww configuration.
 
+source ~/.scripts/cmdfns
+
 url="$1"
 
 if [ -z "$url" ]; then
-    notify-send "Prayer-ical-parser" "\n<b>'$1'<u>Invalid argument</u><b>\n\n<b>Please supply the webcal url as an argument</b>"
+    notifier err \
+        "dialog-error" \
+        "Prayer ical parser" \
+        "$1"
+        "<b>Please supply the webcal url as an argument</b>"
 else
-    echo "$url" | sed 's/^webcal/https/g' | xargs curl | grep --color=never -C 1 --no-group-separator "DTEND" | sed '/DTEND/d; s/:.*Sunrise/:Sunrise/; s/\r//g;' | awk -F ':' '{print $2}' | sed 'N;s/\n/\t/g; s/^[0-9]\{4\}//g' > ~/.config/eww/scripts/prayers
-    notify-send "Prayer-ical-parser" "\n<b><u>Output successfully saved</u></b>\n\n~/.config/eww/scripts/prayers"
+    echo "$url" |\
+        sed 's/^webcal/https/g' |\
+        xargs curl |\
+        grep --color=never -C 1 --no-group-separator "DTEND" |\
+        sed '/DTEND/d; s/:.*Sunrise/:Sunrise/; s/\r//g;' |\
+        awk -F ':' '{print $2}' |\
+        sed 'N;s/\n/\t/g; s/^[0-9]\{4\}//g' > ~/.config/eww/scripts/"$2"
+
+        notifier normal \
+            "cloud-download" \
+            "Prayer ical parser" \
+            "Saved as"
+            "<b>~/.config/eww/scripts/prayers</b>"
 fi

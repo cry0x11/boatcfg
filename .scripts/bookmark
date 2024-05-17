@@ -8,35 +8,31 @@ case $1 in
         bookmark=`wl-paste`
         if [[ $bookmark =~ ^"http" ]]; then
             if grep -q "$bookmark" ~/.web_bookmarks ;then
-                notifier \
-                    normalicon \
+                notifier normal \
+                    "bookmarks" \
                     "Bookmark" \
-                    "already exists" \
-                    "bookmarks"
+                    "Already exists"
             else
                 name=`fzfprompt "Bookmark Name" --header="$bookmark"`
                 if [ -n "$name" ]; then
-                    notifier \
-                        add \
+                    notifier add \
+                        "bookmark-new" \
                         "Bookmark" \
-                        "<b>$name</b>\n\n<b>$bookmark</b>" \
-                        "bookmark-new"
+                        "<b>$name</b>\n\n<b>$bookmark</b>"
 
                     echo -e "$name;;;$bookmark" >> ~/.web_bookmarks
                 else
-                    notifier \
-                        normalicon \
+                    notifier normal \
+                        "bookmarks" \
                         "Bookmark" \
-                        "Not saved because you didn't specify a name" \
-                        "bookmarks"
+                        "Not saved because you didn't specify a name"
                 fi
             fi
         else
-            notifier \
-                normalicon \
+            notifier normal \
+                "dialog-error" \
                 "Bookmark" \
-                "Text in your clipboard is not a valid url" \
-                bookmarks
+                "Text in your clipboard is not a valid url"
         fi
         ;;
     
@@ -64,11 +60,10 @@ case $1 in
         ;;
 
     *)
-        notifier \
-            err \
+        notifier err \
+            "dialog-error" \
             "Bookmark" \
             $1 \
-            "Either 'add' or 'query' were expected" \
-            "bookmark"
+            "Either 'add' or 'query' were expected"
         ;;
 esac

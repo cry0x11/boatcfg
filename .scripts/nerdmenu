@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.scripts/cmdfns
+
 case $1 in
     "install")
         curl \
@@ -13,16 +15,21 @@ case $1 in
             awk '{print $2";;;"$1}' > ~/.scripts/files/nerd-icons
 
         ;;
+
     "query")
         icon=`printf "$(cat ~/.scripts/files/nerd-icons)" |\
                 awk -F ';;;' '{ printf "%2s %-5s %s\n", " ", $1, $2}' |\
-                fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='Nerd > ' |\
+                fzfcmd --prompt='Nerd > ' |\
                 awk '{print $1}'`
 
         [ -n "$icon" ] && wl-copy "$icon"
         ;;
 
     *)
-        echo "Invalid option"
+        notifier err \
+            "dialog-error" \
+            "Nerdmenu" \
+            "$1" \
+            "<b>Either 'install' or 'query' was expected</b>"
         ;;
 esac

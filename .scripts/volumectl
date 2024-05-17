@@ -24,7 +24,6 @@ case $1 in
         volume=`pamixer --get-volume`
         eww update volume_mute="$muted"
         ;;
-    *) echo "Invalid option" ;;
 esac
 
 

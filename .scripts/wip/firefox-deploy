@@ -1,0 +1,12 @@
+#!/bin/sh
+
+function mk () {
+    firefox -CreateProfile $1
+}
+
+mk hard-default
+mk banking
+mk cry0x11
+mk webapp
+
+

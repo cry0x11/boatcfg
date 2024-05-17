@@ -8,10 +8,9 @@ function fzfcmd {
 
 function notifier { 
     case $1 in
-        normal) notify-send "$2" "\n<b><u>$3</u></b>";;
-        normalicon) notify-send "$2" "\n<b><u>$3</u></b>" -i "$4" ;;
-        err) notify-send "$2" "\n<b>'$3': <u>Invalid argument</u></b>\n\n<b>$4</b>" -i "$5";;
-        add) notify-send "$2" "\n<b><u>Added successfully</u></b>\n\n$3" -i "$4" ;;
+        normal) notify-send -i "$2" "$3" "\n<b><u>$4</u></b>\n\n${@:5}"  ;;
+        err) notify-send -i "$2" "$3" "\n<b>'$4': <u>Invalid argument</u></b>\n\n${@:5}" ;;
+        add) notify-send -i "$2" "$3" "\n<b><u>Added successfully</u></b>\n\n${@:4}" ;;
     esac
 }
 
@@ -23,5 +22,11 @@ function fzfprompt {
             --no-info \
             --prompt="$1 > " \
             "${@:2}" | sed '/^$/d'
-            
+}
+
+function mpvcmd {
+    mpv --ytdl=yes \
+        --ytdl-raw-options=force-ipv4= \
+        --ytdl-format='bestvideo[height<=480]+bestaudio/best[height<=480]' \
+        "$@"
 }

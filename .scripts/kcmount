@@ -1,9 +1,16 @@
 #!/bin/bash
+#
+# A script that mounts phone via KDEConnect
+
+source ~/.scripts/cmdfns
 
 deviceName=`kdeconnect-cli -a --id-name-only | cut -d ' ' -f1`
 
 if [ -z "$deviceName" ]; then
-	echo "No phone connected"
+    notifier normal \
+        "dialog-error" \
+        "Kcmount" \
+        "No phone connected"
 	exit 1
 fi
 
@@ -14,29 +21,52 @@ isMounted=`device isMounted`
 case $1 in
 	"mount")
 		if [ $isMounted == "true" ]; then
-			echo "Device already mounted"
+            notifier normal \
+                "dialog-error" \
+                "Kcmount" \
+                "Device already mounted"
 		else
 			device mountAndWait
-			echo "Mounted successfully"
+            notifier normal \
+                "drive-removable-media-usb" \
+                "Kcmount" \
+                "Mounted"
 		fi	
 	    ;;	
+
 	"link")
 		if [ $isMounted == "true" ]; then
 			path=`device getDirectories | cut -d ":" -f1`
 			ln -s $path $2
 		else
-			echo -e "\nDevice isn't even mounted.\nPlease mount the device and try again later."
+            notifier normal \
+                "dialog-error" \
+                "Kcmount" \
+                "Device isn't even mounted" \
+                "<b>Please mount the device and try again later</b>"
 		fi	
 	    ;;
+
 	"unmount")
 		if [ $isMounted == "true" ]; then
 			device unmount
-			echo "Unmounted successfully"
+            notifier normal \
+                "drive-removable-media-usb" \
+                "Kcmount" \
+                "Unmounted"
 		else
-			echo "Device already not mounted"
+            notifier normal \
+                "dialog-error" \
+                "Kcmount" \
+                "Device already not mounted"
 		fi
 	    ;;
+
 	*)
-		echo "Invalid argument"
+        notifier normal \
+            "dialog-error" \
+            "Kcmount" \
+            "$1" \
+            "One of 'mount', 'link' or 'unmount' were expected"
 	    ;;
 esac

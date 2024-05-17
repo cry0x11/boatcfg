@@ -5,7 +5,6 @@ step=5
 case $1 in
     "up") brightnessctl set +$step% ;;
     "down") brightnessctl set $step%- ;;
-    *) echo "Invalid option" ;;
 esac
 
 brightness=`brightnessctl i | sed -n '2p' | sed 's/.*(//g;s/)//g'` 

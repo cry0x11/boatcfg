@@ -9,6 +9,4 @@ case $1 in
         riverctl enter-mode normal
         eww update rev_mode=false
         ;;
-    *)
-        ;;
 esac

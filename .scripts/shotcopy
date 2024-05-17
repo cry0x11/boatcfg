@@ -6,13 +6,7 @@
 [ ! -d ~/.cache/boatcfg/scripts ] && mkdir -p ~/.cache/boatcfg/scripts
 
 source ~/.scripts/cmdfns
-
-function menu () { 
-    #add fzf menu here 
-}
-function notifyShot () { notify-send "Shotcopy: screenshot" "$@"; }
-function notifyVideo () { notify-send "Shotcopy: video recording" "$@"; }
-
+function menu () { ~/.scripts/floatingterm rename "$@"; }
 
 case $1 in
     "shot")
@@ -21,9 +15,10 @@ case $1 in
                 region=`slurp`
                 if [ -n "$region" ]; then
                     grim -g "$region" - | wl-copy
-                    notifyShot "\n<u><b>Copied screenshot to clipboard</u></b>"
-                else
-                    notifyShot "\n<u><b>No region provided so didn't take screenshot</u></b>"
+                    notifier normal \
+                        "folder-pictures" \
+                        "Shotcopy: Screenshot (Copy)" \
+                        "Copied to clipboard"
                 fi
                 ;;
 
@@ -31,70 +26,78 @@ case $1 in
                 region=`slurp`
                 if [ -n "$region" ]; then 
                     grim -g "$region" ~/.cache/boatcfg/scripts/screenshot.png
-                    menu
-                    if [ -n "$name" ]; then
-                        mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$name".png
-                        notifyShot "\n<u><b>Took screenshot</b></u>\n\n<b>~/Pictures/$name.png</b>"
-                    else
-                        datename=`date +'%Y%m%d-%H%M%p-screenshot-region'`
-                        mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$datename".png
-                        notifyShot "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
-                    fi
+                    menu shot "Region"
                 else
-                    notifyShot "\n<u><b>No region provided so didn't take screenshot</b></u>"
+                    notifier normal \
+                        "folder-pictures" \
+                        "Shotcopy: Screenshot (Region)" \
+                        "No region provided so didn't take screenshot"
                 fi
                 ;;
 
             "full")
                 grim ~/.cache/boatcfg/scripts/screenshot.png
-                menu
-                if [ -n "$name" ]; then
-                    mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$name".png
-                    notifyShot "\n<u><b>Took screenshot</b></u>\n\n<b>~/Pictures/$name.png</b>"
-                else
-                    datename=`date +'%Y%m%d-%H%M%S%p-screenshot-full'`
-                    mv ~/.cache/boatcfg/scripts/screenshot.png ~/Pictures/"$datename".png
-                    notifyShot "\n<b><u>Took screenshot</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Pictures/$datename.png</b>"
-                fi
+                menu shot "Full"
                 ;;
            
             *)
-                notifyShot "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'copy', 'region' or 'full' were expected</b>"
+                notifier err \
+                    "dialog-error" \
+                    "Shotcopy: Screenshot" \
+                    "$2" \
+                    "<b>One of 'copy', 'region' or 'full' were expected</b>"
                 ;;
-            esac
-            ;;
+        esac
+        ;;
 
 
     "rec")
-        # name of device below will be used as an audio device for screen recording
+        # name of device below will be used as an audio source for screen recording
         device_name="alsa_output.pci-0000_00_1b.0.analog-stereo.monitor"
+
         case $2 in
             "region")
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
-                    notifyVideo "\n<u><b>Script wasn't made to be run concurrently</b></u>"
+                    notifier normal \
+                        "dialog-error" \
+                        "Shotcopy: Recorder" \
+                        "The script wasn't made to be run concurrently"
                 else
                     region=`slurp`
                     if [ -n "$region" ]; then 
-                        echo "region" > ~/.cache/boatcfg/scripts/recorder.lock
+                        echo "Region" > ~/.cache/boatcfg/scripts/recorder.lock
+
                         eww update rev_recording=true
-                        notifyVideo "\n<u><b>Region video recording started</b></u>"
+
+                        notifier normal \
+                            "folder-video" \
+                            "Shotcopy: Recorder" \
+                            "Region video recording started"
+
                         wf-recorder -x yuv420p                  \
                                     --audio="$device_name"      \
                                     -g "$region"                \
                                     -f ~/.cache/boatcfg/scripts/recording.mp4
-                    else
-                        notifyVideo "\n<u><b>No region provided so didn't record video</b></u>"
                     fi
                 fi
                 ;;
 
             "full")
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
-                    notifyVideo "\n<u><b>Script wasn't made to be run concurrently</b></u>"
+                    notifier normal \
+                        "dialog-error" \
+                        "Shotcopy: Recorder" \
+                        "The script wasn't made to be run concurrently"
                 else
-                    echo "fullscreen" > ~/.cache/boatcfg/scripts/recorder.lock
+                    echo "Full" > ~/.cache/boatcfg/scripts/recorder.lock
+
                     eww update rev_recording=true
-                    notifyVideo "\n<u><b>Fullscreen video recording started</b></u>"
+
+                    notifier normal \
+                        "folder-video" \
+                        "Shotcopy: Recorder" \
+                        "Fullscreen video recording started"
+
                     wf-recorder -x yuv420p                  \
                                 --audio="$device_name"      \
                                 -f ~/.cache/boatcfg/scripts/recording.mp4
@@ -105,28 +108,28 @@ case $1 in
                 if [ -f ~/.cache/boatcfg/scripts/recorder.lock ]; then
                     kill -s SIGINT `pgrep wf-recorder`
                     eww update rev_recording=false
-                    menu
-                    if [ -n "$name" ]; then
-                        mv ~/.cache/boatcfg/scripts/recording.mp4 ~/Videos/"$name".mp4
-                        notifyVideo "\n<b><u>Video recording stopped</u></b>\n\n<b>~/Videos/$name.mp4</b>"
-                    else
-                        recType=`cat ~/.cache/boatcfg/scripts/recorder.lock`
-                        datename=`date +'%Y%m%d-%H%M%S%p-video'`
-                        mv ~/.cache/boatcfg/scripts/recording.mp4 ~/Videos/"${datename}-$recType".mp4
-                        notifyVideo "\n<b><u>Video recording stopped</u></b>\n\n<b>Used date because no name was provided</b>\n\n<b>~/Videos/${datename}-$recType.mp4</b>"
-                    fi
-                    rm ~/.cache/boatcfg/scripts/recorder.lock
+                    menu video
                 else
-                    notifyVideo "\n<b><u>Not even running to be stopped</u></b>"
+                    notifier normal \
+                        "dialog-error" \
+                        "Shotcopy: Recorder" \
+                        "Not even running to be stopped"
                 fi
                 ;;
             *)
-                notifyVideo "\n<b>'$2': <u>Invalid argument</u></b>\n\n<b>One of 'full', 'region' or 'stop' were expected</b>"
+                notifier err \
+                    "dialog-error" \
+                    "Shotcopy: Recorder" \
+                    "$2" \
+                    "<b>One of 'full', 'region' or 'stop' were expected</b>"
                 ;;
         esac
         ;;
     *)
-        notify-send "Shotcopy" \
-                    "\n<b>'$1': <u>Invalid argument</u></b>\n\n<b>Either 'shot' or 'rec' were expected</b>"
+        notifier err \
+            "dialog-error" \
+            "Shotcopy" \
+            "$1" \
+            "<b>Either 'shot' or 'rec' were expected</b>"
         ;;
 esac
