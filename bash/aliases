@@ -41,6 +41,7 @@ alias bl="bare log"
 alias blu="bare ls-files --others"
 alias bpull="bare pull origin main --allow-unrelated-histories"
 alias bds="bare diff --staged"
+alias bd="bare diff"
 alias br="bare rm"
 
 alias gi='git init'
@@ -53,6 +54,7 @@ alias gp='git push -u origin main'
 alias glu='git ls-files --others'
 alias gpull='git pull origin main --allow-unrelated-histories'
 alias gds="git diff --staged"
+alias gd="git diff"
 alias gr="git rm"
 
 export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
