@@ -5,7 +5,11 @@
 # If cache directory does not exist, create one
 [ ! -d ~/.cache/boatcfg/scripts ] && mkdir -p ~/.cache/boatcfg/scripts
 
-function menu () { name=`echo "" | tofi --config ~/.scripts/configs/tofi-prompt.cfg --prompt-text=" Filename  "`; }
+source ~/.scripts/cmdfns
+
+function menu () { 
+    #add fzf menu here 
+}
 function notifyShot () { notify-send "Shotcopy: screenshot" "$@"; }
 function notifyVideo () { notify-send "Shotcopy: video recording" "$@"; }
 
