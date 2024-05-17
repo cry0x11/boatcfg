@@ -185,8 +185,10 @@ spawn Super R "~/.scripts/floatingterm run"
 spawn Super Q "$HOME/.scripts/floatingterm sman"
 
 # Search web
-# spawn Super comma "$HOME/.scripts/search"
 spawn Super S "$HOME/.scripts/floatingterm search"
+
+# Youtube RSS
+spawn Super Y "$HOME/.scripts/floatingterm ytrss"
 
 # 
 # XProp-like functionality ... not sufficient but it does the bare minimum 
@@ -277,6 +279,7 @@ map Super F toggle-float                        # toggle floating
 map Super Space toggle-fullscreen               # toggle fullscreen
 map Super+Shift 0 set-view-tags $(( (1 << 32)-1 ))     # pin focused to all tags 
 map Alt Tab focus-previous-tags                 # toggle between previous tag and current one
+map Control Tab toggle-fullscreen               # toggle fullscreen
 
 map Super+Alt L move right 100                  # move floated focused right
 map Super+Alt H move left 100                   # move floated focused left
@@ -324,7 +327,8 @@ tiler Super Tab "--layout-toggle"   # toggle layout
 #       APP-ID                       APP-TITLE       W       H       X       Y 
 float 'riverprop'                    0               400     250     5       40
 float 'floatingterm'                 0               1000    400    center   center
-float 'org.kde.konsole'      "Floating — Konsole"    1000    400    center   center
+float 'org.kde.konsole'     "Floating — Konsole"     1100    500    center   center
+float 'mlterm'                      "Floating"       1100    500    center   center
 float 'Anki'                         "Browse*"       1000    650    center   center
 float 'Anki'                         "Statistics"    1000    650    center   center
 float 'Anki'                        "Preferences"    1000    650    center   center
@@ -332,7 +336,6 @@ float 'Anki'          "Image Occlusion Enhanced*"    1200    650    center   cen
 float 'Anki'                         "Add"           500     650    center   center
 float 'Gimp'            "Change Foreground Color"    500     500    center   center
 float 'Firefox'   "Firefox - Choose User Profile"    1000    650    center   center
-float 'mpv'                          0               1000    650    center   center
 float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
 float 'nm-connection-editor'         0
@@ -343,6 +346,7 @@ float 'org.keepassxc.KeePassXC'      0
 #    APP-ID                                 TAG
 tags 'sioyek'                                1
 tags 'Anki'          "* - Anki"              2
+tags 'mpv'                                   3
 tags 'Firefox'       "Mozilla Firefox"       4
 tags 'fileManager'                           6
 tags 'Gimp'                                  7
