@@ -28,8 +28,9 @@ $borderRadius: 0.6em;
 
 * {
     all:unset;
-    font-family: "DejaVuSansM Nerd Font Propo", "monospace";
+    font-family: "Hack Nerd Font Propo", "monospace";
     font-size: 15px;
+    font-weight: bold;
 }
 
 .bar {
@@ -58,7 +59,6 @@ $borderRadius: 0.6em;
 
 .module {
     padding: 0.2em 0.6em 0.2em 0.6em;
-    font-weight: bold;
     color: $bg;
     border-radius: $borderRadius;
     margin-right: 0.4em;
