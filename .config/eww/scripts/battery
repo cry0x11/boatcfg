@@ -19,7 +19,7 @@ case $percent in
         fi
         ;;
     100)
-        if [ $state -eq 0 ]; then
+        if [ $state -eq 1 ]; then
             locker=`cat ~/.cache/boatcfg/scripts/battery.lock`
             if [ -z "$locker" ] || [ $locker -ne $percent ] ; then
                 echo "$percent" > ~/.cache/boatcfg/scripts/battery.lock
