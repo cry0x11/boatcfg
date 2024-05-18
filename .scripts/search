@@ -4,7 +4,7 @@ source ~/.scripts/cmdfns
 
 choice=`cat ~/.scripts/files/search-list |\
      awk -F ';' '{ printf "%2s %-5s %-5s %s\n", " ", $1, $2, $3}' |\
-     fzfcmd --prompt='Search > '`
+     fzfcmd --tiebreak=begin --prompt='Search > '`
 
 if [ -n "$choice" ]; then
     entry=`echo $choice | sed 's/\s/;/; s/\s/;/'`
