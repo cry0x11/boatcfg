@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# Using console because of both sixel and bidi are available
+# Using console because both sixel and bidi are available
 function floating () { konsole --notransparency --profile Floating -e "$@"; }
-
-# Using mlterm because fzf previews overlap in konsole :(
-function fclip () { mlterm --title="Floating" -e "$@"; }
 
 
 case $1 in
     sman) floating ~/.scripts/files/scriptfzf;;
-    clip) fclip ~/.scripts/files/lsclip;;
+    clip) floating ~/.scripts/files/lsclip;;
     run) floating ~/.scripts/cmdrunner;;
     mark) floating ~/.scripts/bookmark query;;
     addmark) floating ~/.scripts/bookmark add;;
