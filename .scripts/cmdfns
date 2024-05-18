@@ -3,6 +3,7 @@
 function fzfcmd { 
     fzf --color=preview-bg:'#282829',pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 \
         --bind 'tab:toggle+up,shift-tab:toggle+down' \
+        --tiebreak=begin \
         "$@"
 }
 

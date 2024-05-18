@@ -1,23 +1,20 @@
 #!/bin/bash
 
 source ~/.scripts/cmdfns
+    
+if ! [ -f ~/.scripts/ytsubs ]; then
+    touch ~/.scripts/ytsubs
+fi
 
 function updater {
-    while IFS="" read -r yturl || [ -n "$yturl" ]
-    do
-    # RSSURL
-    rssUrl=`curl -s "$yturl" | grep '"rssUrl":' | sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g'`
-
-    # Filter
-    #sed 'N;N;N;N;s/\n/;;;/g; s/;;; $//g' |\
-    curl -s "$rssUrl" |\
-            sed '/<media:description>/,/<\/media:description/d; /<media:community>/,/<\/media:community>/d; /<author>/,/<\/author>/d; /<updated>/d; /<media:content/d; /<yt:channelId>/d; /<yt:videoId>/d; /<id>/d; /<media:title>/d; /media:group>/d;' |\
-            awk '/<entry>/,/<\/entry>/' |\
-            sed 's/^.*<media:thumbnail url="//g; s/^.*href="//g; s/".*$//g; s/^.*<title>//g; s/<\/title>//g; /<entry>/d; s/<\/entry>//g; s/^.*<published>//g; s/<\/published>//g' |\
-            perl -pe 's/\n/;;;/g if $. % 5' |\
-            sed 's/&quot;/"/g' |\
-            awk -F ';;;' '{t=$1; $1=$3; $3=t; print $1";;;"$2";;;"$3";;;"$4 ;}' >> ~/.cache/boatcfg/scripts/ytrss
-    done < ~/.scripts/files/ytsubs
+    cat ~/.scripts/files/ytsubs |\
+        xargs curl -s |\
+        sed '/<media:description>/,/<\/media:description/d; /<media:community>/,/<\/media:community>/d; /<author>/,/<\/author>/d; /<updated>/d; /<media:content/d; /<yt:channelId>/d; /<yt:videoId>/d; /<id>/d; /<media:title>/d; /media:group>/d;' |\
+        awk '/<entry>/,/<\/entry>/' |\
+        sed 's/^.*<media:thumbnail url="//g; s/^.*href="//g; s/".*$//g; s/^.*<title>//g; s/<\/title>//g; /<entry>/d; s/<\/entry>//g; s/^.*<published>//g; s/<\/published>//g' |\
+        perl -pe 's/\n/;;;/g if $. % 5' |\
+        sed 's/&quot;/"/g' |\
+        awk -F ';;;' '{t=$1; $1=$3; $3=t; print $1";;;"$2";;;"$3";;;"$4 ;}' >> ~/.cache/boatcfg/scripts/ytrss
 }
 
 case $1 in
@@ -47,5 +44,25 @@ case $1 in
     update)
         rm ~/.cache/boatcfg/scripts/ytrss
         updater
+        ;;
+
+    add)
+        yturl=`fzfprompt "Youtube URL"`
+        if [ -n "$yturl" ]; then
+            rssurl=`curl -s "$yturl" | grep '"rssUrl":' | sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g'`
+            if grep -q $rssurl ~/.scripts/files/ytsubs; then
+                notifier normal \
+                "dialog-error" \
+                "Ytrss" \
+                "Feed already exists"
+            else
+                echo $rssurl >> ~/.scripts/files/ytsubs
+                notifier normal \
+                "application-rss+xml" \
+                "Ytrss" \
+                "Feed added successfully" \
+                "<b>$yturl</b>"
+            fi
+        fi
         ;;
 esac

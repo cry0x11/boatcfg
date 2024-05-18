@@ -3,6 +3,8 @@
 󰞅;Nerd Icons;nerdmenu query
 ;Papirus Icons;icontheme
 ;MPV YT;mpvyt
+;Ytrss add;ytrss add
+󰁡;Ytrss update;nohup bash -c "~/.scripts/ytrss update &"
 󰟸;Disable Touchpad;touchpad disable
 󰟸;Enable Touchpad;touchpad enable
 ;Lock;gtklock

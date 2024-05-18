@@ -1,8 +1,10 @@
 #!/bin/bash
 
+source ~/.scripts/cmdfns
+
 choice=`cat ~/.scripts/files/scriptman-list |\
      awk -F ';' '{ printf "%2s %-5s %s\n", " ", $1, $2}' |\
-     fzf --color=pointer:1,prompt:4,hl:4,bg+:'#45403d',fg+:7,hl+:1 --prompt='CMD > ' |\
+     fzfcmd --prompt='CMD > ' |\
      sed 's/[^A-Za-z]/ /g; s/ \{3,\}//g'`
 
 if [ -n "$choice" ]; then
@@ -14,7 +16,7 @@ if [ -n "$choice" ]; then
         cut -d' ' -f1`
 
     if [ -f ~/.scripts/$script ]; then
-        bash -c "~/.scripts/$cmd"
+        ~/.scripts/$cmd
     else
         bash -c "nohup bash -c '$cmd &' 2&>/dev/null"
     fi

@@ -14,5 +14,6 @@ case $1 in
     ffprofile) floating ~/.scripts/browser;;
     search) floating ~/.scripts/search;;
     ytrss) floating ~/.scripts/ytrss view;;
+    ytrss_add) floating ~/.scripts/ytrss add;;
     rename) floating ~/.scripts/rename ${@:2};;
 esac
