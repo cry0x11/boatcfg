@@ -6,7 +6,7 @@ percent=`cat /sys/class/power_supply/BAT0/capacity`
 state=`cat /sys/class/power_supply/ACAD/online`
 
 case $percent in
-    20|15|10|9|8|7|6|5|4|3|2|1)
+    25|20|15|10|9|8|7|6|5|4|3|2|1)
         if [ $state -eq 0 ]; then
             locker=`cat ~/.cache/boatcfg/scripts/battery.lock`
             if [ -z "$locker" ] || [ $locker -ne $percent ] ; then

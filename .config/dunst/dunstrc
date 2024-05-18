@@ -60,7 +60,7 @@
     ignore_dbusclose = true
 
     ### Wayland ###
-    layer = top
+    layer = overlay
     force_xwayland = false
 
     ### mouse
@@ -70,7 +70,6 @@
 
 [experimental]
     per_monitor_dpi = false
-
 
 [urgency_low]
     background = "#282828"
