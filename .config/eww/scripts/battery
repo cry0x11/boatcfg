@@ -1,11 +1,45 @@
 #!/bin/bash
 
+source ~/.scripts/cmdfns
+
 percent=`cat /sys/class/power_supply/BAT0/capacity`
 state=`cat /sys/class/power_supply/ACAD/online`
 
+case $percent in
+    20|15|10|9|8|7|6|5|4|3|2|1)
+        if [ $state -eq 0 ]; then
+            locker=`cat ~/.cache/boatcfg/scripts/battery.lock`
+            if [ -z "$locker" ] || [ $locker -ne $percent ] ; then
+                echo "$percent" > ~/.cache/boatcfg/scripts/battery.lock
+                notifier normal \
+                    "battery-caution-symbolic" \
+                    "Battery is ${percent}%" \
+                    "Please connect the charger"
+            fi
+        fi
+        ;;
+    100)
+        if [ $state -eq 0 ]; then
+            locker=`cat ~/.cache/boatcfg/scripts/battery.lock`
+            if [ -z "$locker" ] || [ $locker -ne $percent ] ; then
+                echo "$percent" > ~/.cache/boatcfg/scripts/battery.lock
+                notifier normal \
+                    "battery-level-100-charged-symbolic" \
+                    "Battery is fully charged" \
+                    "Please disconnect the charger"
+            fi
+        fi
+        ;;
+esac
+
+
 case $1 in
-    percent)    echo "$percent";;
-    state)      echo "$state";;
+    percent)    echo "$percent" ;;
+    state)      echo "$state"   ;;
     *)
-        dunstify "EWW: Battery ERROR!" "\n'$1': INVALID ARGUMENT\n\nEither 'percent' or 'state' were expected"
+        notifier err \
+            "dialog-error" \
+            "Battery" \
+            "$1" \
+            "<b>Either 'percent' or 'state' were expected</b>"
 esac
