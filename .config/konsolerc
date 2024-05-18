@@ -1,0 +1,25 @@
+[Desktop Entry]
+DefaultProfile=Gruvbox-Material.profile
+
+[FileLocation]
+scrollbackUseCacheLocation=true
+scrollbackUseSystemLocation=false
+
+[General]
+ConfigVersion=1
+
+[KonsoleWindow]
+UseSingleInstance=true
+
+[SplitView]
+SplitViewVisibility=AlwaysHideSplitHeader
+
+[TabBar]
+CloseTabButton=None
+TabBarVisibility=AlwaysHideTabBar
+
+[ThumbnailsSettings]
+EnableThumbnails=false
+
+[UiSettings]
+ColorScheme=
