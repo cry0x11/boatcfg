@@ -54,20 +54,6 @@ position=`cat ~/.cache/boatcfg/prayers/$today-index`
 
 calculator $position $today
 
-case $remTime in
-    10|9|8|7|6|5|4|3|2|1|0)
-        locker=`cat ~/.cache/boatcfg/scripts/prayer.lock`
-        if [ -z "$locker" ] || [ $locker -ne $remTime ] ; then
-            echo "$remTime" > ~/.cache/boatcfg/scripts/prayer.lock
-            notifier normal \
-                "software-update-urgent-symbolic" \
-                "Prayer ($summary)" \
-                "Only ${remTime}m remaining" \
-                "Prepare for the prayer"
-        fi
-        ;;
-esac
-
 if [ $position -ge 6 ] && [ $remTime -le 0 ] && [ $remSec -le 0 ]; then
 	remTimeText="DONE"
 	prayTimeText=""	
@@ -106,5 +92,20 @@ fi
 
 case $1 in
     "q") echo "$prayTimeText" ;;
-    "t") echo "$remTimeText" ;;
+    "t") 
+        echo "$remTimeText" 
+        case $remTime in
+            30|20|15|10|9|8|7|6|5|4|3|2|1|0)
+                locker=`cat ~/.cache/boatcfg/scripts/prayer.lock`
+                if [ -z "$locker" ] || [ $locker -ne $remTime ] ; then
+                    echo "$remTime" > ~/.cache/boatcfg/scripts/prayer.lock
+                    notifier normal \
+                        "software-update-urgent-symbolic" \
+                        "Prayer ($summary)" \
+                        "Only ${remTime}m remaining" \
+                        "Prepare for the prayer"
+                fi
+                ;;
+        esac
+        ;;
 esac

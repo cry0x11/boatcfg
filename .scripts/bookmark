@@ -38,7 +38,7 @@ case $1 in
     
     "query")
         query=`cat ~/.web_bookmarks |\
-            awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
+            awk -F ';;;' '{ printf "%2s %-40s %s\n", " ", $1, $2}' |\
             fzfcmd --prompt='Bookmarks > ' |\
             sed 's/^.*http/http/g'`
 

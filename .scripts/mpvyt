@@ -2,7 +2,7 @@
 
 source ~/.scripts/cmdfns
 
-url=`fzfprompt "MPV YT"`
+url=`wl-paste`
 
 if [ -n "$url" ]; then
     if [[ $url =~ ^"https" ]]; then
