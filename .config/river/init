@@ -336,11 +336,13 @@ float 'Anki'          "Image Occlusion Enhanced*"    1200    650    center   cen
 float 'Anki'                         "Add"           500     650    center   center
 float 'Gimp'            "Change Foreground Color"    500     500    center   center
 float 'Firefox'   "Firefox - Choose User Profile"    1000    650    center   center
+float 'org.keepassxc.KeePassXC'      0               900     550    center   center
+float 'kvantummanager'               0               900     550    center   center
+float 'kvantumpreview'               0               900     550    center   center
 float 'Nsxiv'                        0
 float 'org.fcitx.fcitx5-config-qt'   0
 float 'nm-connection-editor'         0
 float 'pavucontrol'                  0
-float 'org.keepassxc.KeePassXC'      0               800     550    center   center
 
 # Start app in specific tag
 #    APP-ID                                 TAG
@@ -350,6 +352,7 @@ tags 'mpv'                                   3
 tags 'Firefox'       "Mozilla Firefox"       4
 tags 'fileManager'                           6
 tags 'Gimp'                                  7
+tags 'org.inkscape.Inkscape'                 7
 tags 'org.telegram.desktop'                  8
 tags 'Godot'                                 9
 tags 'Godot_Engine'                          9
