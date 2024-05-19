@@ -34,10 +34,7 @@ case $1 in
         choiceUrl=`grep ";;;$choice" ~/.cache/boatcfg/scripts/ytrss | awk -F ';;;' '{print $2}'`
 
         if [ -n "$choice" ]; then
-            nohup bash -c "mpv --ytdl=yes \
-                --ytdl-raw-options=force-ipv4= \
-                --ytdl-format='bestvideo[height<=720]+bestaudio/best[height<=720]' \
-                $choiceUrl &" 2&>/dev/null
+            nohup bash -c "source ~/.scripts/cmdfns; mpvcmd $choiceUrl &" 2&>/dev/null
         fi
         ;;
 
@@ -47,21 +44,29 @@ case $1 in
         ;;
 
     add)
-        yturl=`fzfprompt "Youtube URL"`
+        yturl=`wl-paste`
         if [ -n "$yturl" ]; then
-            rssurl=`curl -s "$yturl" | grep '"rssUrl":' | sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g'`
-            if grep -q $rssurl ~/.scripts/files/ytsubs; then
+            if [[ $yturl =~ ^"https://www.youtube.com/" ]]; then
+                rssurl=`curl -s "$yturl" | grep '"rssUrl":' | sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g'`
+                if grep -q $rssurl ~/.scripts/files/ytsubs; then
+                    notifier normal \
+                    "dialog-error" \
+                    "Ytrss" \
+                    "Feed already exists"
+                else
+                    echo $rssurl >> ~/.scripts/files/ytsubs
+                    notifier normal \
+                    "application-rss+xml" \
+                    "Ytrss" \
+                    "Feed added successfully" \
+                    "<b>$yturl</b>"
+                fi
+            else
                 notifier normal \
                 "dialog-error" \
                 "Ytrss" \
-                "Feed already exists"
-            else
-                echo $rssurl >> ~/.scripts/files/ytsubs
-                notifier normal \
-                "application-rss+xml" \
-                "Ytrss" \
-                "Feed added successfully" \
-                "<b>$yturl</b>"
+                "Not a youtube url" \
+                "<b>Please copy the url of a youtube channel to your clipboard</b>"
             fi
         fi
         ;;
