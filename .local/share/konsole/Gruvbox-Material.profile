@@ -1,7 +1,7 @@
 [Appearance]
 BoldIntense=true
 ColorScheme=New Color Scheme
-Font=Hack Nerd Font Propo,13,-1,5,700,0,0,0,0,0,0,0,0,0,0,1,Bold
+Font=JetBrainsMono Nerd Font Propo,13,-1,5,700,0,0,0,0,0,0,0,0,0,0,1,Bold
 IgnoreWcWidth=false
 UseFontLineChararacters=false
 WordMode=true
