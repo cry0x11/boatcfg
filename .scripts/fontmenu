@@ -1,0 +1,32 @@
+#!/bin/bash
+
+source ~/.scripts/cmdfns
+
+case $1 in 
+    name)
+        font=`fc-list |\
+                awk -F ":" '{print $2}' |\
+                sed 's/,.*$//g' |\
+                sort -u |\
+                fzfcmd --prompt "Font > "`
+
+        printf "$font" | wl-copy
+        ;;
+    file)
+        font=`fc-list |\
+            awk -F ":" '{print $1}' |\
+            awk -F "/" '{print $NF}' |\
+            sort -u |\
+            fzfcmd --prompt "Font file > "`
+
+        printf "$font" | wl-copy
+        ;;
+    *)
+        notifier err \
+            "dialog-error" \
+            "Fontmenu" \
+            "$1" \
+            "Either 'name' or 'file' were expected"
+        ;;
+esac
+
