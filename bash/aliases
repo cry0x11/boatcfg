@@ -18,7 +18,7 @@ alias ll='eza -lah --icons=always'
 alias v='nvim'
 alias dv='doas nvim -u ~/.config/nvim/init.lua'
 alias ugrub='doas grub-mkconfig -o /boot/grub/grub.cfg'
-alias ytd='yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480]"'
+alias ytd='yt-dlp -f "bestvideo[ext=mp4][vcodec^=avc][height<=480]+bestaudio/best[height<=480]"'
 alias sbrc="source ~/.bashrc"
 alias rm="trash"
 alias tl="trash-list"
