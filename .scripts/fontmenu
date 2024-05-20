@@ -10,8 +10,16 @@ case $1 in
                 sort -u |\
                 fzfcmd --prompt "Font > "`
 
-        printf "$font" | wl-copy
+        if [ -n "$font" ]; then
+            printf "$font" | wl-copy
+            
+            notifier normal \
+                "dialog-text-and-font" \
+                "Fontmenu" \
+                "Font copied to clipboard"
+        fi
         ;;
+
     file)
         font=`fc-list |\
             awk -F ":" '{print $1}' |\
@@ -19,7 +27,14 @@ case $1 in
             sort -u |\
             fzfcmd --prompt "Font file > "`
 
-        printf "$font" | wl-copy
+        if [ -n "$font" ]; then
+            printf "$font" | wl-copy
+            
+            notifier normal \
+                "dialog-text-and-font" \
+                "Fontmenu" \
+                "Font filename copied to clipboard"
+        fi
         ;;
     *)
         notifier err \

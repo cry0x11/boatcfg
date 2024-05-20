@@ -9,11 +9,11 @@ choice=`cat ~/.scripts/files/scriptman-list |\
 
 if [ -n "$choice" ]; then
     cmd=`cat ~/.scripts/files/scriptman-list |\
-        grep --color=never -w ";$choice" |\
-        awk -F ';' '{print $3}'`
+            grep --color=never ";$choice;" |\
+            awk -F ';' '{print $3}'`
 
     script=`echo "$cmd" |\
-        cut -d' ' -f1`
+                cut -d' ' -f1`
 
     if [ -f ~/.scripts/$script ]; then
         bash -c "~/.scripts/$cmd"
