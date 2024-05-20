@@ -59,3 +59,4 @@ alias gr="git rm"
 
 export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
 export MANPAGER="nvim +Man!"
+export EDITOR="nvim"

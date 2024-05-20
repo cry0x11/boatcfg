@@ -7,14 +7,25 @@ if ! [ -f ~/.scripts/ytsubs ]; then
 fi
 
 function updater {
+    if ! [ -f ~/.cache/boatcfg/scripts/tmp ]; then
+        mkdir -p ~/.cache/boatcfg/scripts/tmp
+    fi
+
     cat ~/.scripts/files/ytsubs |\
-        xargs curl -s |\
-        sed '/<media:description>/,/<\/media:description/d; /<media:community>/,/<\/media:community>/d; /<author>/,/<\/author>/d; /<updated>/d; /<media:content/d; /<yt:channelId>/d; /<yt:videoId>/d; /<id>/d; /<media:title>/d; /media:group>/d;' |\
+        sed 's/=/={/g; s/$/}/g' |\
+        xargs -P 0 -I {} curl -s {} --output ~/.cache/boatcfg/scripts/tmp/'#1'
+
+
+    cat ~/.cache/boatcfg/scripts/tmp/* |\
         awk '/<entry>/,/<\/entry>/' |\
-        sed 's/^.*<media:thumbnail url="//g; s/^.*href="//g; s/".*$//g; s/^.*<title>//g; s/<\/title>//g; /<entry>/d; s/<\/entry>//g; s/^.*<published>//g; s/<\/published>//g' |\
+        sed '/<media:description>/,/<\/media:description/d; /<media:community>/,/<\/media:community>/d; /<author>/,/<\/author>/d; /<updated>/d; /<media:content/d; /<yt:channelId>/d; /<yt:videoId>/d; /<id>/d; /<media:title>/d; /media:group>/d; s/^.*<media:thumbnail url="//g; s/^.*href="//g; s/".*$//g; s/^.*<title>//g; s/<\/title>//g; /<entry>/d; s/<\/entry>//g; s/^.*<published>//g; s/<\/published>//g; s/&quot;/"/g' |\
         perl -pe 's/\n/;;;/g if $. % 5' |\
-        sed 's/&quot;/"/g' |\
         awk -F ';;;' '{t=$1; $1=$3; $3=t; print $1";;;"$2";;;"$3";;;"$4 ;}' >> ~/.cache/boatcfg/scripts/ytrss
+
+    notifier normal \
+        "application-rss+xml" \
+        "Ytrss" \
+        "Feed updated successfully"
 }
 
 case $1 in
@@ -47,7 +58,9 @@ case $1 in
         yturl=`wl-paste`
         if [ -n "$yturl" ]; then
             if [[ $yturl =~ ^"https://www.youtube.com/" ]]; then
-                rssurl=`curl -s "$yturl" | grep '"rssUrl":' | sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g'`
+                rssurl=`curl -s "$yturl" |\
+                            grep '"rssUrl":' |\
+                            sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g; s/channel_id=UC/playlist_id=UU/g'`
                 if grep -q $rssurl ~/.scripts/files/ytsubs; then
                     notifier normal \
                     "dialog-error" \
