@@ -117,7 +117,7 @@
 
           (label
               :class "battery_state"
-              :text `${battery_state == 1 ? "󱐋" : battery_percent == 100 ? "󰁹" : battery_percent > 90 ? "󰂂" : battery_percent > 80 ? "󰂁" : battery_percent > 70 ? "󰂀" : battery_percent > 60 ? "󰁿" : battery_percent > 50 ? "󰁾" : battery_percent > 40 ? "󰁽" : battery_percent == 30 ? "󰁼" : battery_percent == 20 ? "󰁻" : "󰁺" }`
+              :text `${battery_state == 1 ? "󱐋" : battery_percent == 100 ? "" : battery_percent > 75 ? "" : battery_percent > 50 ? "" : battery_percent > 25 ? "" : "" }`
           )
           (label
               :class "battery_percent"
