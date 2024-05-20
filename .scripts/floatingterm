@@ -9,11 +9,8 @@ case $1 in
     clip) floating ~/.scripts/files/lsclip;;
     run) floating ~/.scripts/cmdrunner;;
     mark) floating ~/.scripts/bookmark query;;
-    addmark) floating ~/.scripts/bookmark add;;
-    delmark) floating ~/.scripts/bookmark delete;;
     ffprofile) floating ~/.scripts/browser;;
     search) floating ~/.scripts/search;;
     ytrss) floating ~/.scripts/ytrss view;;
-    ytrss_add) floating ~/.scripts/ytrss add;;
     rename) floating ~/.scripts/rename ${@:2};;
 esac

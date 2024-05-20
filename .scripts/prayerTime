@@ -11,7 +11,7 @@ function removeOld () {
 }
 
 function prayerFile () {
-    grep --color=never $1T ~/.config/eww/scripts/eg-prayers | sed 's/^.*T//g; s/[0.9]\{2\}Z//g' > ~/.cache/boatcfg/prayers/$1
+    grep --color=never $1T ~/.scripts/eg-prayers | sed 's/^.*T//g; s/[0.9]\{2\}Z//g' > ~/.cache/boatcfg/prayers/$1
 }
 
 function calculator () {
