@@ -12,23 +12,23 @@
 
 (defpoll battery_percent :initial "0"
                          :interval "1s"
-    `scripts/battery percent`)
+    `~/.scripts/battery percent`)
 
 (defpoll battery_state :initial "0"
                        :interval "1s"
-    `scripts/battery state`)
+    `~/.scripts/battery state`)
 
 (defpoll prayerTime :initial ""
                     :interval "1s"
-    `scripts/prayerTime t`)
+    `~/.scripts/prayerTime t`)
 
 (defpoll prayer :initial ""
                 :interval "1s"
-    `scripts/prayerTime q`)
+    `~/.scripts/prayerTime q`)
 
 (defpoll ethernet_state :initial "down"
                         :interval "2s"
-    `scripts/network eth state`)
+    `~/.scripts/network eth state`)
 
 (defpoll volume :initial "0"
                 :interval "86400s"

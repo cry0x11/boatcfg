@@ -94,18 +94,26 @@ case $1 in
     "q") echo "$prayTimeText" ;;
     "t") 
         echo "$remTimeText" 
+
         case $remTime in
-            30|20|15|10|9|8|7|6|5|4|3|2|1|0)
-                locker=`cat ~/.cache/boatcfg/scripts/prayer.lock`
-                if [ -z "$locker" ] || [ $locker -ne $remTime ] ; then
-                    echo "$remTime" > ~/.cache/boatcfg/scripts/prayer.lock
-                    notifier normal \
-                        "software-update-urgent-symbolic" \
-                        "Prayer ($summary)" \
-                        "Only ${remTime}m remaining" \
-                        "Prepare for the prayer"
-                fi
-                ;;
+            0) locknum=1 ;;
+            1) locknum=2 ;;
+            2|3|4|5) locknum=5 ;;
+            6|7|8|9|10) locknum=10 ;;
+            11|12|13|14|15) locknum=15 ;;
+            *) locknum=0 ;;
         esac
+
+        if [ $locknum -gt 0 ]; then
+            locker=`cat ~/.cache/boatcfg/scripts/prayer.lock`
+            if [ -z "$locker" ] || [ $locker -ne $locknum ] ; then
+                echo "$locknum" > ~/.cache/boatcfg/scripts/prayer.lock
+                notifier normal \
+                    "software-update-urgent-symbolic" \
+                    "Prayer ($summary)" \
+                    "Only ${remTime}m remaining" \
+                    "Prepare for the prayer"
+            fi
+        fi
         ;;
 esac
