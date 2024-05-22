@@ -2,13 +2,13 @@
 
 source ~/.scripts/extra/cmdfns
 
-[ ! -f ~/.web_bookmarks ] && touch ~/.web_bookmarks
+[ ! -f ~/.scripts/data/.web_bookmarks ] && touch ~/.scripts/data/.web_bookmarks
 
 case $1 in
     "add")
         bookmark=`wl-paste`
         if [[ $bookmark =~ ^"http" ]]; then
-            if grep -q "$bookmark" ~/.web_bookmarks ;then
+            if grep -q "$bookmark" ~/.scripts/data/.web_bookmarks ;then
                 notifier normal \
                     "bookmarks" \
                     "Bookmark" \
@@ -21,7 +21,7 @@ case $1 in
                         "Bookmark" \
                         "<b>$name</b>\n\n<b>$bookmark</b>"
 
-                    echo -e "$name;;;$bookmark" >> ~/.web_bookmarks
+                    echo -e "$name;;;$bookmark" >> ~/.scripts/data/.web_bookmarks
                 else
                     notifier normal \
                         "bookmarks" \
@@ -38,7 +38,7 @@ case $1 in
         ;;
     
     "query")
-        query=`cat ~/.web_bookmarks |\
+        query=`cat ~/.scripts/data/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-40s %s\n", " ", $1, $2}' |\
             fzfcmd --prompt='Bookmarks > ' |\
             sed 's/^.*http/http/g'`
@@ -49,13 +49,13 @@ case $1 in
         ;;
 
     "delete")
-        del=`cat ~/.web_bookmarks |\
+        del=`cat ~/.scripts/data/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
             fzfcmd --multi --prompt='Delete Bookmark > ' |\
             sed 's/^.*http/http/g'`
 
         if [ -n "$del" ]; then
-            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.web_bookmarks 2&>/dev/null
+            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.scripts/data/.web_bookmarks 2&>/dev/null
         fi
             
         ;;
