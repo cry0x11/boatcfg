@@ -1,6 +1,6 @@
 [Appearance]
 BoldIntense=true
-ColorScheme=New Color Scheme
+ColorScheme=gruvbox-material
 Font=JetBrainsMono Nerd Font Propo,13,-1,5,700,0,0,0,0,0,0,0,0,0,0,1,Bold
 IgnoreWcWidth=false
 UseFontLineChararacters=false
