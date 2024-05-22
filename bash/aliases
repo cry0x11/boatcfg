@@ -43,6 +43,7 @@ alias bpull="bare pull origin main --allow-unrelated-histories"
 alias bds="bare diff --staged"
 alias bd="bare diff"
 alias br="bare rm"
+alias bstop="bare update-index --skip-worktree"
 
 alias gi='git init'
 alias ga='git add'
@@ -56,6 +57,7 @@ alias gpull='git pull origin main --allow-unrelated-histories'
 alias gds="git diff --staged"
 alias gd="git diff"
 alias gr="git rm"
+alias gstop="git update-index --skip-worktree"
 
 export PATH="$PATH:$HOME/.scripts:$HOME/go/bin"
 export MANPAGER="nvim +Man!"
