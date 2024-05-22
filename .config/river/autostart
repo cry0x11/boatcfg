@@ -23,4 +23,5 @@ pipewire &
 pipewire-pulse &
 wireplumber &
 kdeconnect-indicator &
+~/.scripts/detect_headphone &
 ~/.scripts/ytrss update

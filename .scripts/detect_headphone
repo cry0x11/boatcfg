@@ -1,0 +1,20 @@
+#!/bin/bash
+# 
+# Credit : https://askubuntu.com/a/1284966
+
+acpi_listen | while IFS= read -r line;
+do
+    if [ "$line" = "jack/headphone HEADPHONE plug" ]; then
+        volume=`pamixer --get-volume`
+        muted=`pamixer --get-mute`
+        eww update volume="$volume"
+        eww update volume_mute="$muted"
+    elif [ "$line" = "jack/headphone HEADPHONE unplug" ]; then
+        volume=`pamixer --get-volume`
+        muted=`pamixer --get-mute`
+        eww update volume="$volume"
+        eww update volume_mute="$muted"
+    fi
+done
+
+
