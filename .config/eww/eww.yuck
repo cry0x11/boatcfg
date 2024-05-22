@@ -6,6 +6,10 @@
     `ristate -vt | stdbuf -o0 sed '/{"viewstag":{}}/d'`
 )
 
+(deflisten pomo :initial "00:00"
+    `tail -f ~/.cache/boatcfg/pomo/log`
+)
+
 (defpoll time :initial ""
               :interval "10s"
     `date +"%a %Y/%m/%d %I:%M %p"`)
@@ -37,6 +41,11 @@
 (defpoll volume_mute :initial "false"
                      :interval "86400s"
   `pamixer --get-mute`)
+
+(defvar rev_pomo false)
+(defvar pomo_icon "󱎫")
+(defvar pomo_break false)
+(defvar pomo_button "0")
 
 (defvar rev_prayer false)
 (defvar rev_date false)
@@ -99,17 +108,7 @@
             :space-evenly true
             :spacing 8
         )
-
-        (label
-          :class "module"
-          :style '${volume_mute == "false" ? "background-color: #a9b665;" : "background-color: #ea6962;" }'
-          :text `${volume_mute == "false" ? "" : "" } ${volume}%`
-        )
-        (label
-          :class "module"
-          :style '${ethernet_state == "up" ? "background-color: #a9b665;" : "background-color: #ea6962;"}'
-          :text `${ethernet_state == "up" ? "󰈀" : ""}`
-        )
+        
         (box
           :class "module"
           :space-evenly false
@@ -123,6 +122,18 @@
               :class "battery_percent"
               :text `${battery_percent}%`
           )
+        )
+
+        (label
+          :class "module"
+          :style '${ethernet_state == "up" ? "background-color: #a9b665;" : "background-color: #5a524c; color:#d4be98"}'
+          :text `${ethernet_state == "up" ? "󰈀" : ""}`
+        )
+
+        (label
+          :class "module"
+          :style '${volume_mute == "false" ? "background-color: #a9b665;" : "background-color: #5a524c; color:#d4be98" }'
+          :text `${volume_mute == "false" ? "" : "" } ${volume}%`
         )
 
         (revealer
@@ -194,6 +205,31 @@
             :justify "center"
 		    :text `${current-json["layout"] == "null" ? "[]" : current-json["layout"]}`
         )
+
+        (revealer
+            :reveal `${rev_pomo}`
+            :transition "slideleft"
+            :duration "350ms"
+          (box
+          :class "module"
+          :space-evenly false
+          :style `${pomo_button == "1" ? "background-color:#5a524c; color:#d4be98" : pomo_break == false ? "background-color: #ea6962;" : "background-color: #a9b665"}`
+            (label
+              :text `${pomo_icon} ${pomo} `
+            )
+
+            (button
+              :onclick `${pomo_button == "0" ? "~/.scripts/pomo pause" : "~/.scripts/pomo resume"}`
+              `${pomo_button == "0" ? "" : ""} `
+            )
+
+            (button
+              :onclick `~/.scripts/pomo stop`
+              ""
+            )
+          )
+        )
+
         (revealer
             :reveal {rev_mode}
             :transition "slideright"
