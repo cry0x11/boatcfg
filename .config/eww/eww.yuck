@@ -45,7 +45,7 @@
 (defvar rev_pomo false)
 (defvar pomo_icon "󱎫")
 (defvar pomo_break false)
-(defvar pomo_button "0")
+(defvar pomo_pause false)
 
 (defvar rev_prayer false)
 (defvar rev_date false)
@@ -213,19 +213,9 @@
           (box
           :class "module"
           :space-evenly false
-          :style `${pomo_button == "1" ? "background-color:#5a524c; color:#d4be98" : pomo_break == false ? "background-color: #ea6962;" : "background-color: #a9b665"}`
+          :style `${pomo_pause == true ? "background-color:#5a524c; color:#d4be98" : pomo_break == false ? "background-color: #ea6962;" : "background-color: #a9b665"}`
             (label
-              :text `${pomo_icon} ${pomo} `
-            )
-
-            (button
-              :onclick `${pomo_button == "0" ? "~/.scripts/pomo pause" : "~/.scripts/pomo resume"}`
-              `${pomo_button == "0" ? "" : ""} `
-            )
-
-            (button
-              :onclick `~/.scripts/pomo stop`
-              ""
+              :text `${pomo_icon} ${pomo}`
             )
           )
         )

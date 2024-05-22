@@ -10,7 +10,7 @@ break_time=5
 function escape () {
     case $1 in
         stop)
-            eww update pomo_button="0"
+            eww update pomo_pause=false
             eww update pomo_icon="󱎫"
             eww update pomo_break=false
             duration=`cat ~/.cache/boatcfg/pomo/duration`
@@ -109,12 +109,12 @@ case $1 in
         ;;
 
     pause) 
-        eww update pomo_button="1"
-        kill -TSTP `pgrep pomo` 
+        eww update pomo_pause=true
+        kill -STOP `pgrep pomo` 
         ;;
 
     resume) 
-        eww update pomo_button="0"
+        eww update pomo_pause=false
         kill -CONT `pgrep pomo` 
         ;;
 
@@ -126,6 +126,6 @@ case $1 in
             "Timer has stopped"
         sleep 0.5
         escape stop
-        kill -SIGKILL `pgrep pomo`
+        kill -KILL `pgrep pomo`
         ;;
 esac

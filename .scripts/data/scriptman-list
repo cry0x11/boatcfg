@@ -1,4 +1,8 @@
 󰒲;Suspend;gtklock & sleep 2 && doas zzz
+󱎫;Pomo start;nohup bash -c "~/.scripts/pomo start"
+;Pomo stop;nohup bash -c "~/.scripts/pomo stop"
+;Pomo pause;nohup bash -c "~/.scripts/pomo pause"
+;Pomo resume;nohup bash -c "~/.scripts/pomo resume"
 ;Bookmarks;bookmark query
 󰸕;Bookmark add;bookmark add
 ;Bookmark rename;bookmark rename
