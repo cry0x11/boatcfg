@@ -48,6 +48,33 @@ case $1 in
         fi
         ;;
 
+    "rename")
+        query=`cat ~/.scripts/data/.web_bookmarks |\
+            awk -F ';;;' '{ printf "%2s %-40s %s\n", " ", $1, $2}' |\
+            fzfcmd --prompt='Bookmarks > ' |\
+            sed 's/^.*http/http/g'`
+
+        if [ -n "$query" ]; then
+            rename=`fzfprompt "Bookmark Rename" --header="$query"`
+
+            if [ -n "$rename" ]; then
+                notifier normal \
+                    "edit" \
+                    "Bookmark" \
+                    "Bookmark name has changed to" \
+                    "<b>$rename</b>\n\n<b>$query</b>"
+
+                printf "$query" |\
+                    xargs -n 1 -I {} sed -i "s|^.*;;;{}$|$rename;;;{}|g" ~/.scripts/data/.web_bookmarks 2&>/dev/null
+            else
+                notifier normal \
+                    "bookmarks" \
+                    "Bookmark" \
+                    "Bookmark hasn't been named because valid input was not provided"
+            fi
+        fi
+        ;;
+
     "delete")
         del=`cat ~/.scripts/data/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-30s %s\n", " ", $1, $2}' |\
@@ -55,7 +82,8 @@ case $1 in
             sed 's/^.*http/http/g'`
 
         if [ -n "$del" ]; then
-            echo "$del" | xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.scripts/data/.web_bookmarks 2&>/dev/null
+            echo "$del" |\
+                xargs -n 1 -I {} sed -i "\|;;;{}$|d" ~/.scripts/data/.web_bookmarks 2&>/dev/null
         fi
             
         ;;

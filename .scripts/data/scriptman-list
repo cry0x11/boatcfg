@@ -1,6 +1,7 @@
 󰒲;Suspend;gtklock & sleep 2 && doas zzz
 ;Bookmarks;bookmark query
 󰸕;Bookmark add;bookmark add
+;Bookmark rename;bookmark rename
 󰞅;Nerd Icons;nerdmenu query
 ;Papirus Icons;icontheme
 ;Font;fontmenu name
