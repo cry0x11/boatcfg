@@ -2,7 +2,7 @@
 #
 # This script lists icons from Papirus
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 choice=`find /usr/share/icons/Papirus-Dark/ -type f |\
     grep --color=never "/symbolic/status/\|/16x16/" |\

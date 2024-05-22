@@ -14,7 +14,7 @@ alias r='doas xbps-remove'
 # ----------------------------
 alias mki='make && doas make install'
 alias grep='grep --color=always -i'
-alias ll='eza -lah --icons=always'
+alias ll='eza -lah --icons=always --group-directories-first'
 alias v='nvim'
 alias dv='doas nvim -u ~/.config/nvim/init.lua'
 alias ugrub='doas grub-mkconfig -o /boot/grub/grub.cfg'

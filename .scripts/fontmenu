@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 case $1 in 
     name)

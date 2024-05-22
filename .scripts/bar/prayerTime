@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 
 [ ! -d ~/.cache/boatcfg/prayers ] && mkdir -p ~/.cache/boatcfg/prayers
@@ -114,6 +114,50 @@ case $1 in
                     "Only ${remTime}m remaining" \
                     "<b>Prepare for the prayer</b>"
             fi
+        fi
+        ;;
+
+    parse)
+
+        # Just supply the url from the button in https://prayerwebcal.dsultan.com/
+        # after configuring the settings as first argument and it will output 
+        # the result in the same directory you invoked the script from.
+        #
+        # the resulted file is expected to be placed in ~/.config/eww/scripts 
+        # unless you changed eww configuration.
+
+        if [ $# -ne 3 ]; then
+            notifier normal \
+                "dialog-error" \
+                "PrayerTime" \
+                "Invalid number of arguments" \
+                "<b>Number of arguments is $# while 3 arguments were expected</b>\n\n<b>Please supply webcal url as well as the name of output file</b>"
+            exit 1
+        fi
+            
+
+        url="$2"
+
+        if [ -z "$url" ]; then
+            notifier err \
+                "dialog-error" \
+                "Prayer ical parser" \
+                "$2"
+                "<b>Please supply the webcal url as an argument</b>"
+        else
+            printf "$url" |\
+                sed 's/^webcal/https/g' |\
+                xargs curl |\
+                grep --color=never -C 1 --no-group-separator "DTEND" |\
+                sed '/DTEND/d; s/:.*Sunrise/:Sunrise/; s/\r//g;' |\
+                awk -F ':' '{print $2}' |\
+                sed 'N;s/\n/\t/g; s/^[0-9]\{4\}//g' > ~/.scripts/data/"$3"
+
+                notifier normal \
+                    "cloud-download" \
+                    "Prayer ical parser" \
+                    "Saved as" \
+                    "<b>~/.scripts/data/$3</b>"
         fi
         ;;
 esac

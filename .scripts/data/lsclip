@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 choice=`cliphist list | fzfcmd --ansi \
                      -d $'\t' \
                      --with-nth 2 \
                      --prompt='Clip > ' \
                      --preview-window=right:50% \
-                     --preview='~/.scripts/files/clip-preview {}'`
+                     --preview='~/.scripts/data/clip-preview {}'`
 
 [ -n "$choice" ] && printf $choice | cliphist decode | wl-copy

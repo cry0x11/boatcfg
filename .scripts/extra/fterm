@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Using console because both sixel and bidi are available
+function fterm () { konsole --notransparency -p tabtitle="Floating" -e "$@"; }
+
+
+case $1 in
+    sman) fterm ~/.scripts/data/scriptfzf;;
+    clip) fterm ~/.scripts/data/lsclip;;
+    run) fterm ~/.scripts/cmdrunner;;
+    mark) fterm ~/.scripts/bookmark query;;
+    ffprofile) fterm ~/.scripts/browser;;
+    search) fterm ~/.scripts/search;;
+    ytrss) fterm ~/.scripts/ytrss view;;
+    rename) fterm ~/.scripts/rename ${@:2};;
+esac

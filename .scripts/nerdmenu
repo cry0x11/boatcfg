@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 case $1 in
     "install")
@@ -12,12 +12,12 @@ case $1 in
             grep --color=never -A 2 "nf-" |\
             sed 's/^\.//g; s/:before {//g; s/  content: "//g; s/";$//g; /^}$/d; s/\\/\\U/g' |\
             paste -sd ' \n' |\
-            awk '{print $2";;;"$1}' > ~/.scripts/files/nerd-icons
+            awk '{print $2";;;"$1}' > ~/.scripts/data/nerd-icons
 
         ;;
 
     "query")
-        icon=`printf "$(cat ~/.scripts/files/nerd-icons)" |\
+        icon=`printf "$(cat ~/.scripts/data/nerd-icons)" |\
                 awk -F ';;;' '{ printf "%2s %-5s %s\n", " ", $1, $2}' |\
                 fzfcmd --prompt='Nerd > ' |\
                 awk '{print $1}'`

@@ -2,7 +2,7 @@
 #
 # A script that mounts phone via KDEConnect
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 deviceName=`kdeconnect-cli -a --id-name-only | cut -d ' ' -f1`
 

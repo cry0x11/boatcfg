@@ -34,7 +34,7 @@ function spawn () { riverctl map normal $1 $2 spawn "$3"; }
 # spawn shell command in recording mode
 function rspawn () { 
     riverctl map recording None $1 spawn "$2"
-    riverctl map -release recording None $1 spawn "$HOME/.scripts/modriver exit"
+    riverctl map -release recording None $1 spawn "$HOME/.config/river/scripts/modriver exit"
 }
 
 # map river command in normal mode
@@ -170,7 +170,7 @@ riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DI
 spawn Super P       keepassxc
 spawn Super Return  konsole
 spawn Super D       firefox
-spawn Super A       "$HOME/.scripts/floatingterm ffprofile"
+spawn Super A       "$HOME/.scripts/extra/fterm ffprofile"
 
 
 
@@ -179,16 +179,16 @@ spawn Super A       "$HOME/.scripts/floatingterm ffprofile"
 # --------------------------------------------------------
 
 # My launcher with custom config
-spawn Super R "~/.scripts/floatingterm run"                 
+spawn Super R "~/.scripts/extra/fterm run"                 
 
 # Script manager to launch other shell scripts
-spawn Super Q "$HOME/.scripts/floatingterm sman"
+spawn Super Q "$HOME/.scripts/extra/fterm sman"
 
 # Search web
-spawn Super S "$HOME/.scripts/floatingterm search"
+spawn Super S "$HOME/.scripts/extra/fterm search"
 
 # Youtube RSS
-spawn Super Y "$HOME/.scripts/floatingterm ytrss"
+spawn Super Y "$HOME/.scripts/extra/fterm ytrss"
 
 # 
 # XProp-like functionality ... not sufficient but it does the bare minimum 
@@ -197,7 +197,7 @@ spawn Super Y "$HOME/.scripts/floatingterm ytrss"
 # it relies on lswt
 # SOURCE: https://gitlab.com/snakedye/ristate
 #
-spawn Super+Shift P "$HOME/.config/river/riverprop"
+spawn Super+Shift P "$HOME/.config/river/scripts/riverprop"
 
 # 
 # I get distracted when i use laptop during study sessions so I made 
@@ -216,10 +216,10 @@ spawn Super E "$HOME/.scripts/fileManager"
 # Adding bookmarks from primary clipboard
 # or copying bookmarks from menu to clipboard
 #
-spawn Super B "$HOME/.scripts/floatingterm mark"
+spawn Super B "$HOME/.scripts/extra/fterm mark"
 
 # paste contents of primary selection into clipboard
-spawn Super V "$HOME/.scripts/floatingterm clip"
+spawn Super V "$HOME/.scripts/extra/fterm clip"
 spawn Super+Shift V "$HOME/.scripts/clipboard delete"
 
 # 
@@ -250,7 +250,7 @@ spawn Control Space "fcitx5-remote -t"
 # --------------------------------------------------------
 riverctl declare-mode recording
 
-spawn None KP_Begin "$HOME/.scripts/modriver enter"
+spawn None KP_Begin "$HOME/.config/river/scripts/modriver enter"
 
 rspawn F "$HOME/.scripts/shotcopy rec full"
 rspawn R "$HOME/.scripts/shotcopy rec region"
@@ -258,7 +258,7 @@ rspawn S "$HOME/.scripts/shotcopy rec stop"
 rspawn X "$HOME/.scripts/shotcopy rec pause"
 rspawn C "$HOME/.scripts/shotcopy rec continue"
 
-riverctl map recording None KP_Begin spawn "$HOME/.scripts/modriver exit"
+riverctl map recording None KP_Begin spawn "$HOME/.config/river/scripts/modriver exit"
 
 # --------------------------------------------------------
 # WM BINDINGS
@@ -325,9 +325,7 @@ tiler Super Tab "--layout-toggle"   # toggle layout
 #
 #       APP-ID                       APP-TITLE       W       H       X       Y 
 float 'riverprop'                    0               400     250     5       40
-float 'floatingterm'                 0               1000    400    center   center
 float 'org.kde.konsole'     "Floating — Konsole"     1100    500    center   center
-float 'mlterm'                      "Floating"       1100    500    center   center
 float 'Anki'                         "Browse*"       1000    650    center   center
 float 'Anki'                         "Statistics"    1000    650    center   center
 float 'Anki'                        "Preferences"    1000    650    center   center

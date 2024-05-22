@@ -5,7 +5,8 @@
 # If cache directory does not exist, create one
 [ ! -d ~/.cache/boatcfg/scripts ] && mkdir -p ~/.cache/boatcfg/scripts
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
+
 function menu () { ~/.scripts/floatingterm rename "$@"; }
 
 case $1 in

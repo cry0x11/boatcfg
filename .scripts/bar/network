@@ -6,7 +6,7 @@
 # 3. notifications
 #
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 function wifi () { doas wpa_cli -i $wifi_interface $@; }
 

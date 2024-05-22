@@ -8,8 +8,8 @@
 ;MPV YT;mpvyt
 ;Ytrss add;ytrss add
 󰁡;Ytrss update;nohup bash -c "~/.scripts/ytrss update &"
-;Disable Touchpad;touchpad disable
-󰟸;Enable Touchpad;touchpad enable
+;Disable Touchpad;~/.config/river/scripts/touchpad disable
+󰟸;Enable Touchpad;~/.config/river/scripts/touchpad enable
 ;Lock;gtklock
 ;Log out;kill -s SIGINT `pgrep river`
 ⏻;Power off;doas poweroff

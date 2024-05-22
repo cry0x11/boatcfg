@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
+
 [ ! -f ~/.web_bookmarks ] && touch ~/.web_bookmarks
 
 case $1 in

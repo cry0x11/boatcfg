@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source ~/.scripts/cmdfns
+source ~/.scripts/extra/cmdfns
 
 url=`wl-paste`
 
 if [ -n "$url" ]; then
     if [[ $url =~ ^"https" ]]; then
-        nohup bash -c "source ~/.scripts/cmdfns; mpvcmd $url &" 2&>/dev/null
+        nohup bash -c "source ~/.scripts/extra/cmdfns; mpvcmd $url &" 2&>/dev/null
     else
         notifier normal \
             "dialog-error" \
