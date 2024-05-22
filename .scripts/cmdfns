@@ -32,6 +32,9 @@ function mpvcmd {
         "Your video will run shortly"
 
     mpv --ytdl=yes \
+        --cache=yes \
+        --cache-secs=30 \
+        --script-opts=ytdl_hook-ytdl_path=yt-dlp \
         --ytdl-raw-options=force-ipv4= \
         --ytdl-format='bestvideo[ext=mp4][vcodec^=avc][height<=720]+bestaudio/best[height<=720]' \
         "$@"

@@ -2,7 +2,7 @@
 
 wallpaper="`ls -l --color=never ~/Pictures/wallpapers/ | awk '{print $9}' | sed '/^$/d' | shuf -n 1`"
 
-cleaner=("lxpolkit" "kdeconnect-indicator" "eww" "dunst" "konsole" "gammastep" "kdeconnectd" "swww-daemon" "wl-paste" "pipewire" "pipewire-pulse" "wireplumber" "fcitx5")
+cleaner=("lxpolkit" "kdeconnect-indicator" "eww" "dunst" "gammastep" "kdeconnectd" "swww-daemon" "wl-paste" "pipewire" "pipewire-pulse" "wireplumber" "fcitx5")
 
 for str in ${cleaner[@]}; do
     kill -SIGTERM `pgrep $str`
@@ -23,5 +23,4 @@ pipewire &
 pipewire-pulse &
 wireplumber &
 kdeconnect-indicator &
-konsole --background-mode &
 ~/.scripts/ytrss update

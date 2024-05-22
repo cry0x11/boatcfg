@@ -9,7 +9,7 @@ scrollbackUseSystemLocation=false
 ConfigVersion=1
 
 [KonsoleWindow]
-UseSingleInstance=true
+RememberWindowSize=false
 
 [SplitView]
 SplitViewVisibility=AlwaysHideSplitHeader

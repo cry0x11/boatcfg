@@ -15,6 +15,7 @@ case $1 in
         ping -c 3 192.168.1.1
         echo $?
         ;;
+
     wifi)
         case $2 in
 

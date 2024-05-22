@@ -12,7 +12,7 @@ CursorShape=0
 UseCustomCursorColor=false
 
 [General]
-AlternatingBackground=2
+AlternatingBackground=1
 InvertSelectionColors=false
 Name=Gruvbox-Material
 Parent=FALLBACK/
@@ -29,8 +29,9 @@ ScrollBarPosition=2
 
 [Terminal Features]
 BellMode=3
+BidiLineLTR=true
 BidiRenderingEnabled=true
 BlinkingCursorEnabled=false
-FlowControlEnabled=false
+FlowControlEnabled=true
 UrlHintsModifiers=0
 VerticalLine=false

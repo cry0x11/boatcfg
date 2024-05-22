@@ -11,7 +11,7 @@ function removeOld () {
 }
 
 function prayerFile () {
-    grep --color=never $1T ~/.scripts/eg-prayers | sed 's/^.*T//g; s/[0.9]\{2\}Z//g' > ~/.cache/boatcfg/prayers/$1
+    grep --color=never $1T ~/.scripts/bar/eg-prayers | sed 's/^.*T//g; s/[0.9]\{2\}Z//g' > ~/.cache/boatcfg/prayers/$1
 }
 
 function calculator () {
@@ -55,7 +55,7 @@ position=`cat ~/.cache/boatcfg/prayers/$today-index`
 calculator $position $today
 
 if [ $position -ge 6 ] && [ $remTime -le 0 ] && [ $remSec -le 0 ]; then
-	remTimeText="DONE"
+	remTimeText="󰸞"
 	prayTimeText=""	
 
 elif [ $remTime -eq 0 ] && [ $remSec -ge 0 ]; then
@@ -72,22 +72,22 @@ elif [ $remTime -le 0 ] && [ $remSec -le 0 ]; then
 	done
 
     if [ $remTime -eq 0 ] && [ $remSec -ge 0 ]; then
-        remTimeText="${remSec}s"
+        remTimeText=`printf "%02d S" ${remSec}`
     elif [ $remTime -ge 60 ]; then
         remMin=$(($remTime%60))
         remHour=$(($remTime/60)) 
-        remTimeText="${remHour}h ${remMin}m"
+        remTimeText=`printf "%02d:%02d" ${remHour} ${remMin}`
     else
-        remTimeText="${remTime}m"
+	    remTimeText=`printf "%02d M" ${remTime}`
     fi
 
 
 elif [ $remTime -ge 60 ]; then
 	remMin=$(($remTime%60))
 	remHour=$(($remTime/60)) 
-	remTimeText="${remHour}h ${remMin}m"
+    remTimeText=`printf "%02d:%02d" ${remHour} ${remMin}`
 else
-	remTimeText="${remTime}m"
+	remTimeText=`printf "%02d M" ${remTime}`
 fi
 
 case $1 in
@@ -112,7 +112,7 @@ case $1 in
                     "software-update-urgent-symbolic" \
                     "Prayer ($summary)" \
                     "Only ${remTime}m remaining" \
-                    "Prepare for the prayer"
+                    "<b>Prepare for the prayer</b>"
             fi
         fi
         ;;

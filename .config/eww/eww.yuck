@@ -12,23 +12,23 @@
 
 (defpoll battery_percent :initial "0"
                          :interval "1s"
-    `~/.scripts/battery percent`)
+    `~/.scripts/bar/battery percent`)
 
 (defpoll battery_state :initial "0"
                        :interval "1s"
-    `~/.scripts/battery state`)
+    `~/.scripts/bar/battery state`)
 
 (defpoll prayerTime :initial ""
                     :interval "1s"
-    `~/.scripts/prayerTime t`)
+    `~/.scripts/bar/prayerTime t`)
 
 (defpoll prayer :initial ""
                 :interval "1s"
-    `~/.scripts/prayerTime q`)
+    `~/.scripts/bar/prayerTime q`)
 
 (defpoll ethernet_state :initial "down"
                         :interval "2s"
-    `~/.scripts/network eth state`)
+    `~/.scripts/bar/network eth state`)
 
 (defpoll volume :initial "0"
                 :interval "86400s"
@@ -77,7 +77,7 @@
               :text "Quran Radio"
           )
           (button
-            :onclick `${quran_button == "0" ? "scripts/cairoQuran play" : "scripts/cairoQuran stop"}`
+            :onclick `${quran_button == "0" ? "~/.scripts/bar/cairoQuran play" : "~/.scripts/bar/cairoQuran stop"}`
             :class "quran-button"
             `${quran_button == "1" ? "" : ""}`
           )
@@ -117,7 +117,7 @@
 
           (label
               :class "battery_state"
-              :text `${battery_state == 1 ? "󱐋" : battery_percent == 100 ? "" : battery_percent > 75 ? "" : battery_percent > 50 ? "" : battery_percent > 25 ? "" : "" }`
+              :text `${battery_state == 1 ? "󱐋" : battery_percent == 100 ? "" : battery_percent >= 75 ? "" : battery_percent >= 50 ? "" : battery_percent >= 25 ? "" : "" }`
           )
           (label
               :class "battery_percent"

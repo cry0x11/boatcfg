@@ -1,0 +1,58 @@
+#!/bin/bash
+# These bastards hog all the cpu uselessly ... after some search, I finally found how to disable them.
+# 
+# You will see many of them hanging around after running the following command to find the interrupts
+# `grep . --color=never -r /sys/firmware/acpi/interrupts`
+# 
+# Don't try to disable them all because you can't. it will tell you that
+# `echo: write error: Invalid argument`
+#
+# The only ones worked with me are non-'invalid'...
+# `grep . --color=never -r /sys/firmware/acpi/interrupts | sed '/invalid/d'`
+# 
+# The remaining ones are the ones you should disable and/or mask them as you can.
+#
+# These are the ones I disabled on my system (HP Pavilion g6) running Arch linux
+#
+# I Ended up putting this in a root crontab
+# `doas -s`
+# `EDITOR=nvim crontab -e`
+#
+# REMEMBER THE FORMAT!
+# `@reboot echo ...`
+
+# DISABLED
+#doas echo "disable" > /sys/firmware/acpi/interrupts/sci
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe1D
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe1F
+#doas echo "disable" > /sys/firmware/acpi/interrupts/ff_gbl_lock 
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe06
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe02
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe01
+#doas echo "disable" > /sys/firmware/acpi/interrupts/ff_pwr_btn
+#doas echo "disable" > /sys/firmware/acpi/interrupts/gpe07
+
+# MASKED
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe1D
+#doas echo "mask" > /sys/firmware/acpi/interrupts/sci
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe07
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe0D
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe01
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe06
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe02
+#doas echo "mask" > /sys/firmware/acpi/interrupts/gpe07
+
+
+# After even more some search it turns out that interrupts 
+# happen due to the motherboard needing update.
+#
+# As I don't wanna risk updating my motherboard I will
+# shut off the interrupts for now.
+# 
+# These below are the interrupts happening on my machine
+# I copied them from the crontab I made under the superuser
+#
+@reboot echo "mask" > /sys/firmware/acpi/interrupts/sci
+@reboot echo "mask" > /sys/firmware/acpi/interrupts/gpe1D
+@reboot echo "disable" > /sys/firmware/acpi/interrupts/sci
+@reboot echo "disable" > /sys/firmware/acpi/interrupts/gpe1D

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # remove verbosity and print out tasks only
 task rc.verbose=nothing ls
