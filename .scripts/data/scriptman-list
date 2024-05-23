@@ -1,8 +1,8 @@
 󰒲;Suspend;gtklock & sleep 2 && doas zzz
-󱎫;Pomo start;nohup bash -c "~/.scripts/pomo start"
-;Pomo stop;nohup bash -c "~/.scripts/pomo stop"
-;Pomo pause;nohup bash -c "~/.scripts/pomo pause"
-;Pomo resume;nohup bash -c "~/.scripts/pomo resume"
+󱎫;Pomo start;~/.scripts/bar/pomo start
+;Pomo stop;~/.scripts/bar/pomo stop
+;Pomo pause;~/.scripts/bar/pomo pause
+;Pomo resume;~/.scripts/bar/pomo resume
 ;Bookmarks;bookmark query
 󰸕;Bookmark add;bookmark add
 ;Bookmark rename;bookmark rename
@@ -12,7 +12,7 @@
 ;Font filename;fontmenu file
 ;MPV YT;mpvyt
 ;Ytrss add;ytrss add
-󰁡;Ytrss update;nohup bash -c "~/.scripts/ytrss update &"
+󰁡;Ytrss update;~/.scripts/ytrss update
 ;Disable Touchpad;~/.config/river/scripts/touchpad disable
 󰟸;Enable Touchpad;~/.config/river/scripts/touchpad enable
 ;Lock;gtklock

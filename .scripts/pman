@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# A script to manage pomodoro timer
+
+source ~/.scripts/extra/cmdfns
+
+working_time=`cat ~/.scripts/data/pman.list |\
+                awk -F ';' '{ printf "%2s Work:%-30s Break:%s\n", " ", $1, $2}'`
+break_time=

@@ -240,7 +240,7 @@ spawn Super bracketright    "$HOME/.scripts/brightctl up"
 spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 
 # Toggling input methods using fcitx5
-spawn Control Space "fcitx5-remote -t"
+spawn Alt Shift_L None "fcitx5-remote -t"
 
 
 # --------------------------------------------------------
@@ -278,7 +278,7 @@ map Super F toggle-float                        # toggle floating
 map Super Space toggle-fullscreen               # toggle fullscreen
 map Super+Shift 0 set-view-tags $(( (1 << 32)-1 ))     # pin focused to all tags 
 map Alt Tab focus-previous-tags                 # toggle between previous tag and current one
-map Control Tab toggle-fullscreen               # toggle fullscreen
+map Super+Shift Tab toggle-fullscreen               # toggle fullscreen
 
 map Super+Alt L move right 100                  # move floated focused right
 map Super+Alt H move left 100                   # move floated focused left
@@ -344,9 +344,9 @@ float 'pavucontrol'                  0
 # Start app in specific tag
 #    APP-ID                                 TAG
 tags 'sioyek'                                1
-tags 'Anki'          "* - Anki"              2
 tags 'mpv'                                   3
 tags 'Firefox'       "Mozilla Firefox"       4
+tags 'Anki'          "* - Anki"              5
 tags 'fileManager'                           6
 tags 'Gimp'                                  7
 tags 'org.inkscape.Inkscape'                 7
