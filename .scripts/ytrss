@@ -53,7 +53,7 @@ case $1 in
             fzfcmd --preview-window=right:50% \
                    --preview="~/.scripts/data/ytrss-preview {}"`
 
-        choiceUrl=`grep ";;;$choice" ~/.cache/boatcfg/scripts/ytrss | awk -F ';;;' '{print $3}'`
+        choiceUrl=`grep -F ";;;$choice" ~/.cache/boatcfg/scripts/ytrss | awk -F ';;;' '{print $3}'`
 
         if [ -n "$choice" ]; then
             nohup bash -c "source ~/.scripts/extra/cmdfns; mpvcmd $choiceUrl &" 2&>/dev/null
