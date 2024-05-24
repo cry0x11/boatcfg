@@ -126,7 +126,7 @@ case $1 in
         notifier normal \
             "no" \
             "Pomo" \
-            "Stopped time"
+            "Stopped timer"
         eww update rev_pomo=false 
         escape stop
         kill -KILL `pgrep pomo`
