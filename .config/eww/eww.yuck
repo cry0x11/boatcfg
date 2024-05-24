@@ -56,6 +56,7 @@
 (defvar quran_active false)
 
 (defvar cal_open false)
+(defvar hovered false)
 
 (defwidget bar []
 
@@ -262,14 +263,18 @@
     :space-evenly "false"
     :orientation "vertical"
     (centerbox
-      :class "cal_header"
       :space-evenly "false"
       :orientation "horizontal"
       (button
+        :class "cal_button"
         ""
       )
-      (label :text "May 2024")
+      (label
+        :class "cal_header"
+        :text "May 2024"
+      )
       (button
+        :class "cal_button"
         ""
       )
     )
@@ -286,10 +291,10 @@
           :orientation "vertical"
           (label :text day)
           (for num in {thismonth["May"][day]}
-            (label
-              :class `${num == substring(time, 9, 2) ? "today" : ""}`
-              :text num
-            )
+              (button
+                :class `${num == substring(time, 9, 2) ? "today" : ""} ${ num != "" ? "day" : ""}`
+                num
+              )
           )
         )
       )

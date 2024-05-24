@@ -311,11 +311,12 @@ color: $bg;
   background-color: rgba(40,40,40,0.99);
   color: $white;
   border-radius: 0.9em;
-  border: 2px solid $red;
+  border: 2px solid $accentColor;
   padding: 2em 1.5em 1.5em 1.5em;
 }
 
 .cal_header {
+    margin: 0em 2em 0em 2em;
 }
 
 .cal_days {
@@ -328,5 +329,15 @@ color: $bg;
 
 .today {
     background-color: $red;
+    color: $bg;
+}
+
+.day:hover {
+    background-color: $yellow;
+    color: $bg;
+}
+
+.cal_button:hover {
+    background-color: $yellow;
     color: $bg;
 }
