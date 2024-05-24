@@ -1,5 +1,5 @@
 󰒲;Suspend;gtklock & sleep 2 && doas zzz
-󱎫;Pomo start;~/.scripts/bar/pomo start
+󱎫;Pomo start;pman
 ;Pomo stop;~/.scripts/bar/pomo stop
 ;Pomo pause;~/.scripts/bar/pomo pause
 ;Pomo resume;~/.scripts/bar/pomo resume
