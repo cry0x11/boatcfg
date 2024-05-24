@@ -297,6 +297,9 @@ do
     map Super+Shift $i set-view-tags $tags      # send focused to tag
 done
 
+# Locked mode
+riverctl map locked Super S spawn "doas zzz"
+
 # Mouse buttons' bindings. It's self-explainatory
 pointer Super BTN_LEFT move-view
 pointer Super BTN_RIGHT resize-view
