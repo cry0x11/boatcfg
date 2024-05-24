@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Number of days in this month
+# Credit: https://stackoverflow.com/a/42595137
+days=`date -d "-\`date +%d\`days month" +%d`
+
+weekdays=("Sat" "Sun" "Mon" "Tue" "Wed" "Thu" "Fri")
+month=`date +"%Y-%m"`
+monthName=`date +"%B"`
+day_list=`seq 1 $days`
+json=`jq --null-input ".$monthName"`
+
+day1=`date -d "${month}-1" +"%a"`
+order=`echo ${weekdays[@]} | sed 's/\s/\n/g' | grep --color=never -n "$day1" | awk -F ':' '{print $1}'`
+
+while [ $order -gt 1 ]; do
+    json=`echo $json | jq ".$monthName.${weekdays[$order-2]}+=[\"\"]"`
+    order=$(( order - 1 ))
+done
+
+for day in ${day_list[@]}; do
+    dayName=`date -d "${month}-${day}" +"%a"`
+    json=`echo $json | jq ".$monthName.$dayName+=[$day]"`
+done
+
+echo $json | jq

@@ -302,3 +302,31 @@ color: $bg;
     background-color: $green;
     color: $bg;
 }
+
+/************************************
+            CALENDAR                         
+************************************/
+
+.calendar {
+  background-color: rgba(40,40,40,0.99);
+  color: $white;
+  border-radius: 0.9em;
+  border: 2px solid $red;
+  padding: 2em 1.5em 1.5em 1.5em;
+}
+
+.cal_header {
+}
+
+.cal_days {
+    margin: 1em 1em 0em 1em;
+}
+
+.cal_main_container {
+    padding-top: 1.3em;
+}
+
+.today {
+    background-color: $red;
+    color: $bg;
+}

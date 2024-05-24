@@ -12,7 +12,7 @@
 
 (defpoll time :initial ""
               :interval "10s"
-    `date +"%a %Y/%m/%d %I:%M %p"`)
+    `date +"%I:%M %p %d"`)
 
 (defpoll battery_percent :initial "0"
                          :interval "1s"
@@ -54,6 +54,8 @@
 (defvar rev_recording false)
 (defvar recording_paused false)
 (defvar quran_active false)
+
+(defvar cal_open false)
 
 (defwidget bar []
 
@@ -152,22 +154,13 @@
             )
         )
 
-
-        (revealer
-            :reveal rev_date
-            :transition "slideleft"
-            :duration "350ms"
-            (label
-                :class "module right_side date"
-                :text `${substring(time, 0, 14)}`
-            )
-        )
         (eventbox
             :onhover "eww update rev_date=true"
             :onhoverlost "eww update rev_date=false"
+            :onclick `${cal_open == false ? "eww update cal_open=true; eww open calendar" : "eww update cal_open=false; eww close calendar" }`
             (label
                 :class "module right_side clock"
-                :text "${substring(time, 15, 8)}"
+                :text "${substring(time, 0, 8)}"
             )
         )
     )
@@ -242,15 +235,64 @@
   (bar)
 )
 
-(defwindow tasks
+
+
+;; CALENDAR
+
+(defwindow calendar
   :monitor 0
   :exclusive false
-  :class "tasks"
+  :class "calendar"
   :windowtype "normal"
-  :geometry (geometry :x "25%"
-                      :y "10.4%"
-                      :width "50%"
-                      :height "70%")
-  (label :text "hello world")
+  :geometry (geometry :x "74.5%"
+                      :y "1%"
+                      :width "25%"
+                      :height "35%")
+  (calendar_main)
 )
 
+(defvar weekdays `["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]`)
+
+(defpoll thismonth :initial ""
+                   :interval "86400s"
+  `~/.scripts/bar/cal`)
+
+(defwidget calendar_main []
+  (box
+    :space-evenly "false"
+    :orientation "vertical"
+    (centerbox
+      :class "cal_header"
+      :space-evenly "false"
+      :orientation "horizontal"
+      (button
+        ""
+      )
+      (label :text "May 2024")
+      (button
+        ""
+      )
+    )
+    (box
+      :class "cal_days"
+      :space-evenly "true"
+      :spacing 5
+      :orientation "horizontal"
+      :class "cal_main_container"
+      (for day in weekdays
+        (box
+          :space-evenly "true"
+          :spacing 5
+          :orientation "vertical"
+          (label :text day)
+          (for num in {thismonth["May"][day]}
+            (label
+              :class `${num == substring(time, 9, 2) ? "today" : ""}`
+              :text num
+            )
+          )
+        )
+      )
+    )
+  )
+)

@@ -29,7 +29,7 @@ case $1 in
                         1[1-5]) locknum=15 ;;
                         1[6-9]|20) locknum=20 ;;
                         2[1-5]) locknum=25 ;;
-                        2[6-9]|30) locknum=30 ;;
+                        2[6-9]|30|29) locknum=30 ;;
                         *) locknum=0 ;;
                     esac
 
@@ -42,6 +42,10 @@ case $1 in
                                 "Battery is ${percent}%" \
                                 "Please connect the charger"
                         fi
+                    fi
+                else
+                    if [ -f ~/.cache/boatcfg/scripts/battery.lock ]; then
+                        rm ~/.cache/boatcfg/scripts/battery.lock
                     fi
                 fi
                 ;;
