@@ -64,6 +64,6 @@ case $1 in
             "dialog-error" \
             "Network" \
             "$1" \
-            "<b>Either 'eth' or 'wifi' were expected</b>"
+            "<b>Either 'eth' or 'wifi' was expected</b>"
         ;;
 esac

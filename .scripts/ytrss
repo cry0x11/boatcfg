@@ -14,6 +14,7 @@ function updater {
     rm ~/.cache/boatcfg/scripts/tmp/*
 
     cat ~/.scripts/data/ytsubs |\
+        awk -F ';;;' '{print $2}' |\
         sed 's/=/={/g; s/$/}/g' |\
         xargs -P 0 -I {} curl -s {} --output ~/.cache/boatcfg/scripts/tmp/'#1'
 
@@ -67,22 +68,11 @@ case $1 in
         yturl=`wl-paste`
         if [ -n "$yturl" ]; then
             if [[ $yturl =~ ^"https://www.youtube.com/" ]]; then
-                rssurl=`curl -s "$yturl" |\
-                            grep '"rssUrl":' |\
-                            sed 's/^.*"rssUrl"://g; s/",".*$//g; s/.*http/http/g; s/channel_id=UC/playlist_id=UU/g'`
-                if grep -q $rssurl ~/.scripts/data/ytsubs; then
-                    notifier normal \
-                    "dialog-error" \
-                    "Ytrss" \
-                    "Feed already exists"
-                else
-                    echo $rssurl >> ~/.scripts/data/ytsubs
-                    notifier normal \
-                    "application-rss+xml" \
-                    "Ytrss" \
-                    "Feed added successfully" \
-                    "<b>$yturl</b>"
-                fi
+                rssinfo=`curl -s "$yturl" |\ 
+                            grep '{"title":' |\
+                            sed 's/.*{"channelMetadataRenderer"://g; s/{"title"://g; s/","description":.*,"rssUrl":"/;;;/g; s/",".*//g; s/^.*"//g; s/channel_id=UC/playlist_id=UU/g'`
+                
+                ytrssCheckUrl add $rssinfo $yturl
             else
                 notifier normal \
                 "dialog-error" \
@@ -92,4 +82,23 @@ case $1 in
             fi
         fi
         ;;
+    import)
+        cat $2 |\
+            jq ".subscriptions[] | .url, .name" |\
+            sed 's|^"http.*channel/UC|https://www.youtube.com/feeds/videos.xml?playlist_id=UU|g; s/^"//g ;s/"$//g' |\
+            perl -pe 's/\n/;;;/g if $. % 2' |\
+            awk -F ';;;' '{t=$1; $1=$2; $2=t; print $1";;;"$2}' |\
+            xargs -n1 -I {} bash -c 'source ~/.scripts/extra/cmdfns; ytrssCheckUrl import "{}"' 2&>/dev/null
+
+        notifier normal \
+            "application-rss+xml" \
+            "Ytrss" \
+            "Imported successfully"
+        ;;
+    *)
+        notifier err \
+            "dialog-error" \
+            "Ytrss" \
+            "$1" \
+            "<b>One of 'view', 'update', 'add' or 'import' was expected</b>"
 esac

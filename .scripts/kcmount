@@ -67,6 +67,6 @@ case $1 in
             "dialog-error" \
             "Kcmount" \
             "$1" \
-            "One of 'mount', 'link' or 'unmount' were expected"
+            "One of 'mount', 'link' or 'unmount' was expected"
 	    ;;
 esac

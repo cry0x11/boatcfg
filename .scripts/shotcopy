@@ -46,7 +46,7 @@ case $1 in
                     "dialog-error" \
                     "Shotcopy: Screenshot" \
                     "$2" \
-                    "<b>One of 'copy', 'region' or 'full' were expected</b>"
+                    "<b>One of 'copy', 'region' or 'full' was expected</b>"
                 ;;
         esac
         ;;
@@ -122,7 +122,7 @@ case $1 in
                     "dialog-error" \
                     "Shotcopy: Recorder" \
                     "$2" \
-                    "<b>One of 'full', 'region' or 'stop' were expected</b>"
+                    "<b>One of 'full', 'region' or 'stop' was expected</b>"
                 ;;
         esac
         ;;
@@ -131,6 +131,6 @@ case $1 in
             "dialog-error" \
             "Shotcopy" \
             "$1" \
-            "<b>Either 'shot' or 'rec' were expected</b>"
+            "<b>Either 'shot' or 'rec' was expected</b>"
         ;;
 esac

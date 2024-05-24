@@ -41,7 +41,7 @@ case $1 in
             "dialog-error" \
             "Fontmenu" \
             "$1" \
-            "Either 'name' or 'file' were expected"
+            "Either 'name' or 'file' was expected"
         ;;
 esac
 

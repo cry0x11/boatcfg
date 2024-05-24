@@ -93,6 +93,6 @@ case $1 in
             "dialog-error" \
             "Bookmark" \
             $1 \
-            "Either 'add' or 'query' were expected"
+            "Either 'add' or 'query' was expected"
         ;;
 esac

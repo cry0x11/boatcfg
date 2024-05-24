@@ -47,3 +47,28 @@ function mpvcmd {
             "<b>Make sure it can be handled by yt-dlp</b>"
     fi
 }
+
+function ytrssCheckUrl {
+    case $1 in
+        add)
+            if grep -q -w "^$2$" ~/.scripts/data/ytsubs; then
+                notifier normal \
+                "dialog-error" \
+                "Ytrss" \
+                "Feed already exists"
+            else
+                echo "$2" >> ~/.scripts/data/ytsubs
+                notifier normal \
+                "application-rss+xml" \
+                "Ytrss" \
+                "Feed added successfully" \
+                "<b>$3</b>"
+            fi
+            ;;
+        import)
+            if ! grep -q -w "^$2$" ~/.scripts/data/ytsubs; then
+                echo "$2" >> ~/.scripts/data/ytsubs
+            fi
+            ;;
+    esac
+}

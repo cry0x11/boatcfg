@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-#break_time="$(( $2 * 60 ))"
 
 source ~/.scripts/extra/cmdfns
 

@@ -2,7 +2,6 @@
 
 source ~/.scripts/extra/cmdfns
 
-
 [ ! -d ~/.cache/boatcfg/prayers ] && mkdir -p ~/.cache/boatcfg/prayers
 
 function removeOld () {

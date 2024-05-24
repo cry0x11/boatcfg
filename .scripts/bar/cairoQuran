@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.scripts/extra/cmdfns
+
 process=`ps -e f | grep --color=never "https://stream.radiojar.com/8s5u5tpdtwzuv" | grep --color=never mpv | awk '{print $1}'`
 
 case $1 in
@@ -20,6 +22,10 @@ case $1 in
         fi
         ;;
     *)
-        dunstify "EWW: Cairo Quran ERROR!" "\n'$1': INVALID ARGUMENT\n\nEither 'play' or 'stop' were expected"
+        notifier err \
+            "dialog-error" \
+            "CairoQuran" \
+            "$1" \
+            "<b>Either 'play' or 'stop' was expected</b>"
         ;;
 esac

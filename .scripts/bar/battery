@@ -53,5 +53,5 @@ case $1 in
             "dialog-error" \
             "Battery" \
             "$1" \
-            "<b>Either 'percent' or 'state' were expected</b>"
+            "<b>Either 'percent' or 'state' was expected</b>"
 esac
