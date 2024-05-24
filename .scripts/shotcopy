@@ -7,7 +7,7 @@
 
 source ~/.scripts/extra/cmdfns
 
-function menu () { ~/.scripts/floatingterm rename "$@"; }
+function menu () { ~/.scripts/extra/fterm rename "$@"; }
 
 case $1 in
     "shot")

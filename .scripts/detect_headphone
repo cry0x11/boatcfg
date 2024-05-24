@@ -2,6 +2,8 @@
 # 
 # Credit : https://askubuntu.com/a/1284966
 
+source ~/.scripts/extra/cmdfns
+
 acpi_listen | while IFS= read -r line;
 do
     if [ "$line" = "jack/headphone HEADPHONE plug" ]; then
@@ -9,11 +11,22 @@ do
         muted=`pamixer --get-mute`
         eww update volume="$volume"
         eww update volume_mute="$muted"
+        
+        notifier normal \
+            "audio-headphones" \
+            "Headphone Detector" \
+            "Headphones plugged in"
+
     elif [ "$line" = "jack/headphone HEADPHONE unplug" ]; then
         volume=`pamixer --get-volume`
         muted=`pamixer --get-mute`
         eww update volume="$volume"
         eww update volume_mute="$muted"
+        
+        notifier normal \
+            "audio-volume-muted" \
+            "Headphone Detector" \
+            "Headphones unplugged"
     fi
 done
 

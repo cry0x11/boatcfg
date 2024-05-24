@@ -13,6 +13,7 @@ function escape () {
             elapsed="$(( $duration - $current ))"
             printf "%02d\n" $elapsed >> ~/.cache/boatcfg/pomo/sessions
             [ -f ~/.cache/boatcfg/pomo/"break" ] && rm ~/.cache/boatcfg/pomo/"break"
+            eww update rev_pomo=false
             ;;
         finish)
             if ! [ -f ~/.cache/boatcfg/pomo/break ]; then
@@ -47,7 +48,7 @@ function run () {
                 eww update pomo_break=false
                 rm ~/.cache/boatcfg/pomo/"break"
                 notifier normal \
-                    "timer-symbolic" \
+                    "fcitx-handwriting-active" \
                     "Pomo" \
                     "Started working session"
                 duration="$(( $working_time*60 ))"
@@ -62,6 +63,12 @@ function run () {
         sec="$(( $time%60 ))"
         printf "%02d:%02d\n" $min $sec >> ~/.cache/boatcfg/pomo/log
         time=$(( $time-1))
+        
+        process=`eww get rev_pomo`
+        if [  $process -eq "false" ]; then
+            eww update rev_pomo=true
+        fi
+
         echo "$time" > ~/.cache/boatcfg/pomo/current
         sleep 1
     done
@@ -93,7 +100,7 @@ case $1 in
             duration="$(( $working_time * 60 ))"
             echo "$duration" > ~/.cache/boatcfg/pomo/duration
             notifier normal \
-                "timer-symbolic" \
+                "fcitx-handwriting-active" \
                 "Pomo" \
                 "Started working session"
             run
@@ -118,11 +125,11 @@ case $1 in
     stop) 
         eww update rev_pomo=false
         notifier normal \
-            "timer-symbolic" \
+            "no" \
             "Pomo" \
-            "Timer has stopped"
+            "Stopped time"
         sleep 0.5
         escape stop
-        kill -KILL `pgrep pomo`
+        kill -SIGKILL `pgrep pomo`
         ;;
 esac

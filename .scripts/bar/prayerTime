@@ -97,9 +97,9 @@ case $1 in
         case $remTime in
             0) locknum=1 ;;
             1) locknum=2 ;;
-            2|3|4|5) locknum=5 ;;
-            6|7|8|9|10) locknum=10 ;;
-            11|12|13|14|15) locknum=15 ;;
+            [2-5]) locknum=5 ;;
+            [6-9]|10) locknum=10 ;;
+            1[1-5]) locknum=15 ;;
             *) locknum=0 ;;
         esac
 

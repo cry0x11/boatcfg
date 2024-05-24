@@ -5,6 +5,7 @@ case $1 in
         riverctl enter-mode recording
         eww update rev_mode=true
         ;;
+
     "exit")
         riverctl enter-mode normal
         eww update rev_mode=false

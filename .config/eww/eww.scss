@@ -61,11 +61,25 @@ $borderRadius: 0.6em;
     padding: 0.2em 0.6em 0.2em 0.6em;
     color: $bg;
     border-radius: $borderRadius;
-    margin-right: 0.4em;
+}
+
+.module_inactive {
+    background-color: $grey; 
+    color: $white;
+}
+
+.module_active {
+    background-color: $green; 
+    color: $bg;
+}
+
+.module_critical {
+    background-color: $red;
+    color: $bg;
 }
 
 /************************************
-            MIDDLE SIDE 
+                MIDDLE 
  ************************************/
 .quran_radio {
     border-radius: $borderRadius;
@@ -79,6 +93,9 @@ $borderRadius: 0.6em;
 /************************************
             RIGHT SIDE 
  ************************************/
+.right_side {
+    margin-right: 0.4em;
+}
 
 .clock { 
     background-color: $purple; 
@@ -250,6 +267,10 @@ tooltip {
             LEFT SIDE                         
 ************************************/
 
+.left_side {
+    margin-left: 0.2em;
+}
+
 .tag { 
     padding: 0em 0.53em 0em 0.53em; 
     border-radius: $borderRadius;
@@ -270,5 +291,14 @@ color: $bg;
 
 .mode { 
     background-color: $yellow; 
-    margin-left: 0.2em;
+}
+
+.pomo_work {
+    background-color: $red;
+    color: $bg;
+}
+
+.pomo_break {
+    background-color: $green;
+    color: $bg;
 }

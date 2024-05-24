@@ -53,7 +53,7 @@
 (defvar rev_mode false)
 (defvar rev_recording false)
 (defvar recording_paused false)
-(defvar quran_button "0")
+(defvar quran_active false)
 
 (defwidget bar []
 
@@ -73,22 +73,21 @@
             :transition "slideright"
             :duration "350ms"
             (label
-                :class "module mode"
+                :class "module right_side mode"
                 :text "${recording_paused == true ? "" : "󰑊"} Rec"
             )
         )
         
         (box
-        :class "quran_radio"
+        :class `quran_radio ${quran_active == false ? "module_inactive" : "module_active" }`
         :space-evenly false
-        :style `${quran_button == "0" ? "background-color: #5a524c; color: #d4be98" : "background-color: #a9b665; color: #282828"}`
           (label
               :text "Quran Radio"
           )
           (button
-            :onclick `${quran_button == "0" ? "~/.scripts/bar/cairoQuran play" : "~/.scripts/bar/cairoQuran stop"}`
+            :onclick `${quran_active == false ? "~/.scripts/bar/cairoQuran play" : "~/.scripts/bar/cairoQuran stop"}`
             :class "quran-button"
-            `${quran_button == "1" ? "" : ""}`
+            `${quran_active == true ? "" : ""}`
           )
         )
     )
@@ -110,9 +109,9 @@
         )
         
         (box
-          :class "module"
+          :class `module right_side ${battery_percent > 30 ? "module_active" : battery_state == 0 ? "module_critical" : "module_active" }`
           :space-evenly false
-          :style '${battery_percent > 25 ? "background-color: #a9b665;" : battery_state == 0 ? "background-color: #ea6962;" : "background-color: #a9b665;" }'
+          :style ''
 
           (label
               :class "battery_state"
@@ -125,14 +124,12 @@
         )
 
         (label
-          :class "module"
-          :style '${ethernet_state == "up" ? "background-color: #a9b665;" : "background-color: #5a524c; color:#d4be98"}'
+          :class `module right_side ${ethernet_state == "up" ? "module_active" : "module_inactive"}`
           :text `${ethernet_state == "up" ? "󰈀" : ""}`
         )
 
         (label
-          :class "module"
-          :style '${volume_mute == "false" ? "background-color: #a9b665;" : "background-color: #5a524c; color:#d4be98" }'
+          :class `module right_side ${volume_mute == "false" ? "module_active" : "module_inactive"}`
           :text `${volume_mute == "false" ? "" : "" } ${volume}%`
         )
 
@@ -141,7 +138,7 @@
             :transition "slideleft"
             :duration "350ms"
             (label
-                :class "module prayer"
+                :class "module right_side prayer"
                 :text "${prayer}"
             )
         )
@@ -150,7 +147,7 @@
             :onhover "eww update rev_prayer=true"
             :onhoverlost "eww update rev_prayer=false"
             (label
-                :class "module prayer"
+                :class "module right_side prayer"
                 :text " ${prayerTime}"
             )
         )
@@ -161,7 +158,7 @@
             :transition "slideleft"
             :duration "350ms"
             (label
-                :class "module date"
+                :class "module right_side date"
                 :text `${substring(time, 0, 14)}`
             )
         )
@@ -169,7 +166,7 @@
             :onhover "eww update rev_date=true"
             :onhoverlost "eww update rev_date=false"
             (label
-                :class "module clock"
+                :class "module right_side clock"
                 :text "${substring(time, 15, 8)}"
             )
         )
@@ -211,9 +208,8 @@
             :transition "slideleft"
             :duration "350ms"
           (box
-          :class "module"
+          :class `module left_side ${pomo_pause == true ? "module_inactive" : pomo_break == false ? "pomo_work" : "pomo_break"}`
           :space-evenly false
-          :style `${pomo_pause == true ? "background-color:#5a524c; color:#d4be98" : pomo_break == false ? "background-color: #ea6962;" : "background-color: #a9b665"}`
             (label
               :text `${pomo_icon} ${pomo}`
             )
@@ -225,7 +221,7 @@
             :transition "slideright"
             :duration "350ms"
             (label
-                :class "module mode"
+                :class "module mode left_side"
                 :text "R"
             )
         )
