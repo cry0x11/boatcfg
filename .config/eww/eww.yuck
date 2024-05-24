@@ -12,7 +12,7 @@
 
 (defpoll time :initial ""
               :interval "10s"
-    `date +"%I:%M %p %d"`)
+    `date +"%I:%M %p %d %b %Y"`)
 
 (defpoll battery_percent :initial "0"
                          :interval "1s"
@@ -271,7 +271,7 @@
       )
       (label
         :class "cal_header"
-        :text "May 2024"
+        :text `${substring(time, 11, 9)}`
       )
       (button
         :class "cal_button"

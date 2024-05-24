@@ -41,10 +41,10 @@ case $1 in
         query=`cat ~/.scripts/data/.web_bookmarks |\
             awk -F ';;;' '{ printf "%2s %-40s %s\n", " ", $1, $2}' |\
             fzfcmd --prompt='Bookmarks > ' |\
-            sed 's/^.*http/http/g'`
+            sed 's/^.*\shttp/http/g'`
 
         if [ -n "$query" ]; then
-            printf "$query" | wl-copy
+            printf "%s" ${query} | wl-copy
         fi
         ;;
 
