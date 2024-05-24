@@ -95,6 +95,20 @@ case $1 in
             "Ytrss" \
             "Imported successfully"
         ;;
+
+    export)
+        if [ -n "$2" ]; then
+            cat .scripts/data/ytsubs |\
+                awk -F ';;;' '{t=$1; $1=$2; $2=t; print $1";;;"$2}' |\
+                sed 's/^/{\n"service_id": 0,\n"url": "/g; s/;;;/",\n"name": "/g; s/$/"\n}/g; s|feeds/videos.xml?playlist_id=UU|channel/UC|g' |\
+                jq -s '{"app_version": "0.27.0", "app_version_int": 997, "subscriptions": .}' > $2.json
+        else
+            notifier normal \
+                "dialog-error" \
+                "Ytrss" \
+                "Please name the exported file"
+        fi
+        ;;
     *)
         notifier err \
             "dialog-error" \
