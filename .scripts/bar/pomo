@@ -10,7 +10,6 @@ function escape () {
             elapsed="$(( $duration - $current ))"
             printf "%02d\n" $elapsed >> ~/.cache/boatcfg/pomo/sessions
             [ -f ~/.cache/boatcfg/pomo/"break" ] && rm ~/.cache/boatcfg/pomo/"break"
-            eww update pomo_pause=false
             eww update pomo_icon="󱎫"
             eww update pomo_break=false
             eww update rev_pomo=false
@@ -94,6 +93,7 @@ case $1 in
 
         if ! [ -f ~/.cache/boatcfg/pomo/current ] || [ $process -eq $$ ]; then
             [ -f ~/.cache/boatcfg/pomo/"break" ] && rm ~/.cache/boatcfg/pomo/"break"
+            eww update pomo_pause=false
             eww update pomo_icon="󱎫"
             eww update pomo_break=false
             eww update rev_pomo=true
