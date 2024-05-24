@@ -240,7 +240,7 @@ spawn Super bracketright    "$HOME/.scripts/brightctl up"
 spawn Super bracketleft     "$HOME/.scripts/brightctl down"
 
 # Toggling input methods using fcitx5
-spawn Alt Shift_L None "fcitx5-remote -t"
+spawn Alt Shift_L "fcitx5-remote -t"
 
 
 # --------------------------------------------------------
